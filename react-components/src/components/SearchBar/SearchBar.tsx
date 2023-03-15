@@ -5,8 +5,10 @@ import classes from './SearchBar.module.css';
 class SearchBar extends React.Component<Record<string, never>, InputState> {
   constructor(props: Record<string, never>) {
     super(props);
+    const localStorageData = localStorage.getItem('value');
+
     this.state = {
-      text: '',
+      text: localStorageData || '',
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -14,6 +16,7 @@ class SearchBar extends React.Component<Record<string, never>, InputState> {
 
   handleChange(e: React.FormEvent<HTMLInputElement>): void {
     this.setState({ text: e.currentTarget.value });
+    localStorage.setItem('value', e.currentTarget.value);
   }
 
   render(): React.ReactNode {
