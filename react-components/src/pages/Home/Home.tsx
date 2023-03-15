@@ -1,12 +1,12 @@
 import SearchBar from '../../components/SearchBar/SearchBar';
 import React from 'react';
-import classes from './Home.module.css';
+import Title from '../../components/Title/Title';
 
 class Home extends React.Component {
   render() {
     return (
       <div data-testid="home-page">
-        <h2 className={classes.title}>Home page</h2>
+        <Title {...{pageTitle: 'Book Shop'}}/>
         <SearchBar />
       </div>
     );
