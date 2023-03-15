@@ -16,7 +16,10 @@ class SearchBar extends React.Component<Record<string, never>, InputState> {
 
   handleChange(e: React.FormEvent<HTMLInputElement>): void {
     this.setState({ text: e.currentTarget.value });
-    localStorage.setItem('value', e.currentTarget.value);
+  }
+
+  componentWillUnmount(): void {
+    localStorage.setItem('value', this.state.text);
   }
 
   render(): React.ReactNode {
