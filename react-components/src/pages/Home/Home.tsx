@@ -6,7 +6,7 @@ class Home extends React.Component {
   render() {
     return (
       <div data-testid="home-page">
-        <Title {...{pageTitle: 'Book Shop'}}/>
+        <Title {...{title: 'Book Shop'}}/>
         <SearchBar />
       </div>
     );

@@ -1,15 +1,15 @@
 import React from 'react';
 import classes from './Title.module.css';
-import { titleProps } from './titleProps.interface';
+import { TitleProps } from './titleProps.interface';
 
-class Title extends React.Component<titleProps> {
-  constructor(props: titleProps) {
+class Title extends React.Component<TitleProps> {
+  constructor(props: TitleProps) {
     super(props);
   }
   render() {
     return (
       <div>
-        <h2 className={classes.title}>{this.props.pageTitle}</h2>
+        <h2 className={classes.title}>{this.props.title}</h2>
       </div>
     );
   }
