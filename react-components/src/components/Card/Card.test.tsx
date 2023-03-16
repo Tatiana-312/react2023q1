@@ -1,6 +1,5 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
-import { it, describe, expect } from 'vitest';
 import Card from './Card';
 
 const testData = {
