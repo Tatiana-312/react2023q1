@@ -1,9 +1,10 @@
 import React from 'react';
 import { InputState } from './inputState.interface';
 import classes from './SearchBar.module.css';
+import { SearchBarProps } from './searchBarProps.interface';
 
-class SearchBar extends React.Component<Record<string, never>, InputState> {
-  constructor(props: Record<string, never>) {
+class SearchBar extends React.Component<SearchBarProps, InputState> {
+  constructor(props: SearchBarProps) {
     super(props);
     const localStorageData = localStorage.getItem('value');
 
