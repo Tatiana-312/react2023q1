@@ -1,5 +1,5 @@
 import React from 'react';
-import { PageTitleProps } from './pageTitle.interface';
+import { PageTitleProps } from './pageTitleProps.interface';
 import classes from './PageTitle.module.css';
 
 class PageTitle extends React.Component<PageTitleProps> {
@@ -9,7 +9,7 @@ class PageTitle extends React.Component<PageTitleProps> {
   render() {
     return (
       <div>
-        <h1 className={classes.title}>{this.props.currentPage} page</h1>
+        <h1 className={classes.title}>{this.props.currentPage}</h1>
       </div>
     );
   }

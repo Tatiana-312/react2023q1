@@ -1,6 +1,5 @@
 import Title from '../../components/Title/Title';
 import React from 'react';
-import classes from './About.module.css';
 
 class About extends React.Component {
   render() {
