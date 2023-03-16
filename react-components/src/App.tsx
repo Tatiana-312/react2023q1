@@ -5,12 +5,21 @@ import { Navigate, Route, Routes } from 'react-router-dom';
 import Home from './pages/Home/Home';
 import About from './pages/About/About';
 import NotFound from './pages/NotFound/NotFound';
+import { CurrentPageState } from 'currentPageState.interface';
 
-class App extends React.Component {
+class App extends React.Component<Record<string, never>, CurrentPageState> {
+  constructor(props: Record<string, never>) {
+    super(props);
+
+    this.state = {
+      currentPage: 'Home',
+    };
+  }
+
   render(): React.ReactNode {
     return (
       <>
-        <Header />
+        <Header {...this.state} />
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/about" element={<About />} />

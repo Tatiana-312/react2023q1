@@ -9,7 +9,7 @@ class PageTitle extends React.Component<PageTitleProps> {
   render() {
     return (
       <div>
-        <h1 className={classes.title}>{this.props.pageTitle} page</h1>
+        <h1 className={classes.title}>{this.props.currentPage} page</h1>
       </div>
     );
   }
