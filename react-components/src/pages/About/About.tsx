@@ -5,7 +5,7 @@ class About extends React.Component {
   render() {
     return (
       <div data-testid="about-page">
-        <Title {...{title: 'About our Book Shop'}}/>
+        <Title {...{ title: 'About our Book Shop' }} />
       </div>
     );
   }
