@@ -8,7 +8,7 @@ class Card extends React.Component<CardProps> {
   }
   render(): React.ReactNode {
     return (
-      <div className={classes.card}>
+      <div className={classes.card} data-testid="card">
         <div className={classes.card__body}>
           <img className={classes.card__image} src={this.props.imgUrl} alt="card-image" />
           <h2 className={classes.card__title}>{this.props.name}</h2>

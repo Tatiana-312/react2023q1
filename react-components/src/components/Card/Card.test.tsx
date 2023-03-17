@@ -16,10 +16,12 @@ describe('Card component', () => {
             <Card key={testData.id} {...testData} />
         )
 
+        expect(screen.getByTestId('card')).toBeDefined();
         expect(screen.getByRole('img')).toBeInTheDocument();
         expect(screen.getByRole('heading', { level: 2 })).toBeInTheDocument();
         expect(screen.getByRole('heading', { level: 3 })).toBeInTheDocument();
         expect(screen.getByRole('button')).toBeInTheDocument();
         expect(screen.getByText('Novel')).toBeInTheDocument();
+        expect(screen.getByText('Buy')).toBeInTheDocument();
     });
 });
