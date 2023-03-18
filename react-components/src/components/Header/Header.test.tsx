@@ -26,8 +26,8 @@ describe('Header component', () => {
     const homeLink = screen.getByTestId('home-link');
     const aboutLink = screen.getByTestId('about-link');
     fireEvent.click(aboutLink);
-    expect(screen.getByRole('heading', {name: 'About Us'})).toBeInTheDocument();
+    expect(screen.getByRole('heading', { name: 'About Us' })).toBeInTheDocument();
     fireEvent.click(homeLink);
-    expect(screen.getByRole('heading', {name: 'Home'})).toBeInTheDocument();
+    expect(screen.getByRole('heading', { name: 'Home' })).toBeInTheDocument();
   });
 });
