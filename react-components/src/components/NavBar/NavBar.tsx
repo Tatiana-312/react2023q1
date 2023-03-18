@@ -26,6 +26,12 @@ class NavBar extends React.Component<Record<string, never>, CurrentPageState> {
       page: 'About Us',
       onClick: () => this.onClick('About Us'),
     },
+    {
+      testId: 'form-link',
+      route: '/form',
+      page: 'Form',
+      onClick: () => this.onClick('Form'),
+    },
   ];
 
   onClick(currentPage: string) {
