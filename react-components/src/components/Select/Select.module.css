@@ -11,3 +11,7 @@
 .select__country:focus {
   outline: none;
 }
+
+.select__country:hover {
+  cursor: pointer;
+}

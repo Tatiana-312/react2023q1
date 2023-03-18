@@ -8,7 +8,7 @@ class Checkbox extends React.Component<CheckboxProps> {
   }
   render() {
     return (
-      <>
+      <div className={classes.checkbox__container}>
         <input
           className={classes.checkbox__data}
           type="checkbox"
@@ -16,7 +16,7 @@ class Checkbox extends React.Component<CheckboxProps> {
           name={this.props.name}
         />
         <label htmlFor={this.props.name}>{this.props.label}</label>
-      </>
+      </div>
     );
   }
 }
