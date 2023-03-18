@@ -3,6 +3,7 @@ import React from 'react';
 import Select from '../../components/Select/Select';
 import Checkbox from '../../components/Checkbox/Checkbox';
 import ToggleSwitch from '../../components/ToggleSwitch/ToggleSwitch';
+import classes from './Form.module.css';
 
 class Form extends React.Component {
   nameInput: React.RefObject<HTMLInputElement>;
@@ -49,9 +50,9 @@ class Form extends React.Component {
           refer={this.countrySelect}
         />
         <Input type="file" label="Book cover" name="file" refer={this.fileInput} />
-        <Checkbox name="permission" label="I consent to my personal data" />
         <ToggleSwitch />
-        <input type="submit" value="submit" />
+        <Checkbox name="permission" label="I consent to my personal data" />
+        <input className={classes.submit__button} type="submit" value="submit" />
       </form>
     );
   }
