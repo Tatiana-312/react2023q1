@@ -25,8 +25,8 @@ class Form extends React.Component {
       <form onSubmit={this.handleSubmit}>
         <Input type="text" label="Name" name="name" refer={this.nameInput} />
         <Input type="text" label="Surname" name="surname" refer={this.surnameInput} />
-        <Input type="date" label="Date of purchase" name="date" refer={this.dateInput} />
-        <Input type="file" label="Book image" name="file" refer={this.fileInput} />
+        <Input type="date" label="Date of delivery" name="date" refer={this.dateInput} />
+        <Input type="file" label="Book cover" name="file" refer={this.fileInput} />
         <input type="submit" value="submit" />
       </form>
     );
