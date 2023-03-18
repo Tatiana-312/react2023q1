@@ -50,7 +50,12 @@ class Form extends React.Component {
           refer={this.countrySelect}
         />
         <Input type="file" label="Book cover" name="file" refer={this.fileInput} />
-        <ToggleSwitch />
+        <ToggleSwitch
+          title="Will you pay in cash or by credit card?"
+          firstOption="Cash"
+          secondOption="Credit Card"
+          name="payment"
+        />
         <Checkbox name="permission" label="I consent to my personal data" />
         <input className={classes.submit__button} type="submit" value="submit" />
       </form>
