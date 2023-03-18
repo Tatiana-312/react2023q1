@@ -8,10 +8,10 @@ class Input extends React.Component<InputProps> {
   }
   render() {
     return (
-      <label className={classes.label__name}>
+      <label className={classes.label}>
         {this.props.label}
         <input
-          className={classes.input__name}
+          className={classes.input}
           type={this.props.type}
           name={this.props.name}
           ref={this.props.refer}
