@@ -5,13 +5,13 @@ class ToggleSwitch extends React.Component {
   render() {
     return (
       <>
-        <p>Will you pay in cash or by credit card?</p>
-        <span>Cash</span>
+        <p className={classes.toggle__title}>Will you pay in cash or by credit card?</p>
+        <span className={classes.toggle__option}>Cash</span>
         <label className={classes.switch}>
           <input className={classes.switch__input} type="Checkbox" name="sale" />
           <span className={classes.slider}></span>
         </label>
-        <span>Credit Card</span>
+        <span className={classes.toggle__option}>Credit Card</span>
       </>
     );
   }
