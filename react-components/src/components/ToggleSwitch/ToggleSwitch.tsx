@@ -11,12 +11,19 @@ class ToggleSwitch extends React.Component<ToggleSwitchProps> {
     return (
       <>
         <p className={classes.toggle__title}>{this.props.title}</p>
-        <span className={classes.toggle__option}>{this.props.firstOption}</span>
-        <label className={classes.switch}>
-          <input className={classes.switch__input} type="Checkbox" name={this.props.name} />
-          <span className={classes.slider}></span>
-        </label>
-        <span className={classes.toggle__option}>{this.props.secondOption}</span>
+        <fieldset className={classes.radio_switch}>
+          <div className={classes.radio_switch__inner}>
+            <input type="radio" name={this.props.name} id="public" />
+            <label className={classes.toggle__option} htmlFor="public">
+              {this.props.firstOption}
+            </label>
+
+            <input type="radio" name={this.props.name} id="private" />
+            <label className={classes.toggle__option} htmlFor="private">
+              {this.props.secondOption}
+            </label>
+          </div>
+        </fieldset>
       </>
     );
   }
