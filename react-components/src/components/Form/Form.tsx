@@ -24,24 +24,19 @@ class Form extends React.Component {
     this.paymentSwitch = React.createRef();
   }
 
+  getCurrentSwitchValue = (isChecked: boolean): string => {
+    return isChecked ? 'Cash' : 'Card';
+  }
+
   handleSubmit: React.FormEventHandler<HTMLFormElement> = (event) => {
     event.preventDefault();
-    const isChecked = (this.paymentSwitch.current as HTMLInputElement).checked;
-    let paymentValue = '';
-
-    if (isChecked) {
-      paymentValue = 'Cash';
-    } else {
-      paymentValue = 'Card';
-    }
-
     const cardsData: CardsData = {
       name: (this.nameInput.current as HTMLInputElement).value,
       surname: (this.surnameInput.current as HTMLInputElement).value,
       date: (this.dateInput.current as HTMLInputElement).value,
       country: (this.countrySelect.current as HTMLSelectElement).value,
       file: (this.fileInput.current as HTMLInputElement).value,
-      payment: paymentValue,
+      payment: this.getCurrentSwitchValue((this.paymentSwitch.current as HTMLInputElement).checked),
     };
 
     console.log(cardsData);
