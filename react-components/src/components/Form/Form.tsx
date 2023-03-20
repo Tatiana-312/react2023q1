@@ -31,12 +31,13 @@ class Form extends React.Component<FormProps> {
 
   handleSubmit: React.FormEventHandler<HTMLFormElement> = (event) => {
     event.preventDefault();
+    const inputBookCover = this.fileInput.current as HTMLInputElement;
     const cardsData: CardsData = {
       name: (this.nameInput.current as HTMLInputElement).value,
       surname: (this.surnameInput.current as HTMLInputElement).value,
       date: (this.dateInput.current as HTMLInputElement).value,
       country: (this.countrySelect.current as HTMLSelectElement).value,
-      file: (this.fileInput.current as HTMLInputElement).value,
+      file: URL.createObjectURL((inputBookCover.files as FileList)[0]),
       payment: this.getCurrentSwitchValue((this.paymentSwitch.current as HTMLInputElement).checked),
     };
 
