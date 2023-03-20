@@ -4,6 +4,7 @@ import Select from '../../components/Select/Select';
 import Checkbox from '../../components/Checkbox/Checkbox';
 import ToggleSwitch from '../../components/ToggleSwitch/ToggleSwitch';
 import classes from './Form.module.css';
+import { CardsData } from './cardsData.interface';
 
 class Form extends React.Component {
   nameInput: React.RefObject<HTMLInputElement>;
@@ -11,6 +12,7 @@ class Form extends React.Component {
   dateInput: React.RefObject<HTMLInputElement>;
   countrySelect: React.RefObject<HTMLSelectElement>;
   fileInput: React.RefObject<HTMLInputElement>;
+  paymentSwitch: React.RefObject<HTMLInputElement>;
 
   constructor(props: Record<string, never>) {
     super(props);
@@ -19,11 +21,30 @@ class Form extends React.Component {
     this.dateInput = React.createRef();
     this.countrySelect = React.createRef();
     this.fileInput = React.createRef();
+    this.paymentSwitch = React.createRef();
   }
 
   handleSubmit: React.FormEventHandler<HTMLFormElement> = (event) => {
     event.preventDefault();
-    console.log((this.nameInput.current as HTMLInputElement).value);
+    const isChecked = (this.paymentSwitch.current as HTMLInputElement).checked;
+    let paymentValue = '';
+
+    if (isChecked) {
+      paymentValue = 'Cash';
+    } else {
+      paymentValue = 'Card';
+    }
+
+    const cardsData: CardsData = {
+      name: (this.nameInput.current as HTMLInputElement).value,
+      surname: (this.surnameInput.current as HTMLInputElement).value,
+      date: (this.dateInput.current as HTMLInputElement).value,
+      country: (this.countrySelect.current as HTMLSelectElement).value,
+      file: (this.fileInput.current as HTMLInputElement).value,
+      payment: paymentValue,
+    };
+
+    console.log(cardsData);
   };
 
   render() {
@@ -55,6 +76,7 @@ class Form extends React.Component {
           firstOption="Cash"
           secondOption="Credit Card"
           name="payment"
+          refer={this.paymentSwitch}
         />
         <Checkbox name="permission" label="I consent to my personal data" />
         <input className={classes.submit__button} type="submit" value="submit" />
