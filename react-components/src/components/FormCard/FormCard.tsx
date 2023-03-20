@@ -10,24 +10,24 @@ class FormCard extends React.Component<CardsData> {
     return (
       <div className={classes.card}>
         <p>
-          <span>name: </span>
+          <span>Name: </span>
           {this.props.name}
         </p>
         <p>
-          <span>surname: </span>
+          <span>Surname: </span>
           {this.props.surname}
         </p>
         <p>
-          <span>date: </span>
+          <span>Date: </span>
           {this.props.date}
         </p>
         <p>
-          <span>country: </span>
+          <span>Country: </span>
           {this.props.country}
         </p>
         <img src={this.props.file} alt="book cover" />
         <p>
-          <span>payment method: </span>
+          <span>Payment method: </span>
           {this.props.payment}
         </p>
       </div>
