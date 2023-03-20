@@ -3,24 +3,27 @@ import React from 'react';
 import classes from './FormPage.module.css';
 import { CardsData } from '../../components/Form/cardsData.interface';
 import FormCardList from '../../components/FormCardList/FormCardList';
+import { FormPageState } from './formPageState.interface';
 
-class FormPage extends React.Component {
-  cards: CardsData[];
+class FormPage extends React.Component<Record<string, unknown>, FormPageState> {
   constructor(props: Record<string, unknown>) {
     super(props);
-    this.cards = [];
+    this.state = {
+      cards: [],
+    };
   }
 
   uploadCardsData = (data: CardsData) => {
-    this.cards.push(data);
-    console.log(this.cards);
+    this.setState((prevState) => ({
+      cards: [...prevState.cards, data],
+    }));
   };
 
   render(): React.ReactNode {
     return (
       <div className={classes.form__container}>
         <Form uploadCard={this.uploadCardsData} />
-        <FormCardList cards={this.cards} />
+        <FormCardList {...this.state} />
       </div>
     );
   }

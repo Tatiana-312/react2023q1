@@ -7,7 +7,6 @@ import { FormCardListProps } from './formCardListProps.interface';
 class FormCardList extends React.Component<FormCardListProps> {
   constructor(props: FormCardListProps) {
     super(props);
-    console.log('PPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPP',props);
   }
 
   render() {
