@@ -5,8 +5,9 @@ import Checkbox from '../../components/Checkbox/Checkbox';
 import ToggleSwitch from '../../components/ToggleSwitch/ToggleSwitch';
 import classes from './Form.module.css';
 import { CardsData } from './cardsData.interface';
+import { FormProps } from './formProps.interface';
 
-class Form extends React.Component {
+class Form extends React.Component<FormProps> {
   nameInput: React.RefObject<HTMLInputElement>;
   surnameInput: React.RefObject<HTMLInputElement>;
   dateInput: React.RefObject<HTMLInputElement>;
@@ -14,7 +15,7 @@ class Form extends React.Component {
   fileInput: React.RefObject<HTMLInputElement>;
   paymentSwitch: React.RefObject<HTMLInputElement>;
 
-  constructor(props: Record<string, never>) {
+  constructor(props: FormProps) {
     super(props);
     this.nameInput = React.createRef();
     this.surnameInput = React.createRef();
@@ -26,7 +27,7 @@ class Form extends React.Component {
 
   getCurrentSwitchValue = (isChecked: boolean): string => {
     return isChecked ? 'Cash' : 'Card';
-  }
+  };
 
   handleSubmit: React.FormEventHandler<HTMLFormElement> = (event) => {
     event.preventDefault();
@@ -39,7 +40,7 @@ class Form extends React.Component {
       payment: this.getCurrentSwitchValue((this.paymentSwitch.current as HTMLInputElement).checked),
     };
 
-    console.log(cardsData);
+    this.props.uploadCard(cardsData);
   };
 
   render() {
