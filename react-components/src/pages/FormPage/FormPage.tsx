@@ -2,7 +2,7 @@ import Form from '../../components/Form/Form';
 import React from 'react';
 import classes from './FormPage.module.css';
 import { CardsData } from '../../components/Form/cardsData.interface';
-import FormCard from '../../components/FormCard/FormCard';
+import FormCardList from '../../components/FormCardList/FormCardList';
 
 class FormPage extends React.Component {
   cards: CardsData[];
@@ -20,7 +20,7 @@ class FormPage extends React.Component {
     return (
       <div className={classes.form__container}>
         <Form uploadCard={this.uploadCardsData} />
-        <FormCard />
+        <FormCardList cards={this.cards} />
       </div>
     );
   }
