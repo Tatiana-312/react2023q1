@@ -14,6 +14,7 @@ class Checkbox extends React.Component<CheckboxProps> {
           type="checkbox"
           id={this.props.name}
           name={this.props.name}
+          ref={this.props.refer}
         />
         <label htmlFor={this.props.name}>{this.props.label}</label>
       </div>

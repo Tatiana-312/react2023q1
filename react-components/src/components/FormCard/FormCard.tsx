@@ -25,7 +25,7 @@ class FormCard extends React.Component<CardsData> {
           <span>Country: </span>
           {this.props.country}
         </p>
-        <img src={this.props.file} alt="book cover" />
+        <img className={classes.card__img} src={this.props.file} alt="book cover" />
         <p>
           <span>Payment method: </span>
           {this.props.payment}

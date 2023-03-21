@@ -15,6 +15,7 @@ class Form extends React.Component<FormProps, FormState> {
   countrySelect: React.RefObject<HTMLSelectElement>;
   fileInput: React.RefObject<HTMLInputElement>;
   paymentSwitch: React.RefObject<HTMLInputElement>;
+  permissionCheckbox: React.RefObject<HTMLInputElement>;
 
   constructor(props: FormProps) {
     super(props);
@@ -24,6 +25,7 @@ class Form extends React.Component<FormProps, FormState> {
     this.countrySelect = React.createRef();
     this.fileInput = React.createRef();
     this.paymentSwitch = React.createRef();
+    this.permissionCheckbox = React.createRef();
 
     this.state = {
       disableSubmit: true,
@@ -53,6 +55,24 @@ class Form extends React.Component<FormProps, FormState> {
     }
   };
 
+  resetValues = (): void => {
+    const nameField = this.nameInput.current as HTMLInputElement;
+    const surnameField = this.surnameInput.current as HTMLInputElement;
+    const dateField = this.dateInput.current as HTMLInputElement;
+    const countryField = this.countrySelect.current as HTMLSelectElement;
+    const fileField = this.fileInput.current as HTMLInputElement;
+    const paymentField = this.paymentSwitch.current as HTMLInputElement;
+    const permissionField = this.permissionCheckbox.current as HTMLInputElement;
+
+    nameField.value = '';
+    surnameField.value = '';
+    dateField.value = '';
+    countryField.value = 'Belarus';
+    fileField.value = '';
+    paymentField.checked = false;
+    permissionField.checked = false;
+  };
+
   handleSubmit: React.FormEventHandler<HTMLFormElement> = (event) => {
     event.preventDefault();
     const inputBookCover = this.fileInput.current as HTMLInputElement;
@@ -66,6 +86,7 @@ class Form extends React.Component<FormProps, FormState> {
     };
 
     this.props.uploadCard(cardsData);
+    this.resetValues();
   };
 
   handleChange = (e: React.FormEvent<HTMLInputElement>): void => {
@@ -129,7 +150,11 @@ class Form extends React.Component<FormProps, FormState> {
           name="payment"
           refer={this.paymentSwitch}
         />
-        <Checkbox name="permission" label="I consent to my personal data" />
+        <Checkbox
+          name="permission"
+          label="I consent to my personal data"
+          refer={this.permissionCheckbox}
+        />
         <input
           className={classes.submit__button}
           type="submit"
