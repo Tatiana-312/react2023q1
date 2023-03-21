@@ -18,6 +18,7 @@ class Input extends React.Component<InputProps> {
           onChange={this.props.onChange}
           required
         />
+        <span className={classes.validation__error}>{this.props.errorText}</span>
       </label>
     );
   }

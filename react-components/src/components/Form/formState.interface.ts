@@ -1,8 +1,7 @@
 export interface FormState {
   disableSubmit: boolean;
-  name?: boolean;
-  surname?: boolean;
-  date?: boolean;
-  country?: boolean;
-  file?: boolean;
+  nameError: string;
+  surnameError: string;
+  dateError: string;
+  fileError: string;
 }

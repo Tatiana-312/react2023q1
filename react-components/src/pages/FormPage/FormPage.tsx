@@ -22,7 +22,7 @@ class FormPage extends React.Component<Record<string, unknown>, FormPageState> {
   render(): React.ReactNode {
     return (
       <div className={classes.form__container}>
-        <Form saveCards={this.saveCardsToState} />
+        <Form saveCard={this.saveCardsToState} />
         <FormCardList {...this.state} />
       </div>
     );

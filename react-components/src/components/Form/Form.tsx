@@ -29,11 +29,10 @@ class Form extends React.Component<FormProps, FormState> {
 
     this.state = {
       disableSubmit: true,
-      name: true,
-      surname: true,
-      date: true,
-      country: true,
-      file: true,
+      nameError: '',
+      surnameError: '',
+      dateError: '',
+      fileError: '',
     };
   }
 
@@ -42,17 +41,52 @@ class Form extends React.Component<FormProps, FormState> {
   };
 
   enableSubmit = (): void => {
-    if (
-      this.state.name &&
-      this.state.surname &&
-      this.state.date &&
-      this.state.country &&
-      this.state.file
-    ) {
-      this.setState((prevState) => {
-        return { ...prevState, disableSubmit: false };
-      });
+    this.setState((prevState) => {
+      return { ...prevState, disableSubmit: false };
+    });
+  };
+
+  isValidInput = (): boolean => {
+    const nameField = this.nameInput.current as HTMLInputElement;
+    const surnameField = this.surnameInput.current as HTMLInputElement;
+    const dateField = this.dateInput.current as HTMLInputElement;
+    const fileField = this.fileInput.current as HTMLInputElement;
+
+    const inputDate = new Date(dateField.value);
+    const currentDate = new Date();
+    let isValid = true;
+
+    if (!/^[A-Za-z]{2,29}$/.test(nameField.value)) {
+      this.setState({ nameError: 'Name must contain between 2 and 30 letters without spaces' });
+      isValid = false;
+    } else {
+      this.setState({ nameError: '' });
     }
+
+    if (!/^[A-Za-z]{2,29}$/.test(surnameField.value)) {
+      this.setState({
+        surnameError: 'Surname must contain between 2 and 30 letters without spaces',
+      });
+      isValid = false;
+    } else {
+      this.setState({ surnameError: '' });
+    }
+
+    if (inputDate < currentDate) {
+      this.setState({ dateError: 'Сannot be selected earlier than the current date' });
+      isValid = false;
+    } else {
+      this.setState({ dateError: '' });
+    }
+
+    if (!/^.*\.(jpg|JPG|png|PNG)$/.test(fileField.value)) {
+      this.setState({ fileError: 'Only images allowed' });
+      isValid = false;
+    } else {
+      this.setState({ fileError: '' });
+    }
+
+    return isValid;
   };
 
   resetValues = (): void => {
@@ -71,11 +105,16 @@ class Form extends React.Component<FormProps, FormState> {
     fileField.value = '';
     paymentField.checked = false;
     permissionField.checked = false;
+    this.setState({ nameError: '' });
+    this.setState({ surnameError: '' });
+    this.setState({ dateError: '' });
+    this.setState({ fileError: '' });
   };
 
   handleSubmit: React.FormEventHandler<HTMLFormElement> = (event) => {
     event.preventDefault();
     const inputBookCover = this.fileInput.current as HTMLInputElement;
+
     const cardsData: CardsData = {
       name: (this.nameInput.current as HTMLInputElement).value,
       surname: (this.surnameInput.current as HTMLInputElement).value,
@@ -85,8 +124,10 @@ class Form extends React.Component<FormProps, FormState> {
       payment: this.getCurrentSwitchValue((this.paymentSwitch.current as HTMLInputElement).checked),
     };
 
-    this.props.saveCards(cardsData);
-    this.resetValues();
+    if (this.isValidInput()) {
+      this.props.saveCard(cardsData);
+      this.resetValues();
+    }
   };
 
   handleChange = (e: React.FormEvent<HTMLInputElement>): void => {
@@ -104,6 +145,7 @@ class Form extends React.Component<FormProps, FormState> {
           name="name"
           refer={this.nameInput}
           onChange={this.handleChange}
+          errorText={this.state.nameError}
         />
         <Input
           type="text"
@@ -111,6 +153,7 @@ class Form extends React.Component<FormProps, FormState> {
           name="surname"
           refer={this.surnameInput}
           onChange={this.handleChange}
+          errorText={this.state.surnameError}
         />
         <Input
           type="date"
@@ -118,6 +161,7 @@ class Form extends React.Component<FormProps, FormState> {
           name="date"
           refer={this.dateInput}
           onChange={this.handleChange}
+          errorText={this.state.dateError}
         />
         <Select
           id="country"
@@ -142,6 +186,7 @@ class Form extends React.Component<FormProps, FormState> {
           name="file"
           refer={this.fileInput}
           onChange={this.handleChange}
+          errorText={this.state.fileError}
         />
         <ToggleSwitch
           title="Will you pay in cash or by credit card?"
