@@ -7,6 +7,7 @@ import classes from './Form.module.css';
 import { CardsData } from './cardsData.interface';
 import { FormProps } from './formProps.interface';
 import { FormState } from './formState.interface';
+import DataSaveMessage from '../DataSaveMessage/DataSaveMessage';
 
 class Form extends React.Component<FormProps, FormState> {
   nameInput: React.RefObject<HTMLInputElement>;
@@ -33,6 +34,7 @@ class Form extends React.Component<FormProps, FormState> {
       surnameError: '',
       dateError: '',
       fileError: '',
+      dataSaveMessage: '',
     };
   }
 
@@ -56,16 +58,20 @@ class Form extends React.Component<FormProps, FormState> {
     const currentDate = new Date();
     let isValid = true;
 
-    if (!/^[A-Za-z]{2,29}$/.test(nameField.value)) {
-      this.setState({ nameError: 'Name must contain between 2 and 30 letters without spaces' });
+    if (!/^[A-Z][a-z]{1,28}$/.test(nameField.value)) {
+      this.setState({
+        nameError:
+          'Name must start with a capital letter and contain more than 1 latin letter without spaces',
+      });
       isValid = false;
     } else {
       this.setState({ nameError: '' });
     }
 
-    if (!/^[A-Za-z]{2,29}$/.test(surnameField.value)) {
+    if (!/^[A-Z][a-z]{1,28}$/.test(surnameField.value)) {
       this.setState({
-        surnameError: 'Surname must contain between 2 and 30 letters without spaces',
+        surnameError:
+          'Surname must start with a capital letter and contain more than 1 latin letter without spaces',
       });
       isValid = false;
     } else {
@@ -85,7 +91,6 @@ class Form extends React.Component<FormProps, FormState> {
     } else {
       this.setState({ fileError: '' });
     }
-
     return isValid;
   };
 
@@ -126,11 +131,15 @@ class Form extends React.Component<FormProps, FormState> {
 
     if (this.isValidInput()) {
       this.props.saveCard(cardsData);
+      this.setState({
+        dataSaveMessage: 'Data saved successfully!',
+      });
       this.resetValues();
     }
   };
 
   handleChange = (e: React.FormEvent<HTMLInputElement>): void => {
+    this.setState({ dataSaveMessage: '' });
     if (e.currentTarget.value.length) {
       this.enableSubmit();
     }
@@ -206,6 +215,7 @@ class Form extends React.Component<FormProps, FormState> {
           value="submit"
           disabled={this.state.disableSubmit}
         />
+        <DataSaveMessage dataSaveMessage={this.state.dataSaveMessage} />
       </form>
     );
   }

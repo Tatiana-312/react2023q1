@@ -4,4 +4,5 @@ export interface FormState {
   surnameError: string;
   dateError: string;
   fileError: string;
+  dataSaveMessage: string;
 }
