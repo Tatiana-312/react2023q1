@@ -13,7 +13,12 @@ class ToggleSwitch extends React.Component<ToggleSwitchProps> {
         <p className={classes.toggle__title}>{this.props.title}</p>
         <fieldset className={classes.radio_switch}>
           <div className={classes.radio_switch__inner}>
-            <input type="radio" name={this.props.name} id={this.props.firstOption} ref={this.props.refer} />
+            <input
+              type="radio"
+              name={this.props.name}
+              id={this.props.firstOption}
+              ref={this.props.refer}
+            />
             <label className={classes.toggle__option} htmlFor={this.props.firstOption}>
               {this.props.firstOption}
             </label>
