@@ -85,7 +85,7 @@ class Form extends React.Component<FormProps, FormState> {
       payment: this.getCurrentSwitchValue((this.paymentSwitch.current as HTMLInputElement).checked),
     };
 
-    this.props.uploadCard(cardsData);
+    this.props.saveCards(cardsData);
     this.resetValues();
   };
 

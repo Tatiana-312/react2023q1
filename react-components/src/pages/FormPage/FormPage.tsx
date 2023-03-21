@@ -13,7 +13,7 @@ class FormPage extends React.Component<Record<string, unknown>, FormPageState> {
     };
   }
 
-  uploadCardsData = (data: CardsData) => {
+  saveCardsToState = (data: CardsData) => {
     this.setState((prevState) => ({
       cards: [...prevState.cards, data],
     }));
@@ -22,7 +22,7 @@ class FormPage extends React.Component<Record<string, unknown>, FormPageState> {
   render(): React.ReactNode {
     return (
       <div className={classes.form__container}>
-        <Form uploadCard={this.uploadCardsData} />
+        <Form saveCards={this.saveCardsToState} />
         <FormCardList {...this.state} />
       </div>
     );
