@@ -6,8 +6,9 @@ import ToggleSwitch from '../../components/ToggleSwitch/ToggleSwitch';
 import classes from './Form.module.css';
 import { CardsData } from './cardsData.interface';
 import { FormProps } from './formProps.interface';
+import { FormState } from './formState.interface';
 
-class Form extends React.Component<FormProps> {
+class Form extends React.Component<FormProps, FormState> {
   nameInput: React.RefObject<HTMLInputElement>;
   surnameInput: React.RefObject<HTMLInputElement>;
   dateInput: React.RefObject<HTMLInputElement>;
@@ -23,10 +24,33 @@ class Form extends React.Component<FormProps> {
     this.countrySelect = React.createRef();
     this.fileInput = React.createRef();
     this.paymentSwitch = React.createRef();
+
+    this.state = {
+      disableSubmit: true,
+      name: true,
+      surname: true,
+      date: true,
+      country: true,
+      file: true,
+    };
   }
 
   getCurrentSwitchValue = (isChecked: boolean): string => {
     return isChecked ? 'Cash' : 'Card';
+  };
+
+  enableSubmit = (): void => {
+    if (
+      this.state.name &&
+      this.state.surname &&
+      this.state.date &&
+      this.state.country &&
+      this.state.file
+    ) {
+      this.setState((prevState) => {
+        return { ...prevState, disableSubmit: false };
+      });
+    }
   };
 
   handleSubmit: React.FormEventHandler<HTMLFormElement> = (event) => {
@@ -44,12 +68,36 @@ class Form extends React.Component<FormProps> {
     this.props.uploadCard(cardsData);
   };
 
+  handleChange = (e: React.FormEvent<HTMLInputElement>): void => {
+    if (e.currentTarget.value.length) {
+      this.enableSubmit();
+    }
+  };
+
   render() {
     return (
       <form onSubmit={this.handleSubmit}>
-        <Input type="text" label="Name" name="name" refer={this.nameInput} />
-        <Input type="text" label="Surname" name="surname" refer={this.surnameInput} />
-        <Input type="date" label="Date of delivery" name="date" refer={this.dateInput} />
+        <Input
+          type="text"
+          label="Name"
+          name="name"
+          refer={this.nameInput}
+          onChange={this.handleChange}
+        />
+        <Input
+          type="text"
+          label="Surname"
+          name="surname"
+          refer={this.surnameInput}
+          onChange={this.handleChange}
+        />
+        <Input
+          type="date"
+          label="Date of delivery"
+          name="date"
+          refer={this.dateInput}
+          onChange={this.handleChange}
+        />
         <Select
           id="country"
           label="Choose your country"
@@ -67,7 +115,13 @@ class Form extends React.Component<FormProps> {
           ]}
           refer={this.countrySelect}
         />
-        <Input type="file" label="Book cover" name="file" refer={this.fileInput} />
+        <Input
+          type="file"
+          label="Book cover"
+          name="file"
+          refer={this.fileInput}
+          onChange={this.handleChange}
+        />
         <ToggleSwitch
           title="Will you pay in cash or by credit card?"
           firstOption="Cash"
@@ -76,7 +130,12 @@ class Form extends React.Component<FormProps> {
           refer={this.paymentSwitch}
         />
         <Checkbox name="permission" label="I consent to my personal data" />
-        <input className={classes.submit__button} type="submit" value="submit" />
+        <input
+          className={classes.submit__button}
+          type="submit"
+          value="submit"
+          disabled={this.state.disableSubmit}
+        />
       </form>
     );
   }

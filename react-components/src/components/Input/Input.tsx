@@ -15,6 +15,7 @@ class Input extends React.Component<InputProps> {
           type={this.props.type}
           name={this.props.name}
           ref={this.props.refer}
+          onChange={this.props.onChange}
           required
         />
       </label>
