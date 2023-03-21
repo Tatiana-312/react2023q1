@@ -4,7 +4,8 @@
 
 .input {
   display: block;
-  margin: 10px 0px;
+  margin-top: 10px;
+  margin-bottom: 0px;
   padding: 5px 10px;
   font-size: 14px;
   border: none;
@@ -14,4 +15,11 @@
 
 .input:focus {
   outline: none;
+}
+
+.validation__error {
+  display: inline-block;
+  color: rgb(169, 1, 1);
+  font-size: 12px;
+  height: 12px;
 }

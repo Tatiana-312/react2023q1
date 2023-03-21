@@ -1,5 +1,5 @@
 .toggle__title {
-  padding: 10px 0;
+  padding-bottom: 10px;
 }
 
 .toggle__option {
@@ -7,95 +7,95 @@
 }
 
 .radio_switch {
-	border: none;
-	padding: 0;
-	white-space: nowrap;
+  border: none;
+  padding: 0;
+  white-space: nowrap;
 }
 
 .radio_switch__inner {
-	display: inline-block;
-	position: relative;
+  display: inline-block;
+  position: relative;
 }
 
 .radio_switch label {
-	display: inline-block;
-	position: relative;
-	z-index: 2;
+  display: inline-block;
+  position: relative;
+  z-index: 2;
 }
 
 .radio_switch input {
-	-moz-appearance: none;
-	-webkit-appearance: none;
-	appearance: none;
-	background: none;
-	height: 100%;
-	opacity: .00001;
-	position: absolute;
-	top: 0;
-	z-index: 3;
+  -moz-appearance: none;
+  -webkit-appearance: none;
+  appearance: none;
+  background: none;
+  height: 100%;
+  opacity: 0.00001;
+  position: absolute;
+  top: 0;
+  z-index: 3;
   cursor: pointer;
 }
 
 .radio_switch input:first-of-type {
-	left: 0;
+  left: 0;
   width: 30%;
 }
 
 .radio_switch input:last-of-type {
-	right: 0;
+  right: 0;
   width: 55%;
 }
 
 .radio_switch input:not(:checked):hover + label {
-	text-decoration: underline;
+  text-decoration: underline;
 }
 
 .radio_switch label:first-of-type {
-	padding-right: 5em;
+  padding-right: 5em;
 }
 
 .radio_switch label:last-child {
-	margin-left: -4.25em;
-	padding-left: 60px;
+  margin-left: -4.25em;
+  padding-left: 60px;
 }
 
 .radio_switch label:first-of-type:before,
 .radio_switch label:first-of-type:after {
-	content: "";
+  content: '';
   height: 19px;
-	overflow: hidden;
-	pointer-events: none;
-	position: absolute;
-	vertical-align: middle;
+  overflow: hidden;
+  pointer-events: none;
+  position: absolute;
+  vertical-align: middle;
 }
 
 .radio_switch label:first-of-type:before {
-	background: #fff;
-	border-radius: 100%;
-	position: absolute;
+  background: #fff;
+  border-radius: 100%;
+  position: absolute;
   right: 26px;
-	transition: right .2s ease-in-out;
+  transition: right 0.2s ease-in-out;
   width: 19px;
-	z-index: 2;
+  z-index: 2;
 }
 
 .radio_switch label:first-of-type:after {
-	background: #ccc;
+  background: #ccc;
   box-shadow: inset 0 0 5px rgb(5 78 53);
-	border-radius: 1em;
-	margin: 0 1em;
-	transition: background .2s ease-in-out;
+  border-radius: 1em;
+  margin: 0 1em;
+  transition: background 0.2s ease-in-out;
   width: 36px;
 }
 
 .radio_switch input:first-of-type:checked ~ label:first-of-type:after {
-	background:  rgb(173, 215, 201);
+  background: rgb(173, 215, 201);
 }
 
 .radio_switch input:first-of-type:checked ~ label:first-of-type:before {
-	right: 45px;
+  right: 45px;
 }
 
 .radio_switch input:last-of-type:checked ~ label:last-of-type {
-	z-index: 1;
+  z-index: 1;
 }
