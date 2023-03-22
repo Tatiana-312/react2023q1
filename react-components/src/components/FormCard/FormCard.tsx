@@ -14,10 +14,6 @@ class FormCard extends React.Component<CardsData> {
           {this.props.name}
         </p>
         <p>
-          <span>Surname: </span>
-          {this.props.surname}
-        </p>
-        <p>
           <span>Date: </span>
           {this.props.date}
         </p>

@@ -26,6 +26,7 @@ class Form extends React.Component<FormProps, FormState> {
     this.fileInput = React.createRef();
     this.paymentSwitch = React.createRef();
     this.permissionCheckbox = React.createRef();
+
     this.countries = [
       'Belarus',
       'Georgia',
@@ -58,15 +59,11 @@ class Form extends React.Component<FormProps, FormState> {
   };
 
   isValidInputs = (): boolean => {
-    const nameField = this.nameInput.current as HTMLInputElement;
-    const dateField = this.dateInput.current as HTMLInputElement;
-    const fileField = this.fileInput.current as HTMLInputElement;
-
-    const inputDate = new Date(dateField.value);
+    const inputDate = new Date(this.dateInput.current!.value);
     const currentDate = new Date();
     let isValid = true;
 
-    if (!/^[A-Z][a-z]{1,28}$/.test(nameField.value)) {
+    if (!/^[A-Z][a-z]{1,28}$/.test(this.nameInput.current!.value)) {
       this.setState({
         nameError:
           'Name must start with a capital letter and contain more than 1 latin letter without spaces',
@@ -83,7 +80,7 @@ class Form extends React.Component<FormProps, FormState> {
       this.setState({ dateError: '' });
     }
 
-    if (!/^.*\.(jpg|JPG|png|PNG)$/.test(fileField.value)) {
+    if (!/^.*\.(jpg|JPG|png|PNG)$/.test(this.fileInput.current!.value)) {
       this.setState({ fileError: 'Only images allowed' });
       isValid = false;
     } else {
@@ -93,41 +90,37 @@ class Form extends React.Component<FormProps, FormState> {
   };
 
   resetValues = (): void => {
-    const nameField = this.nameInput.current as HTMLInputElement;
-    const dateField = this.dateInput.current as HTMLInputElement;
-    const countryField = this.countrySelect.current as HTMLSelectElement;
-    const fileField = this.fileInput.current as HTMLInputElement;
-    const paymentField = this.paymentSwitch.current as HTMLInputElement;
-    const permissionField = this.permissionCheckbox.current as HTMLInputElement;
-
-    nameField.value = '';
-    dateField.value = '';
-    countryField.value = 'Belarus';
-    fileField.value = '';
-    paymentField.checked = false;
-    permissionField.checked = false;
+    this.nameInput.current!.value = '';
+    this.dateInput.current!.value = '';
+    this.countrySelect.current!.value = 'Belarus';
+    this.fileInput.current!.value = '';
+    this.paymentSwitch.current!.checked = false;
+    this.permissionCheckbox.current!.checked = false;
     this.setState({ nameError: '' });
     this.setState({ dateError: '' });
     this.setState({ fileError: '' });
   };
 
+  setSuccessMessage = (): void => {
+    this.setState({
+      dataSaveMessage: 'Data saved successfully!',
+    });
+  };
+
   handleSubmit: React.FormEventHandler<HTMLFormElement> = (event) => {
     event.preventDefault();
-    const inputBookCover = this.fileInput.current as HTMLInputElement;
 
     const cardsData: CardsData = {
-      name: (this.nameInput.current as HTMLInputElement).value,
-      date: (this.dateInput.current as HTMLInputElement).value,
-      country: (this.countrySelect.current as HTMLSelectElement).value,
-      file: URL.createObjectURL((inputBookCover.files as FileList)[0]),
-      payment: this.getCurrentSwitchValue((this.paymentSwitch.current as HTMLInputElement).checked),
+      name: this.nameInput.current!.value,
+      date: this.dateInput.current!.value,
+      country: this.countrySelect.current!.value,
+      file: URL.createObjectURL((this.fileInput.current!.files as FileList)[0]),
+      payment: this.getCurrentSwitchValue(this.paymentSwitch.current!.checked),
     };
 
     if (this.isValidInputs()) {
       this.props.saveCard(cardsData);
-      this.setState({
-        dataSaveMessage: 'Data saved successfully!',
-      });
+      this.setSuccessMessage();
       this.resetValues();
     }
   };
