@@ -40,7 +40,6 @@ class Form extends React.Component<FormProps, FormState> {
     ];
 
     this.state = {
-      disableSubmit: true,
       nameError: '',
       dateError: '',
       fileError: '',
@@ -52,14 +51,8 @@ class Form extends React.Component<FormProps, FormState> {
     return isChecked ? 'Cash' : 'Card';
   };
 
-  enableSubmit = (): void => {
-    this.setState((prevState) => {
-      return { ...prevState, disableSubmit: false };
-    });
-  };
-
   private isNameValid = (): boolean => {
-    if (!/^[A-Z][a-z]{1,28}$/.test(this.nameInput.current!.value)) {
+    if (!this.nameInput.current!.value || !/^[A-Z][a-z]{1,28}$/.test(this.nameInput.current!.value)) {
       this.setState({
         nameError:
           'Name must start with a capital letter and contain more than 1 latin letter without spaces',
@@ -74,7 +67,7 @@ class Form extends React.Component<FormProps, FormState> {
   private isDateValid = (): boolean => {
     const inputDate = new Date(this.dateInput.current!.value);
     const currentDate = new Date();
-    if (inputDate < currentDate) {
+    if (!this.dateInput.current!.value || inputDate < currentDate) {
       this.setState({ dateError: 'Сannot be selected earlier than the current date' });
       return false;
     } else {
@@ -84,7 +77,7 @@ class Form extends React.Component<FormProps, FormState> {
   };
 
   private isFileValid = (): boolean => {
-    if (!/^.*\.(jpg|JPG|png|PNG)$/.test(this.fileInput.current!.value)) {
+    if (!this.fileInput.current!.value || !/^.*\.(jpg|JPG|png|PNG)$/.test(this.fileInput.current!.value)) {
       this.setState({ fileError: 'Only images allowed' });
       return false;
     } else {
@@ -131,9 +124,9 @@ class Form extends React.Component<FormProps, FormState> {
 
   handleSubmit: React.FormEventHandler<HTMLFormElement> = (event) => {
     event.preventDefault();
-    const cardData: CardData = this.getCardData();
 
     if (this.isValuesValid()) {
+      const cardData: CardData = this.getCardData();
       this.props.saveCard(cardData);
       this.setSuccessMessage();
       this.resetValues();
@@ -142,9 +135,6 @@ class Form extends React.Component<FormProps, FormState> {
 
   handleChange = (e: React.FormEvent<HTMLInputElement>): void => {
     this.setState({ dataSaveMessage: '' });
-    if (e.currentTarget.value.length) {
-      this.enableSubmit();
-    }
   };
 
   render() {
@@ -197,7 +187,6 @@ class Form extends React.Component<FormProps, FormState> {
           className={classes.submit__button}
           type="submit"
           value="submit"
-          disabled={this.state.disableSubmit}
         />
         <DataSaveMessage dataSaveMessage={this.state.dataSaveMessage} />
       </form>

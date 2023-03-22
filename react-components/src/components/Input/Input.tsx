@@ -16,7 +16,6 @@ class Input extends React.Component<InputProps> {
           name={this.props.name}
           ref={this.props.refer}
           onChange={this.props.onChange}
-          required
         />
         <span className={classes.validation__error}>{this.props.errorText}</span>
       </label>
