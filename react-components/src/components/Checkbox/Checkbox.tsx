@@ -1,4 +1,5 @@
 import React from 'react';
+import ValidatorMessage from '../ValidatorErrorMessage/ValidatorMessage';
 import classes from './Checkbox.module.css';
 import { CheckboxProps } from './checkboxProps.interface';
 
@@ -17,6 +18,7 @@ class Checkbox extends React.Component<CheckboxProps> {
           ref={this.props.refer}
         />
         <label htmlFor={this.props.name}>{this.props.label}</label>
+        <ValidatorMessage errorText={this.props.errorText} />
       </div>
     );
   }

@@ -1,0 +1,6 @@
+.validation__error {
+  display: inline-block;
+  color: rgb(169, 1, 1);
+  font-size: 12px;
+  height: 25px;
+}

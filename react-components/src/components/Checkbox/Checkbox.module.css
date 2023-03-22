@@ -1,5 +1,6 @@
 .checkbox__container {
-  margin: 10px 0;
+  margin-top: 10px;
+  height: 50px;
 }
 
 .checkbox__data {

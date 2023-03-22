@@ -1,6 +1,7 @@
 import React from 'react';
 import { InputProps } from './inputProps.interface';
 import classes from './Input.module.css';
+import ValidatorMessage from '../ValidatorErrorMessage/ValidatorMessage';
 
 class Input extends React.Component<InputProps> {
   constructor(props: InputProps) {
@@ -17,7 +18,7 @@ class Input extends React.Component<InputProps> {
           ref={this.props.refer}
           onChange={this.props.onChange}
         />
-        <span className={classes.validation__error}>{this.props.errorText}</span>
+        <ValidatorMessage errorText={this.props.errorText} />
       </label>
     );
   }

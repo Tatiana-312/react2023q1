@@ -40,9 +40,10 @@ class Form extends React.Component<FormProps, FormState> {
     ];
 
     this.state = {
-      nameError: '',
-      dateError: '',
-      fileError: '',
+      nameError: '*',
+      dateError: '*',
+      fileError: '*',
+      checkboxError: '',
       dataSaveMessage: '',
     };
   }
@@ -59,7 +60,7 @@ class Form extends React.Component<FormProps, FormState> {
       });
       return false;
     } else {
-      this.setState({ nameError: '' });
+      this.setState({ nameError: '*' });
       return true;
     }
   };
@@ -71,7 +72,7 @@ class Form extends React.Component<FormProps, FormState> {
       this.setState({ dateError: 'Сannot be selected earlier than the current date' });
       return false;
     } else {
-      this.setState({ dateError: '' });
+      this.setState({ dateError: '*' });
       return true;
     }
   };
@@ -81,17 +82,28 @@ class Form extends React.Component<FormProps, FormState> {
       this.setState({ fileError: 'Only images allowed' });
       return false;
     } else {
-      this.setState({ fileError: '' });
+      this.setState({ fileError: '*' });
       return true;
     }
   };
 
-  isValuesValid = (): boolean => {
-    const isValidName = this.isNameValid();
-    const isValidDate = this.isDateValid();
-    const isValidFile = this.isFileValid();
+  private isCheckboxValid = ():boolean => {
+    if (!this.permissionCheckbox.current!.checked) {
+      this.setState({ checkboxError: 'Please check this box if you want to proceed' });
+      return false;
+    } else {
+      this.setState({ checkboxError: '' });
+      return true;
+    }
+  }
 
-    if (isValidName && isValidDate && isValidFile) {
+  isValuesValid = (): boolean => {
+    const isNameValid = this.isNameValid();
+    const isDateValid = this.isDateValid();
+    const isFileValid = this.isFileValid();
+    const isCheckboxValid = this.isCheckboxValid();
+
+    if (isNameValid && isDateValid && isFileValid && isCheckboxValid) {
       return true;
     }
     return false;
@@ -182,6 +194,7 @@ class Form extends React.Component<FormProps, FormState> {
           name="permission"
           label="I consent to my personal data"
           refer={this.permissionCheckbox}
+          errorText={this.state.checkboxError}
         />
         <input
           className={classes.submit__button}
