@@ -111,9 +111,6 @@ class Form extends React.Component<FormProps, FormState> {
     this.fileInput.current!.value = '';
     this.paymentSwitch.current!.checked = false;
     this.permissionCheckbox.current!.checked = false;
-    this.setState({ nameError: '' });
-    this.setState({ dateError: '' });
-    this.setState({ fileError: '' });
   };
 
   setSuccessMessage = (): void => {
