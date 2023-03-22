@@ -11,27 +11,36 @@ import DataSaveMessage from '../DataSaveMessage/DataSaveMessage';
 
 class Form extends React.Component<FormProps, FormState> {
   nameInput: React.RefObject<HTMLInputElement>;
-  surnameInput: React.RefObject<HTMLInputElement>;
   dateInput: React.RefObject<HTMLInputElement>;
   countrySelect: React.RefObject<HTMLSelectElement>;
   fileInput: React.RefObject<HTMLInputElement>;
   paymentSwitch: React.RefObject<HTMLInputElement>;
   permissionCheckbox: React.RefObject<HTMLInputElement>;
+  countries: string[];
 
   constructor(props: FormProps) {
     super(props);
     this.nameInput = React.createRef();
-    this.surnameInput = React.createRef();
     this.dateInput = React.createRef();
     this.countrySelect = React.createRef();
     this.fileInput = React.createRef();
     this.paymentSwitch = React.createRef();
     this.permissionCheckbox = React.createRef();
+    this.countries = [
+      'Belarus',
+      'Georgia',
+      'Germany',
+      'Kazakhstan',
+      'Kyrgyzstan',
+      'Poland',
+      'Russia',
+      'Ukraine',
+      'Uzbekistan',
+    ];
 
     this.state = {
       disableSubmit: true,
       nameError: '',
-      surnameError: '',
       dateError: '',
       fileError: '',
       dataSaveMessage: '',
@@ -48,9 +57,8 @@ class Form extends React.Component<FormProps, FormState> {
     });
   };
 
-  isValidInput = (): boolean => {
+  isValidInputs = (): boolean => {
     const nameField = this.nameInput.current as HTMLInputElement;
-    const surnameField = this.surnameInput.current as HTMLInputElement;
     const dateField = this.dateInput.current as HTMLInputElement;
     const fileField = this.fileInput.current as HTMLInputElement;
 
@@ -66,16 +74,6 @@ class Form extends React.Component<FormProps, FormState> {
       isValid = false;
     } else {
       this.setState({ nameError: '' });
-    }
-
-    if (!/^[A-Z][a-z]{1,28}$/.test(surnameField.value)) {
-      this.setState({
-        surnameError:
-          'Surname must start with a capital letter and contain more than 1 latin letter without spaces',
-      });
-      isValid = false;
-    } else {
-      this.setState({ surnameError: '' });
     }
 
     if (inputDate < currentDate) {
@@ -96,7 +94,6 @@ class Form extends React.Component<FormProps, FormState> {
 
   resetValues = (): void => {
     const nameField = this.nameInput.current as HTMLInputElement;
-    const surnameField = this.surnameInput.current as HTMLInputElement;
     const dateField = this.dateInput.current as HTMLInputElement;
     const countryField = this.countrySelect.current as HTMLSelectElement;
     const fileField = this.fileInput.current as HTMLInputElement;
@@ -104,14 +101,12 @@ class Form extends React.Component<FormProps, FormState> {
     const permissionField = this.permissionCheckbox.current as HTMLInputElement;
 
     nameField.value = '';
-    surnameField.value = '';
     dateField.value = '';
     countryField.value = 'Belarus';
     fileField.value = '';
     paymentField.checked = false;
     permissionField.checked = false;
     this.setState({ nameError: '' });
-    this.setState({ surnameError: '' });
     this.setState({ dateError: '' });
     this.setState({ fileError: '' });
   };
@@ -122,14 +117,13 @@ class Form extends React.Component<FormProps, FormState> {
 
     const cardsData: CardsData = {
       name: (this.nameInput.current as HTMLInputElement).value,
-      surname: (this.surnameInput.current as HTMLInputElement).value,
       date: (this.dateInput.current as HTMLInputElement).value,
       country: (this.countrySelect.current as HTMLSelectElement).value,
       file: URL.createObjectURL((inputBookCover.files as FileList)[0]),
       payment: this.getCurrentSwitchValue((this.paymentSwitch.current as HTMLInputElement).checked),
     };
 
-    if (this.isValidInput()) {
+    if (this.isValidInputs()) {
       this.props.saveCard(cardsData);
       this.setState({
         dataSaveMessage: 'Data saved successfully!',
@@ -157,14 +151,6 @@ class Form extends React.Component<FormProps, FormState> {
           errorText={this.state.nameError}
         />
         <Input
-          type="text"
-          label="Surname"
-          name="surname"
-          refer={this.surnameInput}
-          onChange={this.handleChange}
-          errorText={this.state.surnameError}
-        />
-        <Input
           type="date"
           label="Date of delivery"
           name="date"
@@ -176,17 +162,7 @@ class Form extends React.Component<FormProps, FormState> {
           id="country"
           label="Choose your country"
           name="country"
-          optionValues={[
-            'Belarus',
-            'Georgia',
-            'Germany',
-            'Kazakhstan',
-            'Kyrgyzstan',
-            'Poland',
-            'Russia',
-            'Ukraine',
-            'Uzbekistan',
-          ]}
+          optionValues={this.countries}
           refer={this.countrySelect}
         />
         <Input
