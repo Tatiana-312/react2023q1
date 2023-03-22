@@ -1,7 +1,7 @@
 import Form from '../../components/Form/Form';
 import React from 'react';
 import classes from './FormPage.module.css';
-import { CardsData } from '../../components/Form/cardsData.interface';
+import { CardData } from '../../components/Form/cardData.interface';
 import FormCardList from '../../components/FormCardList/FormCardList';
 import { FormPageState } from './formPageState.interface';
 
@@ -13,7 +13,7 @@ class FormPage extends React.Component<Record<string, unknown>, FormPageState> {
     };
   }
 
-  saveCardsToState = (data: CardsData) => {
+  saveCardsToState = (data: CardData) => {
     this.setState((prevState) => ({
       cards: [...prevState.cards, data],
     }));

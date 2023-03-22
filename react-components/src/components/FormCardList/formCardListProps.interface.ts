@@ -1,5 +1,5 @@
-import { CardsData } from '../Form/cardsData.interface';
+import { CardData } from '../Form/cardData.interface';
 
 export interface FormCardListProps {
-  cards: CardsData[];
+  cards: CardData[];
 }

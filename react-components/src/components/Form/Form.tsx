@@ -4,7 +4,7 @@ import Select from '../../components/Select/Select';
 import Checkbox from '../../components/Checkbox/Checkbox';
 import ToggleSwitch from '../../components/ToggleSwitch/ToggleSwitch';
 import classes from './Form.module.css';
-import { CardsData } from './cardsData.interface';
+import { CardData } from './cardData.interface';
 import { FormProps } from './formProps.interface';
 import { FormState } from './formState.interface';
 import DataSaveMessage from '../DataSaveMessage/DataSaveMessage';
@@ -58,7 +58,7 @@ class Form extends React.Component<FormProps, FormState> {
     });
   };
 
-  isValidInputs = (): boolean => {
+  isValuesValid = (): boolean => {
     const inputDate = new Date(this.dateInput.current!.value);
     const currentDate = new Date();
     let isValid = true;
@@ -107,19 +107,22 @@ class Form extends React.Component<FormProps, FormState> {
     });
   };
 
-  handleSubmit: React.FormEventHandler<HTMLFormElement> = (event) => {
-    event.preventDefault();
-
-    const cardsData: CardsData = {
+  getCardData = (): CardData => {
+    return {
       name: this.nameInput.current!.value,
       date: this.dateInput.current!.value,
       country: this.countrySelect.current!.value,
       file: URL.createObjectURL((this.fileInput.current!.files as FileList)[0]),
       payment: this.getCurrentSwitchValue(this.paymentSwitch.current!.checked),
     };
+  };
 
-    if (this.isValidInputs()) {
-      this.props.saveCard(cardsData);
+  handleSubmit: React.FormEventHandler<HTMLFormElement> = (event) => {
+    event.preventDefault();
+    const cardData: CardData = this.getCardData();
+
+    if (this.isValuesValid()) {
+      this.props.saveCard(cardData);
       this.setSuccessMessage();
       this.resetValues();
     }

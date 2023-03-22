@@ -1,5 +1,5 @@
-import { CardsData } from './cardsData.interface';
+import { CardData } from './cardData.interface';
 
 export interface FormProps {
-  saveCard: (data: CardsData) => void;
+  saveCard: (data: CardData) => void;
 }

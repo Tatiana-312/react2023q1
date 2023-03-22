@@ -1,9 +1,9 @@
 import React from 'react';
-import { CardsData } from '../Form/cardsData.interface';
+import { CardData } from '../Form/cardData.interface';
 import classes from './FormCard.module.css';
 
-class FormCard extends React.Component<CardsData> {
-  constructor(props: CardsData) {
+class FormCard extends React.Component<CardData> {
+  constructor(props: CardData) {
     super(props);
   }
   render() {
