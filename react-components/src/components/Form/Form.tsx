@@ -58,35 +58,50 @@ class Form extends React.Component<FormProps, FormState> {
     });
   };
 
-  isValuesValid = (): boolean => {
-    const inputDate = new Date(this.dateInput.current!.value);
-    const currentDate = new Date();
-    let isValid = true;
-
+  private isNameValid = (): boolean => {
     if (!/^[A-Z][a-z]{1,28}$/.test(this.nameInput.current!.value)) {
       this.setState({
         nameError:
           'Name must start with a capital letter and contain more than 1 latin letter without spaces',
       });
-      isValid = false;
+      return false;
     } else {
       this.setState({ nameError: '' });
+      return true;
     }
+  };
 
+  private isDateValid = (): boolean => {
+    const inputDate = new Date(this.dateInput.current!.value);
+    const currentDate = new Date();
     if (inputDate < currentDate) {
       this.setState({ dateError: 'Сannot be selected earlier than the current date' });
-      isValid = false;
+      return false;
     } else {
       this.setState({ dateError: '' });
+      return true;
     }
+  };
 
+  private isFileValid = (): boolean => {
     if (!/^.*\.(jpg|JPG|png|PNG)$/.test(this.fileInput.current!.value)) {
       this.setState({ fileError: 'Only images allowed' });
-      isValid = false;
+      return false;
     } else {
       this.setState({ fileError: '' });
+      return true;
     }
-    return isValid;
+  };
+
+  isValuesValid = (): boolean => {
+    const isValidName = this.isNameValid();
+    const isValidDate = this.isDateValid();
+    const isValidFile = this.isFileValid();
+
+    if (isValidName && isValidDate && isValidFile) {
+      return true;
+    }
+    return false;
   };
 
   resetValues = (): void => {
