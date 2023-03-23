@@ -4,4 +4,5 @@ export interface SelectProps {
   name: string;
   optionValues: string[];
   refer: React.RefObject<HTMLSelectElement>;
+  errorText: string;
 }

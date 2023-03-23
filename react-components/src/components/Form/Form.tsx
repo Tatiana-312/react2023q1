@@ -43,7 +43,8 @@ class Form extends React.Component<FormProps, FormState> {
       nameError: '*',
       dateError: '*',
       fileError: '*',
-      checkboxError: '',
+      selectError: '*',
+      checkboxError: '*',
       dataSaveMessage: '',
     };
   }
@@ -53,7 +54,10 @@ class Form extends React.Component<FormProps, FormState> {
   };
 
   private isNameValid = (): boolean => {
-    if (!this.nameInput.current!.value || !/^[A-Z][a-z]{1,28}$/.test(this.nameInput.current!.value)) {
+    if (
+      !this.nameInput.current!.value ||
+      !/^[A-Z][a-z]{1,28}$/.test(this.nameInput.current!.value)
+    ) {
       this.setState({
         nameError:
           'Name must start with a capital letter and contain more than 1 latin letter without spaces',
@@ -78,7 +82,10 @@ class Form extends React.Component<FormProps, FormState> {
   };
 
   private isFileValid = (): boolean => {
-    if (!this.fileInput.current!.value || !/^.*\.(jpg|JPG|png|PNG)$/.test(this.fileInput.current!.value)) {
+    if (
+      !this.fileInput.current!.value ||
+      !/^.*\.(jpg|JPG|png|PNG)$/.test(this.fileInput.current!.value)
+    ) {
       this.setState({ fileError: 'Only images allowed' });
       return false;
     } else {
@@ -87,23 +94,34 @@ class Form extends React.Component<FormProps, FormState> {
     }
   };
 
-  private isCheckboxValid = ():boolean => {
+  private isCheckboxValid = (): boolean => {
     if (!this.permissionCheckbox.current!.checked) {
       this.setState({ checkboxError: 'Please check this box if you want to proceed' });
       return false;
     } else {
-      this.setState({ checkboxError: '' });
+      this.setState({ checkboxError: '*' });
       return true;
     }
-  }
+  };
+
+  private isSelectValid = (): boolean => {
+    if (this.countrySelect.current!.value === 'none') {
+      this.setState({ selectError: 'Please choose your country' });
+      return false;
+    } else {
+      this.setState({ selectError: '*' });
+      return true;
+    }
+  };
 
   isValuesValid = (): boolean => {
     const isNameValid = this.isNameValid();
     const isDateValid = this.isDateValid();
     const isFileValid = this.isFileValid();
     const isCheckboxValid = this.isCheckboxValid();
+    const isSelectValid = this.isSelectValid();
 
-    if (isNameValid && isDateValid && isFileValid && isCheckboxValid) {
+    if (isNameValid && isDateValid && isFileValid && isCheckboxValid && isSelectValid) {
       return true;
     }
     return false;
@@ -112,7 +130,7 @@ class Form extends React.Component<FormProps, FormState> {
   resetValues = (): void => {
     this.nameInput.current!.value = '';
     this.dateInput.current!.value = '';
-    this.countrySelect.current!.value = 'Belarus';
+    this.countrySelect.current!.value = 'none';
     this.fileInput.current!.value = '';
     this.paymentSwitch.current!.checked = false;
     this.permissionCheckbox.current!.checked = false;
@@ -170,10 +188,11 @@ class Form extends React.Component<FormProps, FormState> {
         />
         <Select
           id="country"
-          label="Choose your country"
+          label="Country"
           name="country"
           optionValues={this.countries}
           refer={this.countrySelect}
+          errorText={this.state.selectError}
         />
         <Input
           type="file"
@@ -196,11 +215,7 @@ class Form extends React.Component<FormProps, FormState> {
           refer={this.permissionCheckbox}
           errorText={this.state.checkboxError}
         />
-        <input
-          className={classes.submit__button}
-          type="submit"
-          value="submit"
-        />
+        <input className={classes.submit__button} type="submit" value="submit" />
         <DataSaveMessage dataSaveMessage={this.state.dataSaveMessage} />
       </form>
     );

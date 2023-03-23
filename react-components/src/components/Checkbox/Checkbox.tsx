@@ -9,17 +9,19 @@ class Checkbox extends React.Component<CheckboxProps> {
   }
   render() {
     return (
-      <div className={classes.checkbox__container}>
-        <input
-          className={classes.checkbox__data}
-          type="checkbox"
-          id={this.props.name}
-          name={this.props.name}
-          ref={this.props.refer}
-        />
-        <label htmlFor={this.props.name}>{this.props.label}</label>
+      <>
+        <div className={classes.checkbox__container}>
+          <input
+            className={classes.checkbox__data}
+            type="checkbox"
+            id={this.props.name}
+            name={this.props.name}
+            ref={this.props.refer}
+          />
+          <label htmlFor={this.props.name}>{this.props.label}</label>
+        </div>
         <ValidatorMessage errorText={this.props.errorText} />
-      </div>
+      </>
     );
   }
 }

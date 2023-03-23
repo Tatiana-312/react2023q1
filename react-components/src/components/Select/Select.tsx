@@ -1,6 +1,7 @@
 import React from 'react';
 import { SelectProps } from './selectProps.interface';
 import classes from './Select.module.css';
+import ValidatorMessage from '../ValidatorErrorMessage/ValidatorMessage';
 
 class Select extends React.Component<SelectProps> {
   constructor(props: SelectProps) {
@@ -16,10 +17,12 @@ class Select extends React.Component<SelectProps> {
           id={this.props.id}
           ref={this.props.refer}
         >
+          <option value='none' hidden>Choose you country</option>
           {this.props.optionValues.map((value, index) => {
             return <option key={index}>{value}</option>;
           })}
         </select>
+        <ValidatorMessage errorText={this.props.errorText} />
       </>
     );
   }
