@@ -8,15 +8,16 @@ import { CardData } from './cardData.interface';
 import { FormProps } from './formProps.interface';
 import { FormState } from './formState.interface';
 import DataSaveMessage from '../DataSaveMessage/DataSaveMessage';
+import FormValidatorService from './formValidator.service';
 
 class Form extends React.Component<FormProps, FormState> {
+  formValidatorService: FormValidatorService;
   nameInput: React.RefObject<HTMLInputElement>;
   dateInput: React.RefObject<HTMLInputElement>;
   countrySelect: React.RefObject<HTMLSelectElement>;
   fileInput: React.RefObject<HTMLInputElement>;
   paymentSwitch: React.RefObject<HTMLInputElement>;
   permissionCheckbox: React.RefObject<HTMLInputElement>;
-  countries: string[];
 
   constructor(props: FormProps) {
     super(props);
@@ -26,18 +27,7 @@ class Form extends React.Component<FormProps, FormState> {
     this.fileInput = React.createRef();
     this.paymentSwitch = React.createRef();
     this.permissionCheckbox = React.createRef();
-
-    this.countries = [
-      'Belarus',
-      'Georgia',
-      'Germany',
-      'Kazakhstan',
-      'Kyrgyzstan',
-      'Poland',
-      'Russia',
-      'Ukraine',
-      'Uzbekistan',
-    ];
+    this.formValidatorService = new FormValidatorService(this);
 
     this.state = {
       nameError: '*',
@@ -49,82 +39,20 @@ class Form extends React.Component<FormProps, FormState> {
     };
   }
 
+  private countries = [
+    'Belarus',
+    'Georgia',
+    'Germany',
+    'Kazakhstan',
+    'Kyrgyzstan',
+    'Poland',
+    'Russia',
+    'Ukraine',
+    'Uzbekistan',
+  ];
+
   getCurrentSwitchValue = (isChecked: boolean): string => {
     return isChecked ? 'Cash' : 'Card';
-  };
-
-  private isNameValid = (): boolean => {
-    if (
-      !this.nameInput.current!.value ||
-      !/^[A-Z][a-z]{1,28}$/.test(this.nameInput.current!.value)
-    ) {
-      this.setState({
-        nameError:
-          'Name must start with a capital letter and contain more than 1 latin letter without spaces',
-      });
-      return false;
-    } else {
-      this.setState({ nameError: '*' });
-      return true;
-    }
-  };
-
-  private isDateValid = (): boolean => {
-    const inputDate = new Date(this.dateInput.current!.value);
-    const currentDate = new Date();
-    if (!this.dateInput.current!.value || inputDate < currentDate) {
-      this.setState({ dateError: 'Сannot be selected earlier than the current date' });
-      return false;
-    } else {
-      this.setState({ dateError: '*' });
-      return true;
-    }
-  };
-
-  private isFileValid = (): boolean => {
-    if (
-      !this.fileInput.current!.value ||
-      !/^.*\.(jpg|JPG|png|PNG)$/.test(this.fileInput.current!.value)
-    ) {
-      this.setState({ fileError: 'Only images allowed' });
-      return false;
-    } else {
-      this.setState({ fileError: '*' });
-      return true;
-    }
-  };
-
-  private isCheckboxValid = (): boolean => {
-    if (!this.permissionCheckbox.current!.checked) {
-      this.setState({ checkboxError: 'Please check this box if you want to proceed' });
-      return false;
-    } else {
-      this.setState({ checkboxError: '*' });
-      return true;
-    }
-  };
-
-  private isSelectValid = (): boolean => {
-    if (this.countrySelect.current!.value === 'none') {
-      this.setState({ selectError: 'Please choose your country' });
-      return false;
-    } else {
-      this.setState({ selectError: '*' });
-      return true;
-    }
-  };
-
-  isValuesValid = (): boolean => {
-    const isNameValid = this.isNameValid();
-    const isDateValid = this.isDateValid();
-    const isFileValid = this.isFileValid();
-    const isCheckboxValid = this.isCheckboxValid();
-    const isSelectValid = this.isSelectValid();
-
-    if (isNameValid && isDateValid && isFileValid && isCheckboxValid && isSelectValid) {
-      return true;
-    }
-    return false;
   };
 
   resetValues = (): void => {
@@ -155,7 +83,7 @@ class Form extends React.Component<FormProps, FormState> {
   handleSubmit: React.FormEventHandler<HTMLFormElement> = (event) => {
     event.preventDefault();
 
-    if (this.isValuesValid()) {
+    if (this.formValidatorService.isValuesValid()) {
       const cardData: CardData = this.getCardData();
       this.props.saveCard(cardData);
       this.setSuccessMessage();
