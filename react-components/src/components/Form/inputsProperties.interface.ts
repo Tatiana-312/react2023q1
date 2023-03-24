@@ -3,4 +3,5 @@ export interface InputsProperties {
   label: string;
   name: string;
   refer: React.RefObject<HTMLInputElement>;
+  testId: string;
 }

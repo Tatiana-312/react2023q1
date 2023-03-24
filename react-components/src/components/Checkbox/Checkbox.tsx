@@ -12,6 +12,7 @@ class Checkbox extends React.Component<CheckboxProps> {
       <>
         <div className={classes.checkbox__container}>
           <input
+            data-testid={this.props.testId}
             className={classes.checkbox__data}
             type="checkbox"
             id={this.props.name}

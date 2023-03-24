@@ -88,6 +88,7 @@ class Form extends React.Component<FormProps, FormState> {
         {this.constants.inputsProperties.map((props, index) => {
           return (
             <Input
+              testId={props.testId}
               type={props.type}
               label={props.label}
               name={props.name}
@@ -99,6 +100,7 @@ class Form extends React.Component<FormProps, FormState> {
           );
         })}
         <Select
+          testId="select-country"
           id="country"
           label="Country"
           name="country"
@@ -107,6 +109,7 @@ class Form extends React.Component<FormProps, FormState> {
           errorText={this.state.selectError}
         />
         <ToggleSwitch
+          testId="switch-payment"
           title="Will you pay in cash or by credit card?"
           firstOption="Cash"
           secondOption="Credit Card"
@@ -114,12 +117,18 @@ class Form extends React.Component<FormProps, FormState> {
           refer={this.paymentSwitch}
         />
         <Checkbox
+          testId="checkbox-permission"
           name="permission"
           label="I consent to my personal data"
           refer={this.permissionCheckbox}
           errorText={this.state.checkboxError}
         />
-        <input className={classes.submit__button} type="submit" value="submit" />
+        <input
+          data-testid="input-submit"
+          className={classes.submit__button}
+          type="submit"
+          value="submit"
+        />
         <DataSaveMessage dataSaveMessage={this.state.dataSaveMessage} />
       </form>
     );

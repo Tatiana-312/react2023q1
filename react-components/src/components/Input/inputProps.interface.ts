@@ -5,4 +5,5 @@ export interface InputProps {
   refer: React.RefObject<HTMLInputElement>;
   onChange?: (e: React.FormEvent<HTMLInputElement>) => void;
   errorText: string;
+  testId: string;
 }

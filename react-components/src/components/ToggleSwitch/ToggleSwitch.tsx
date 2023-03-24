@@ -11,7 +11,7 @@ class ToggleSwitch extends React.Component<ToggleSwitchProps> {
     return (
       <>
         <p className={classes.toggle__title}>{this.props.title}</p>
-        <fieldset className={classes.radio_switch}>
+        <fieldset data-testid={this.props.testId} className={classes.radio_switch}>
           <div className={classes.radio_switch__inner}>
             <input
               type="radio"

@@ -17,18 +17,21 @@ class Constants {
 
     this.inputsProperties = [
       {
+        testId: 'input-name',
         type: 'text',
         label: 'Name',
         name: 'name',
         refer: this.nameInput,
       },
       {
+        testId: 'input-date',
         type: 'date',
         label: 'Date of delivery',
         name: 'date',
         refer: this.dateInput,
       },
       {
+        testId: 'input-file',
         type: 'file',
         label: 'Book cover',
         name: 'file',

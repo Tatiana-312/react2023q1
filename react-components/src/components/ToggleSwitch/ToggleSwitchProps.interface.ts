@@ -4,4 +4,5 @@ export interface ToggleSwitchProps {
   secondOption: string;
   name: string;
   refer: React.RefObject<HTMLInputElement>;
+  testId: string;
 }

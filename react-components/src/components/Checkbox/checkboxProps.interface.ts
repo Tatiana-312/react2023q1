@@ -3,4 +3,5 @@ export interface CheckboxProps {
   label: string;
   refer: React.RefObject<HTMLInputElement>;
   errorText: string;
+  testId: string;
 }

@@ -12,6 +12,7 @@ class Input extends React.Component<InputProps> {
       <label className={classes.label}>
         {this.props.label}
         <input
+          data-testid={this.props.testId}
           className={classes.input}
           type={this.props.type}
           name={this.props.name}

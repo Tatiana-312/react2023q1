@@ -12,6 +12,7 @@ class Select extends React.Component<SelectProps> {
       <>
         <label htmlFor={this.props.id}>{this.props.label}</label>
         <select
+          data-testid={this.props.testId}
           className={classes.select__country}
           name={this.props.name}
           id={this.props.id}
