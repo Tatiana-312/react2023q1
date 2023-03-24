@@ -28,61 +28,52 @@ class FormValidatorService {
     selectError: 'Please choose your country',
   };
 
-  private setValidationError = (stateKey: string, errorMessage: string): boolean => {
-    this.form.setState({
-      [stateKey]: errorMessage,
-    });
-    return false;
-  };
-
-  private deleteValidationError = (stateKey: string): boolean => {
-    this.form.setState({ [stateKey]: '*' });
-    return true;
+  private setValidationMessage = (
+    stateKey: string,
+    errorMessage: string,
+    isNotValid: boolean
+  ): boolean => {
+    if (isNotValid) {
+      this.form.setState({
+        [stateKey]: errorMessage,
+      });
+      return false;
+    } else {
+      this.form.setState({ [stateKey]: '*' });
+      return true;
+    }
   };
 
   private isNameValid = (): boolean => {
     const nameInput = this.nameInput.current!;
-    if (!nameInput.value || !/^[A-Z][a-z]{1,28}$/.test(nameInput.value)) {
-      return this.setValidationError('nameError', this.messages.nameError);
-    } else {
-      return this.deleteValidationError('nameError');
-    }
+    const isNotValid =
+      !nameInput.value || !/^[A-Z][a-z]{1,28}$/.test(nameInput.value) ? true : false;
+    return this.setValidationMessage('nameError', this.messages.nameError, isNotValid);
   };
 
   private isDateValid = (): boolean => {
     const dateInput = this.dateInput.current!;
     const inputDate = new Date(dateInput.value);
     const currentDate = new Date();
-    if (!dateInput.value || inputDate < currentDate) {
-      return this.setValidationError('dateError', this.messages.dateError);
-    } else {
-      return this.deleteValidationError('dateError');
-    }
+    const isNotValid = !dateInput.value || inputDate < currentDate ? true : false;
+    return this.setValidationMessage('dateError', this.messages.dateError, isNotValid);
   };
 
   private isFileValid = (): boolean => {
     const fileInput = this.fileInput.current!;
-    if (!fileInput.value || !/^.*\.(jpg|JPG|png|PNG)$/.test(fileInput.value)) {
-      return this.setValidationError('fileError', this.messages.fileError);
-    } else {
-      return this.deleteValidationError('fileError');
-    }
+    const isNotValid =
+      !fileInput.value || !/^.*\.(jpg|JPG|png|PNG)$/.test(fileInput.value) ? true : false;
+    return this.setValidationMessage('fileError', this.messages.fileError, isNotValid);
   };
 
   private isCheckboxValid = (): boolean => {
-    if (!this.permissionCheckbox.current!.checked) {
-      return this.setValidationError('checkboxError', this.messages.checkboxError);
-    } else {
-      return this.deleteValidationError('checkboxError');
-    }
+    const isNotValid = !this.permissionCheckbox.current!.checked;
+    return this.setValidationMessage('checkboxError', this.messages.checkboxError, isNotValid);
   };
 
   private isSelectValid = (): boolean => {
-    if (this.countrySelect.current!.value === 'none') {
-      return this.setValidationError('selectError', this.messages.selectError);
-    } else {
-      return this.deleteValidationError('selectError');
-    }
+    const isNotValid = this.countrySelect.current!.value === 'none';
+    return this.setValidationMessage('selectError', this.messages.selectError, isNotValid);
   };
 
   isValuesValid = (): boolean => {
