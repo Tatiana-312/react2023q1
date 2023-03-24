@@ -14,6 +14,7 @@ class ToggleSwitch extends React.Component<ToggleSwitchProps> {
         <fieldset data-testid={this.props.testId} className={classes.radio_switch}>
           <div className={classes.radio_switch__inner}>
             <input
+              data-testid={`${this.props.name}-first`}
               type="radio"
               name={this.props.name}
               id={this.props.firstOption}
@@ -23,7 +24,12 @@ class ToggleSwitch extends React.Component<ToggleSwitchProps> {
               {this.props.firstOption}
             </label>
 
-            <input type="radio" name={this.props.name} id={this.props.secondOption} />
+            <input
+              data-testid={`${this.props.name}-second`}
+              type="radio"
+              name={this.props.name}
+              id={this.props.secondOption}
+            />
             <label className={classes.toggle__option} htmlFor={this.props.secondOption}>
               {this.props.secondOption}
             </label>

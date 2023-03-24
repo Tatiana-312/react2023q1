@@ -18,7 +18,9 @@ class Select extends React.Component<SelectProps> {
           id={this.props.id}
           ref={this.props.refer}
         >
-          <option value='none' hidden>Choose you country</option>
+          <option value="none" hidden>
+            Choose you country
+          </option>
           {this.props.optionValues.map((value, index) => {
             return <option key={index}>{value}</option>;
           })}
