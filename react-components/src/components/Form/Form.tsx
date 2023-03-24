@@ -9,9 +9,11 @@ import { FormProps } from './formProps.interface';
 import { FormState } from './formState.interface';
 import DataSaveMessage from '../DataSaveMessage/DataSaveMessage';
 import FormValidatorService from './formValidator.service';
+import Constants from './constants';
 
 class Form extends React.Component<FormProps, FormState> {
   formValidatorService: FormValidatorService;
+  constants: Constants;
   nameInput: React.RefObject<HTMLInputElement>;
   dateInput: React.RefObject<HTMLInputElement>;
   countrySelect: React.RefObject<HTMLSelectElement>;
@@ -28,6 +30,7 @@ class Form extends React.Component<FormProps, FormState> {
     this.paymentSwitch = React.createRef();
     this.permissionCheckbox = React.createRef();
     this.formValidatorService = new FormValidatorService(this);
+    this.constants = new Constants(this);
 
     this.state = {
       nameError: '*',
@@ -39,20 +42,10 @@ class Form extends React.Component<FormProps, FormState> {
     };
   }
 
-  private countries = [
-    'Belarus',
-    'Georgia',
-    'Germany',
-    'Kazakhstan',
-    'Kyrgyzstan',
-    'Poland',
-    'Russia',
-    'Ukraine',
-    'Uzbekistan',
-  ];
-
-  getCurrentSwitchValue = (isChecked: boolean): string => {
-    return isChecked ? 'Cash' : 'Card';
+  setSuccessMessage = (): void => {
+    this.setState({
+      dataSaveMessage: 'Data saved successfully!',
+    });
   };
 
   resetValues = (): void => {
@@ -64,10 +57,8 @@ class Form extends React.Component<FormProps, FormState> {
     this.permissionCheckbox.current!.checked = false;
   };
 
-  setSuccessMessage = (): void => {
-    this.setState({
-      dataSaveMessage: 'Data saved successfully!',
-    });
+  getCurrentSwitchValue = (isChecked: boolean): string => {
+    return isChecked ? 'Cash' : 'Card';
   };
 
   getCardData = (): CardData => {
@@ -80,7 +71,7 @@ class Form extends React.Component<FormProps, FormState> {
     };
   };
 
-  handleSubmit: React.FormEventHandler<HTMLFormElement> = (event) => {
+  handleSubmit: React.FormEventHandler<HTMLFormElement> = (event): void => {
     event.preventDefault();
 
     if (this.formValidatorService.isValuesValid()) {
@@ -91,44 +82,29 @@ class Form extends React.Component<FormProps, FormState> {
     }
   };
 
-  handleChange = (e: React.FormEvent<HTMLInputElement>): void => {
-    this.setState({ dataSaveMessage: '' });
-  };
-
   render() {
     return (
       <form onSubmit={this.handleSubmit}>
-        <Input
-          type="text"
-          label="Name"
-          name="name"
-          refer={this.nameInput}
-          onChange={this.handleChange}
-          errorText={this.state.nameError}
-        />
-        <Input
-          type="date"
-          label="Date of delivery"
-          name="date"
-          refer={this.dateInput}
-          onChange={this.handleChange}
-          errorText={this.state.dateError}
-        />
+        {this.constants.inputsProperties.map((props, index) => {
+          return (
+            <Input
+              type={props.type}
+              label={props.label}
+              name={props.name}
+              refer={props.refer}
+              onChange={() => this.setState({ dataSaveMessage: '' })}
+              errorText={this.state[`${props.name}Error`]}
+              key={index}
+            />
+          );
+        })}
         <Select
           id="country"
           label="Country"
           name="country"
-          optionValues={this.countries}
+          optionValues={this.constants.countries}
           refer={this.countrySelect}
           errorText={this.state.selectError}
-        />
-        <Input
-          type="file"
-          label="Book cover"
-          name="file"
-          refer={this.fileInput}
-          onChange={this.handleChange}
-          errorText={this.state.fileError}
         />
         <ToggleSwitch
           title="Will you pay in cash or by credit card?"
