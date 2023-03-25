@@ -2,6 +2,7 @@ import React from 'react';
 import { render, screen } from '@testing-library/react';
 import Form from './Form';
 import userEvent from '@testing-library/user-event';
+import { vi } from 'vitest';
 
 describe('Form component', () => {
   it('render form components', () => {
@@ -110,5 +111,124 @@ describe('Form component', () => {
     await userEvent.click(cardRadio);
     expect(cashRadio).not.toBeChecked();
     expect(cardRadio).toBeChecked();
+  });
+
+  describe('check validation', () => {
+    const messages = {
+      nameError:
+        'Name must start with a capital letter and contain more than 1 latin letter without spaces',
+      dateError: 'Сannot be selected earlier than the current date',
+      fileError: 'Only images allowed',
+      checkboxError: 'Please check this box if you want to proceed',
+      selectError: 'Please choose your country',
+    };
+
+    it('should show name validate error', async () => {
+      render(
+        <Form
+          saveCard={function (): void {
+            throw new Error('Function not implemented.');
+          }}
+        />
+      );
+      const inputName = screen.getByTestId('input-name');
+      await userEvent.type(inputName, 'react2');
+      const submit = screen.getByTestId('input-submit');
+      await userEvent.click(submit);
+      expect(screen.getByText(messages.nameError)).toBeInTheDocument();
+    });
+
+    it('should show date validate error', async () => {
+      render(
+        <Form
+          saveCard={function (): void {
+            throw new Error('Function not implemented.');
+          }}
+        />
+      );
+      const inputDate = screen.getByTestId('input-date');
+      const invalidTestDate = '2023-03-20';
+      await userEvent.type(inputDate, invalidTestDate);
+      const submit = screen.getByTestId('input-submit');
+      await userEvent.click(submit);
+      expect(screen.getByText(messages.dateError)).toBeInTheDocument();
+    });
+
+    it('should show file validate error', async () => {
+      render(
+        <Form
+          saveCard={function (): void {
+            throw new Error('Function not implemented.');
+          }}
+        />
+      );
+      const mockFile = new File(['someDoc'], 'someDoc.txt', { type: 'txt' });
+      const inputFile = screen.getByTestId('input-file') as HTMLInputElement;
+      await userEvent.upload(inputFile, mockFile);
+      const submit = screen.getByTestId('input-submit');
+      await userEvent.click(submit);
+      expect(screen.getByText(messages.fileError)).toBeInTheDocument();
+    });
+
+    it('should show country validate error', async () => {
+      render(
+        <Form
+          saveCard={function (): void {
+            throw new Error('Function not implemented.');
+          }}
+        />
+      );
+      const submit = screen.getByTestId('input-submit');
+      await userEvent.click(submit);
+      expect(screen.getByText(messages.selectError)).toBeInTheDocument();
+    });
+
+    it('should show checkbox validate error', async () => {
+      render(
+        <Form
+          saveCard={function (): void {
+            throw new Error('Function not implemented.');
+          }}
+        />
+      );
+      const checkbox = screen.getByTestId('checkbox-permission');
+      const submit = screen.getByTestId('input-submit');
+      await userEvent.click(submit);
+      expect(checkbox).not.toBeChecked();
+      expect(screen.getByText(messages.checkboxError)).toBeInTheDocument();
+    });
+
+    it('should display successful message if valid all inputs', async () => {
+      render(<Form saveCard={vi.fn()} />);
+
+      const inputName = screen.getByTestId('input-name');
+      await userEvent.type(inputName, 'React');
+
+      const inputData = screen.getByTestId('input-date');
+      const currentDate = new Date();
+      const tomorrow = new Date(currentDate.getTime() + 24 * 60 * 60 * 1000);
+      const correctTestDate = tomorrow.toISOString().split('T')[0];
+      await userEvent.type(inputData, correctTestDate);
+
+      global.URL.createObjectURL = vi.fn();
+      const mockFile = new File(['someImage'], 'someImage.png', { type: 'image/png' });
+      const inputFile = screen.getByTestId('input-file') as HTMLInputElement;
+      await userEvent.upload(inputFile, mockFile);
+
+      const select = screen.getByTestId('select-country');
+      const option = screen.getByRole('option', { name: 'Kyrgyzstan' }) as HTMLOptionElement;
+      await userEvent.selectOptions(select, option);
+
+      const cashRadio = screen.getByTestId('payment-first');
+      await userEvent.click(cashRadio);
+
+      const checkbox = screen.getByTestId('checkbox-permission');
+      await userEvent.click(checkbox);
+
+      const submit = screen.getByTestId('input-submit');
+      await userEvent.click(submit);
+
+      expect(screen.getByText('Data saved successfully!')).toBeInTheDocument();
+    });
   });
 });

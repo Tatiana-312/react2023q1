@@ -8,7 +8,7 @@ class FormCard extends React.Component<CardData> {
   }
   render() {
     return (
-      <div className={classes.card}>
+      <div data-testid='form-card' className={classes.card}>
         <p>
           <span>Name: </span>
           {this.props.name}
