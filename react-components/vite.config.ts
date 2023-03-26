@@ -12,7 +12,7 @@ export default defineConfig({
     environment: 'jsdom',
     setupFiles: ['./src/setupTest.ts'],
     coverage: {
-      exclude: [...configDefaults.coverage.exclude, 'src/main.tsx', '**/*.interface.ts', ],
+      exclude: [...configDefaults.exclude, 'src/main.tsx', '**/*.interface.ts', '**/*.test.tsx', 'src/vite-env.d.ts'],
       enabled: true,
       provider: 'c8',
       reporter: ['text'],
