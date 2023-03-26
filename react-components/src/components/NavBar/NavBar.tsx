@@ -1,6 +1,5 @@
 import React from 'react';
 import classes from './NavBar.module.css';
-import { CurrentPageState } from './currentPageState.interface';
 import NavBarLink from '../../components/NavBarLink/NavBarLink';
 import Home from '../../pages/Home/Home';
 import About from '../../pages/About/About';
