@@ -1,0 +1,7 @@
+.form__container {
+  display: flex;
+  column-gap: 20px;
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 20px;
+}

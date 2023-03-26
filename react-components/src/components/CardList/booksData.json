@@ -1,0 +1,58 @@
+[
+  {
+    "id": 1,
+    "imgUrl": "https://m.media-amazon.com/images/P/0553277537.01._SCLZZZZZZZ_SX500_.jpg",
+    "name": "Dandelion Wine",
+    "author": "Ray Bredbury",
+    "genre": "Novel"
+  },
+  {
+    "id": 2,
+    "imgUrl": "https://m.media-amazon.com/images/P/1451673310.01._SCLZZZZZZZ_SX500_.jpg",
+    "name": "Fahrenheit 451",
+    "author": "Ray Bredbury",
+    "genre": "Novel"
+  },
+  {
+    "id": 3,
+    "imgUrl": "https://m.media-amazon.com/images/I/91SZSW8qSsL.jpg",
+    "name": "1984",
+    "author": "George Orwell",
+    "genre": "Dystopia"
+  },
+  {
+    "id": 4,
+    "imgUrl": "https://m.media-amazon.com/images/I/71JUJ6pGoIL.jpg",
+    "name": "Animal Farm",
+    "author": "George Orwell",
+    "genre": "Satirical allegorical novella"
+  },
+  {
+    "id": 5,
+    "imgUrl": "https://m.media-amazon.com/images/P/1613737548.01._SCLZZZZZZZ_SX500_.jpg",
+    "name": "The Snail on the Slope",
+    "author": "Arkady and Boris Strugatsky",
+    "genre": "Science fiction novel"
+  },
+  {
+    "id": 6,
+    "imgUrl": "https://m.media-amazon.com/images/P/1613743416.01._SCLZZZZZZZ_SX500_.jpg",
+    "name": "Roadside Picnic",
+    "author": "Arkady and Boris Strugatsky",
+    "genre": "Science fiction novel"
+  },
+  {
+    "id": 7,
+    "imgUrl": "https://erisgoesto.files.wordpress.com/2016/04/shawshank-paperback-stephen-king-for-a-year.jpg",
+    "name": "Shawshank Redemption",
+    "author": "Stephen King",
+    "genre": "Novella"
+  },
+  {
+    "id": 8,
+    "imgUrl": "https://m.media-amazon.com/images/P/1501192264.01._SCLZZZZZZZ_SX500_.jpg",
+    "name": "The Green Mile",
+    "author": "Stephen King",
+    "genre": "Novel"
+  }
+]
