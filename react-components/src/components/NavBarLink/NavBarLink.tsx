@@ -15,7 +15,6 @@ class NavBarLink extends React.Component<NavBarLinkProps> {
           data-testid={this.props.testId}
           to={this.props.route}
           className={({ isActive }) => (isActive ? `${classes.active}` : undefined)}
-          onClick={this.props.onClick}
         >
           {this.props.page}
         </NavLink>

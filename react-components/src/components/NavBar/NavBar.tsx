@@ -1,42 +1,59 @@
-import PageTitle from '../../components/PageTitle/PageTitle';
 import React from 'react';
 import classes from './NavBar.module.css';
 import { CurrentPageState } from './currentPageState.interface';
 import NavBarLink from '../../components/NavBarLink/NavBarLink';
+import Home from '../../pages/Home/Home';
+import About from '../../pages/About/About';
+import FormPage from '../../pages/FormPage/FormPage';
+import NotFound from '../../pages/NotFound/NotFound';
+import { Route, Routes } from 'react-router-dom';
+import { TitleRoutes } from './routes.interface';
 
-class NavBar extends React.Component<Record<string, never>, CurrentPageState> {
-  constructor(props: Record<string, never>) {
-    super(props);
-
-    this.state = {
-      currentPage: 'Home',
-    };
-  }
-
+class NavBar extends React.Component {
   readonly navLinkData = [
     {
       testId: 'home-link',
       route: '/',
       page: 'Home',
-      onClick: () => this.onClick('Home'),
     },
     {
       testId: 'about-link',
-      route: '/about',
+      route: 'about',
       page: 'About Us',
-      onClick: () => this.onClick('About Us'),
     },
     {
       testId: 'form-link',
-      route: '/form',
+      route: 'form',
       page: 'Form',
-      onClick: () => this.onClick('Form'),
     },
   ];
 
-  onClick(currentPage: string) {
-    this.setState({ currentPage: currentPage });
-  }
+  readonly titleRoutes = [
+    {
+      path: '/',
+      key: 'home',
+      title: 'Home',
+      element: <Home />,
+    },
+    {
+      path: 'about',
+      key: 'about',
+      title: 'About Us',
+      element: <About />,
+    },
+    {
+      path: 'form',
+      key: 'about',
+      title: 'Form',
+      element: <FormPage />,
+    },
+    {
+      path: '*',
+      key: 'notFound',
+      title: '404 Not Found',
+      element: <NotFound />,
+    },
+  ];
 
   render() {
     return (
@@ -46,7 +63,13 @@ class NavBar extends React.Component<Record<string, never>, CurrentPageState> {
             <NavBarLink {...obj} key={index} />
           ))}
         </ul>
-        <PageTitle {...this.state} />
+        <h1 className={classes.title}>
+          <Routes>
+            {this.titleRoutes.map(({ key, path, title }: TitleRoutes) => {
+              return <Route key={key} path={path} element={title} />;
+            })}
+          </Routes>
+        </h1>
       </>
     );
   }
