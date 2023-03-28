@@ -3,26 +3,34 @@ import { InputProps } from './inputProps.interface';
 import classes from './Input.module.css';
 import ValidatorMessage from '../ValidatorErrorMessage/ValidatorMessage';
 
-class Input extends React.Component<InputProps> {
-  constructor(props: InputProps) {
-    super(props);
-  }
-  render() {
-    return (
-      <label className={classes.label}>
-        {this.props.label}
-        <input
-          data-testid={this.props.testId}
-          className={classes.input}
-          type={this.props.type}
-          name={this.props.name}
-          ref={this.props.refer}
-          onChange={this.props.onChange}
-        />
-        <ValidatorMessage errorText={this.props.errorText} />
-      </label>
-    );
-  }
-}
+const Input: React.FC<InputProps> = ({
+  label,
+  testId,
+  type,
+  name,
+  errorText,
+  register,
+  required,
+  pattern,
+  validate,
+  isErrors,
+}) => {
+  return (
+    <label className={classes.label}>
+      {label}
+      <input
+        data-testid={testId}
+        className={classes.input}
+        type={type}
+        {...register(name, {
+          required: required,
+          pattern: pattern,
+          validate: validate,
+        })}
+      />
+      {isErrors ? <ValidatorMessage errorText={errorText} /> : <ValidatorMessage errorText="" />}
+    </label>
+  );
+};
 
 export default Input;
