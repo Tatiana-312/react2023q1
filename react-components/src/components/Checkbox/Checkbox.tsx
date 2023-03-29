@@ -3,28 +3,30 @@ import ValidatorMessage from '../ValidatorErrorMessage/ValidatorMessage';
 import classes from './Checkbox.module.css';
 import { CheckboxProps } from './checkboxProps.interface';
 
-class Checkbox extends React.Component<CheckboxProps> {
-  constructor(props: CheckboxProps) {
-    super(props);
-  }
-  render() {
-    return (
-      <>
-        <div className={classes.checkbox__container}>
-          <input
-            data-testid={this.props.testId}
-            className={classes.checkbox__data}
-            type="checkbox"
-            id={this.props.name}
-            name={this.props.name}
-            ref={this.props.refer}
-          />
-          <label htmlFor={this.props.name}>{this.props.label}</label>
-        </div>
-        <ValidatorMessage errorText={this.props.errorText} />
-      </>
-    );
-  }
-}
+const Checkbox: React.FC<CheckboxProps> = ({
+  testId,
+  name,
+  label,
+  register,
+  required,
+  isErrors,
+  errorText,
+}) => {
+  return (
+    <>
+      <div className={classes.checkbox__container}>
+        <input
+          data-testid={testId}
+          className={classes.checkbox__data}
+          type="checkbox"
+          id={name}
+          {...register(name, { required: required })}
+        />
+        <label htmlFor={name}>{label}</label>
+      </div>
+      {isErrors ? <ValidatorMessage errorText={errorText} /> : <ValidatorMessage errorText="" />}
+    </>
+  );
+};
 
 export default Checkbox;

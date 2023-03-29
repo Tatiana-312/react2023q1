@@ -1,7 +1,14 @@
+import { FieldValues, Path, UseFormRegister } from 'react-hook-form';
+
+interface NameProperty {
+  permission: string;
+}
 export interface CheckboxProps {
-  name: string;
-  label: string;
-  refer: React.RefObject<HTMLInputElement>;
-  errorText: string;
   testId: string;
+  name: Path<NameProperty>;
+  label: string;
+  register: UseFormRegister<FieldValues>;
+  required: boolean;
+  isErrors: boolean;
+  errorText: string;
 }
