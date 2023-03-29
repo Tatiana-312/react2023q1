@@ -9,5 +9,9 @@ export interface ToggleSwitchProps {
   secondOption: string;
   name: Path<NameProperty>;
   register: UseFormRegister<FieldValues>;
+  required: boolean;
+  isErrors: boolean;
+  errorText: string;
   testId: string;
+  onChange: (e: React.FormEvent<HTMLInputElement>) => void;
 }
