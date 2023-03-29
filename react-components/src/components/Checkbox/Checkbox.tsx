@@ -11,6 +11,7 @@ const Checkbox: React.FC<CheckboxProps> = ({
   required,
   isErrors,
   errorText,
+  onChange,
 }) => {
   return (
     <>
@@ -21,6 +22,7 @@ const Checkbox: React.FC<CheckboxProps> = ({
           type="checkbox"
           id={name}
           {...register(name, { required: required })}
+          onChange={onChange}
         />
         <label htmlFor={name}>{label}</label>
       </div>

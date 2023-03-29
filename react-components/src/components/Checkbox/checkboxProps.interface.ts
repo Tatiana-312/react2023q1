@@ -11,4 +11,5 @@ export interface CheckboxProps {
   required: boolean;
   isErrors: boolean;
   errorText: string;
+  onChange: (e: React.FormEvent<HTMLInputElement>) => void;
 }
