@@ -117,7 +117,7 @@ describe('Form component', () => {
     const messages = {
       nameError:
         'Name must start with a capital letter and contain more than 1 latin letter without spaces',
-      dateError: 'Сannot be selected earlier than the current date',
+      dateError: 'Cannot be selected earlier than the current date',
       fileError: 'Only images allowed',
       checkboxError: 'Please check this box if you want to proceed',
       selectError: 'Please choose your country',

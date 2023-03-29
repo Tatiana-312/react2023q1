@@ -87,7 +87,7 @@ const Form: React.FC<FormProps> = ({ saveCard }) => {
         required={true}
         validate={(value) => /^.*\.(jpg|JPG|png|PNG)$/.test(value[0].name)}
         isErrors={Boolean(errors.file)}
-        errorText="Please choose an image"
+        errorText="Only images allowed"
         onChange={onChange}
       />
       <Select
