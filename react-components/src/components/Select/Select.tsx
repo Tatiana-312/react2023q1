@@ -3,31 +3,36 @@ import { SelectProps } from './selectProps.interface';
 import classes from './Select.module.css';
 import ValidatorMessage from '../ValidatorErrorMessage/ValidatorMessage';
 
-class Select extends React.Component<SelectProps> {
-  constructor(props: SelectProps) {
-    super(props);
-  }
-  render() {
-    return (
-      <>
-        <label htmlFor={this.props.id}>{this.props.label}</label>
-        <select
-          data-testid={this.props.testId}
-          className={classes.select__country}
-          name={this.props.name}
-          id={this.props.id}
-          ref={this.props.refer}
-        >
-          <option value="none" hidden>
-            Choose you country
-          </option>
-          {this.props.optionValues.map((value, index) => {
-            return <option key={index}>{value}</option>;
-          })}
-        </select>
-        <ValidatorMessage errorText={this.props.errorText} />
-      </>
-    );
-  }
-}
+const Select: React.FC<SelectProps> = ({
+  testId,
+  id,
+  label,
+  name,
+  optionValues,
+  register,
+  required,
+  isErrors,
+  errorText,
+}) => {
+  return (
+    <>
+      <label htmlFor={id}>{label}</label>
+      <select
+        data-testid={testId}
+        className={classes.select__country}
+        id={id}
+        {...register(name, { required: required })}
+      >
+        <option value="" hidden>
+          Choose you country
+        </option>
+        {optionValues.map((value, index) => {
+          return <option key={index}>{value}</option>;
+        })}
+      </select>
+      {isErrors ? <ValidatorMessage errorText={errorText} /> : <ValidatorMessage errorText="" />}
+    </>
+  );
+};
+
 export default Select;
