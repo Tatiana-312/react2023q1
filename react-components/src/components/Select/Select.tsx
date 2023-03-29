@@ -13,6 +13,7 @@ const Select: React.FC<SelectProps> = ({
   required,
   isErrors,
   errorText,
+  onChange,
 }) => {
   return (
     <>
@@ -22,6 +23,7 @@ const Select: React.FC<SelectProps> = ({
         className={classes.select__country}
         id={id}
         {...register(name, { required: required })}
+        onChange={onChange}
       >
         <option value="" hidden>
           Choose you country

@@ -14,4 +14,5 @@ export interface SelectProps {
   isErrors: boolean;
   errorText: string;
   testId: string;
+  onChange: (e: React.FormEvent<HTMLSelectElement>) => void;
 }
