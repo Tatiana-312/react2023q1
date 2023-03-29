@@ -1,138 +1,139 @@
 import Input from '../../components/Input/Input';
-import React from 'react';
+import React, { useState } from 'react';
 import Select from '../../components/Select/Select';
 import Checkbox from '../../components/Checkbox/Checkbox';
 import ToggleSwitch from '../../components/ToggleSwitch/ToggleSwitch';
 import classes from './Form.module.css';
 import { CardData } from './cardData.interface';
 import { FormProps } from './formProps.interface';
-import { FormState } from './formState.interface';
 import DataSaveMessage from '../DataSaveMessage/DataSaveMessage';
-import FormValidatorService from './formValidator.service';
-import Constants from './constants';
+import { useForm } from 'react-hook-form';
+import { FieldValues, SubmitHandler } from 'react-hook-form/dist/types';
 
-class Form extends React.Component<FormProps, FormState> {
-  formValidatorService: FormValidatorService;
-  constants: Constants;
-  nameInput: React.RefObject<HTMLInputElement>;
-  dateInput: React.RefObject<HTMLInputElement>;
-  countrySelect: React.RefObject<HTMLSelectElement>;
-  fileInput: React.RefObject<HTMLInputElement>;
-  paymentSwitch: React.RefObject<HTMLInputElement>;
-  permissionCheckbox: React.RefObject<HTMLInputElement>;
+const Form: React.FC<FormProps> = ({ saveCard }) => {
+  const [dataSaveMessage, setDataSaveMessage] = useState('');
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    reset,
+  } = useForm({ reValidateMode: 'onSubmit' });
 
-  constructor(props: FormProps) {
-    super(props);
-    this.nameInput = React.createRef();
-    this.dateInput = React.createRef();
-    this.countrySelect = React.createRef();
-    this.fileInput = React.createRef();
-    this.paymentSwitch = React.createRef();
-    this.permissionCheckbox = React.createRef();
-    this.formValidatorService = new FormValidatorService(this);
-    this.constants = new Constants(this);
+  const countries = [
+    'Belarus',
+    'Georgia',
+    'Germany',
+    'Kazakhstan',
+    'Kyrgyzstan',
+    'Poland',
+    'Russia',
+    'Ukraine',
+    'Uzbekistan',
+  ];
 
-    this.state = {
-      nameError: '*',
-      dateError: '*',
-      fileError: '*',
-      selectError: '*',
-      checkboxError: '*',
-      dataSaveMessage: '',
-    };
-  }
-
-  setSuccessMessage = (): void => {
-    this.setState({
-      dataSaveMessage: 'Data saved successfully!',
-    });
-  };
-
-  resetValues = (): void => {
-    this.nameInput.current!.value = '';
-    this.dateInput.current!.value = '';
-    this.countrySelect.current!.value = 'none';
-    this.fileInput.current!.value = '';
-    this.paymentSwitch.current!.checked = false;
-    this.permissionCheckbox.current!.checked = false;
-  };
-
-  getCurrentSwitchValue = (isChecked: boolean): string => {
-    return isChecked ? 'Cash' : 'Card';
-  };
-
-  getCardData = (): CardData => {
+  const getCardData = (formData: FieldValues): CardData => {
     return {
-      name: this.nameInput.current!.value,
-      date: this.dateInput.current!.value,
-      country: this.countrySelect.current!.value,
-      file: URL.createObjectURL((this.fileInput.current!.files as FileList)[0]),
-      payment: this.getCurrentSwitchValue(this.paymentSwitch.current!.checked),
+      name: formData.name,
+      date: formData.date,
+      country: formData.country,
+      file: URL.createObjectURL(formData.file[0]),
+      payment: formData.payment,
     };
   };
 
-  handleSubmit: React.FormEventHandler<HTMLFormElement> = (event): void => {
-    event.preventDefault();
-
-    if (this.formValidatorService.isValuesValid()) {
-      const cardData: CardData = this.getCardData();
-      this.props.saveCard(cardData);
-      this.setSuccessMessage();
-      this.resetValues();
-    }
+  const onSubmit: SubmitHandler<FieldValues> = (formData): void => {
+    const cardData: CardData = getCardData(formData);
+    saveCard(cardData);
+    setDataSaveMessage('Data saved successfully!');
+    reset();
   };
 
-  render() {
-    return (
-      <form onSubmit={this.handleSubmit}>
-        {this.constants.inputsProperties.map((props, index) => {
-          return (
-            <Input
-              testId={props.testId}
-              type={props.type}
-              label={props.label}
-              name={props.name}
-              refer={props.refer}
-              onChange={() => this.setState({ dataSaveMessage: '' })}
-              errorText={this.state[`${props.name}Error`]}
-              key={index}
-            />
-          );
-        })}
-        <Select
-          testId="select-country"
-          id="country"
-          label="Country"
-          name="country"
-          optionValues={this.constants.countries}
-          refer={this.countrySelect}
-          errorText={this.state.selectError}
-        />
-        <ToggleSwitch
-          testId="switch-payment"
-          title="Will you pay in cash or by credit card?"
-          firstOption="Cash"
-          secondOption="Credit Card"
-          name="payment"
-          refer={this.paymentSwitch}
-        />
-        <Checkbox
-          testId="checkbox-permission"
-          name="permission"
-          label="I consent to my personal data"
-          refer={this.permissionCheckbox}
-          errorText={this.state.checkboxError}
-        />
-        <input
-          data-testid="input-submit"
-          className={classes.submit__button}
-          type="submit"
-          value="submit"
-        />
-        <DataSaveMessage dataSaveMessage={this.state.dataSaveMessage} />
-      </form>
-    );
-  }
-}
+  const onChange = (): void => {
+    setDataSaveMessage('');
+  };
+
+  return (
+    <form onSubmit={handleSubmit(onSubmit)}>
+      <Input
+        name="name"
+        testId="input-name"
+        type="text"
+        label="Name"
+        register={register}
+        required={true}
+        pattern={/^[A-Za-z]{2,29}$/}
+        isErrors={Boolean(errors.name)}
+        errorText="Name must start with a capital letter and contain more than 1 latin letter without spaces"
+        onChange={onChange}
+      />
+      <Input
+        name="date"
+        testId="input-date"
+        type="date"
+        label="Date of delivery"
+        register={register}
+        required={true}
+        validate={(value) => new Date(value) > new Date()}
+        isErrors={Boolean(errors.date)}
+        errorText="Cannot be selected earlier than the current date"
+        onChange={onChange}
+      />
+      <Input
+        name="file"
+        testId="input-file"
+        type="file"
+        label="Book cover"
+        register={register}
+        required={true}
+        validate={(value) => /^.*\.(jpg|JPG|png|PNG)$/.test(value[0].name)}
+        isErrors={Boolean(errors.file)}
+        errorText="Please choose an image"
+        onChange={onChange}
+      />
+      <Select
+        name="country"
+        testId="select-country"
+        id="country"
+        label="Choose your country"
+        register={register}
+        required={true}
+        validate={(value) => value !== ''}
+        isErrors={Boolean(errors.country)}
+        errorText="Please choose your country"
+        optionValues={countries}
+        onChange={onChange}
+      />
+      <ToggleSwitch
+        testId="switch-payment"
+        title="Will you pay in cash or by credit card?"
+        firstOption="Cash"
+        secondOption="Card"
+        name="payment"
+        register={register}
+        required={true}
+        isErrors={Boolean(errors.payment)}
+        errorText={'Please select a payment method'}
+        onChange={onChange}
+      />
+      <Checkbox
+        testId="checkbox-permission"
+        name="permission"
+        label="I consent to my personal data"
+        register={register}
+        required={true}
+        isErrors={Boolean(errors.permission)}
+        errorText={'Please check this box if you want to proceed'}
+        onChange={onChange}
+      />
+      <input
+        data-testid="input-submit"
+        className={classes.submit__button}
+        type="submit"
+        value="submit"
+      />
+      <DataSaveMessage dataSaveMessage={dataSaveMessage} />
+    </form>
+  );
+};
 
 export default Form;

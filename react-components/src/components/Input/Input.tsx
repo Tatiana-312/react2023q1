@@ -14,6 +14,7 @@ const Input: React.FC<InputProps> = ({
   pattern,
   validate,
   isErrors,
+  onChange
 }) => {
   return (
     <label className={classes.label}>
@@ -27,6 +28,7 @@ const Input: React.FC<InputProps> = ({
           pattern: pattern,
           validate: validate,
         })}
+        onChange={onChange}
       />
       {isErrors ? <ValidatorMessage errorText={errorText} /> : <ValidatorMessage errorText="" />}
     </label>
