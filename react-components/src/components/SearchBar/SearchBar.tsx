@@ -1,44 +1,42 @@
-import React from 'react';
-import { InputState } from './inputState.interface';
+import React, { useEffect, useRef, useState } from 'react';
 import classes from './SearchBar.module.css';
-import { SearchBarProps } from './searchBarProps.interface';
 
-class SearchBar extends React.Component<SearchBarProps, InputState> {
-  constructor(props: SearchBarProps) {
-    super(props);
+const SearchBar: React.FC = () => {
+  const [searchValue, setSearchValue] = useState<string>('');
+
+  const handleChange = (e: React.FormEvent<HTMLInputElement>): void => {
+    setSearchValue(e.currentTarget.value);
+  };
+
+  const value = useRef(searchValue);
+
+  useEffect(() => {
     const localStorageData = localStorage.getItem('value');
+    setSearchValue(localStorageData || '');
 
-    this.state = {
-      text: localStorageData || '',
+    return () => {
+      localStorage.setItem('value', value.current);
     };
+  }, []);
 
-    this.handleChange = this.handleChange.bind(this);
-  }
+  useEffect(() => {
+    value.current = searchValue;
+  }, [searchValue]);
 
-  handleChange(e: React.FormEvent<HTMLInputElement>): void {
-    this.setState({ text: e.currentTarget.value });
-  }
-
-  componentWillUnmount(): void {
-    localStorage.setItem('value', this.state.text);
-  }
-
-  render(): React.ReactNode {
-    return (
-      <form className={classes.form}>
-        <input
-          className={classes.input}
-          type="text"
-          value={this.state.text}
-          onChange={this.handleChange}
-          placeholder="Type text here"
-        />
-        <button className={classes.button} type="submit">
-          Search
-        </button>
-      </form>
-    );
-  }
-}
+  return (
+    <form className={classes.form} onSubmit={(e) => e.preventDefault()}>
+      <input
+        className={classes.input}
+        type="text"
+        value={searchValue}
+        onChange={handleChange}
+        placeholder="Type text here"
+      />
+      <button className={classes.button} type="submit">
+        Search
+      </button>
+    </form>
+  );
+};
 
 export default SearchBar;

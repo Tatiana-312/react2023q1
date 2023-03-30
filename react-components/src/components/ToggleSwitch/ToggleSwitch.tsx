@@ -13,7 +13,7 @@ const ToggleSwitch: React.FC<ToggleSwitchProps> = ({
   required,
   isErrors,
   errorText,
-  onChange
+  onChange,
 }) => {
   return (
     <>
