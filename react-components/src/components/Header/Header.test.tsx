@@ -27,10 +27,10 @@ describe('Header component', () => {
     const aboutLink = screen.getByTestId('about-link');
     const formLink = screen.getByTestId('form-link');
     fireEvent.click(aboutLink);
-    expect(screen.getByRole('heading', { name: 'About Us' })).toBeInTheDocument();
+    expect(screen.getByRole('heading', { name: 'about page' })).toBeInTheDocument();
     fireEvent.click(homeLink);
-    expect(screen.getByRole('heading', { name: 'Home' })).toBeInTheDocument();
+    expect(screen.getByRole('heading', { name: 'home page' })).toBeInTheDocument();
     fireEvent.click(formLink);
-    expect(screen.getByRole('heading', { name: 'Form' })).toBeInTheDocument();
+    expect(screen.getByRole('heading', { name: 'form page' })).toBeInTheDocument();
   });
 });

@@ -31,7 +31,7 @@ const NavBar: React.FC = () => {
           <NavBarLink {...obj} key={index} />
         ))}
       </ul>
-      <h1 className={classes.title}>{pageRoute ? pageRoute : 'Home'} page</h1>
+      <h1 className={classes.title}>{pageRoute ? pageRoute : 'home'} page</h1>
     </>
   );
 };
