@@ -8,19 +8,19 @@ const SearchBar: React.FC = () => {
     setSearchValue(e.currentTarget.value);
   };
 
-  const value = useRef(searchValue);
+  const searchBarRef = useRef(searchValue);
 
   useEffect(() => {
     const localStorageData = localStorage.getItem('value');
     setSearchValue(localStorageData || '');
 
     return () => {
-      localStorage.setItem('value', value.current);
+      localStorage.setItem('value', searchBarRef.current);
     };
   }, []);
 
   useEffect(() => {
-    value.current = searchValue;
+    searchBarRef.current = searchValue;
   }, [searchValue]);
 
   return (
