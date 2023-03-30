@@ -9,7 +9,7 @@ export interface SelectProps {
   name: Path<NameProperty>;
   optionValues: string[];
   register: UseFormRegister<FieldValues>;
-  validate: (value: string) => void;
+  validate: (value: string) => boolean;
   required: boolean;
   isErrors: boolean;
   errorText: string;

@@ -1,4 +1,4 @@
-import { UseFormRegister, Path, FieldValues } from 'react-hook-form';
+import { UseFormRegister, Path, FieldValues, FieldValue, ValidationRule } from 'react-hook-form';
 interface NameProperty {
   name: string;
   date: string;
@@ -12,9 +12,9 @@ export interface InputProps {
   name: Path<NameProperty>;
   register: UseFormRegister<FieldValues>;
   required: boolean;
-  pattern?: RegExp;
-  validate?: (value: any) => any;
+  pattern?: ValidationRule<RegExp>;
+  validate?: (value: FieldValue<FieldValues>) => boolean;
   isErrors: boolean;
-  onChange?: (e: React.FormEvent<HTMLInputElement>) => void;
+  onChange: (e: React.FormEvent<HTMLInputElement>) => void;
   errorText: string;
 }

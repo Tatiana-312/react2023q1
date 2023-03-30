@@ -73,7 +73,7 @@ const Form: React.FC<FormProps> = ({ saveCard }) => {
         label="Date of delivery"
         register={register}
         required={true}
-        validate={(value) => new Date(value) > new Date()}
+        validate={(value: Date) => new Date(value) > new Date()}
         isErrors={Boolean(errors.date)}
         errorText="Cannot be selected earlier than the current date"
         onChange={onChange}
@@ -85,7 +85,7 @@ const Form: React.FC<FormProps> = ({ saveCard }) => {
         label="Book cover"
         register={register}
         required={true}
-        validate={(value) => /^.*\.(jpg|JPG|png|PNG)$/.test(value[0].name)}
+        validate={(value: File[]) => /^.*\.(jpg|JPG|png|PNG)$/.test(value[0].name)}
         isErrors={Boolean(errors.file)}
         errorText="Only images allowed"
         onChange={onChange}

@@ -14,7 +14,7 @@ const Input: React.FC<InputProps> = ({
   pattern,
   validate,
   isErrors,
-  onChange
+  onChange,
 }) => {
   return (
     <label className={classes.label}>
