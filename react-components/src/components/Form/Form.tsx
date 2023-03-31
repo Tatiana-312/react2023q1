@@ -64,7 +64,7 @@ const Form: React.FC = () => {
         label="Name"
         register={register}
         required={true}
-        pattern={/^[A-Za-z]{2,29}$/}
+        pattern={/^[A-Z][a-z]{1,28}$/}
         isErrors={Boolean(errors.name)}
         errorText="Name must start with a capital letter and contain more than 1 latin letter without spaces"
         onChange={onChange}
