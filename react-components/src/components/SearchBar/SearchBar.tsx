@@ -1,10 +1,11 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useContext, useEffect, useRef, useState } from 'react';
+import { ApiDataContext } from '../../pages/Home/Home';
 import { Data } from './data.interface';
 import classes from './SearchBar.module.css';
 
 const SearchBar: React.FC = () => {
   const [searchValue, setSearchValue] = useState<string>('');
-  const [apiCharacters, setApiCharacters] = useState<Data[]>([]);
+  const { setApiCharacters } = useContext(ApiDataContext);
 
   const handleChange = (e: React.FormEvent<HTMLInputElement>): void => {
     setSearchValue(e.currentTarget.value);
@@ -15,7 +16,7 @@ const SearchBar: React.FC = () => {
   useEffect(() => {
     const localStorageData = localStorage.getItem('value');
     setSearchValue(localStorageData || '');
-
+    fetchData(searchValue);
     return () => {
       localStorage.setItem('value', searchBarRef.current);
     };
@@ -27,7 +28,12 @@ const SearchBar: React.FC = () => {
 
   const fetchData = async (query: string) => {
     try {
-      const response = await fetch(`https://rickandmortyapi.com/api/character/?name=${query}`);
+      let response: Response;
+      if (query) {
+        response = await fetch(`https://rickandmortyapi.com/api/character/?name=${query}`);
+      } else {
+        response = await fetch(`https://rickandmortyapi.com/api/character`);
+      }
       const data = await response.json();
       setApiCharacters(data.results);
       console.log(data);
