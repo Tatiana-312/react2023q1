@@ -44,7 +44,7 @@ describe('Local Storage', () => {
 
     localStorage.setItem(mockKey, mockValue);
 
-    render(<SearchBar value="" />);
+    render(<SearchBar />);
 
     expect(screen.getByRole('textbox')).toHaveValue(mockValue);
   });

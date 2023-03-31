@@ -6,13 +6,7 @@ import { vi } from 'vitest';
 
 describe('Form component', () => {
   it('render form components', () => {
-    render(
-      <Form
-        saveCard={function (): void {
-          throw new Error('Function not implemented.');
-        }}
-      />
-    );
+    render(<Form />);
 
     expect(screen.getByTestId('input-name')).toBeInTheDocument();
     expect(screen.getByTestId('input-date')).toBeInTheDocument();
@@ -25,39 +19,21 @@ describe('Form component', () => {
 
   describe('add data in input fields', () => {
     it('print text in input name component', async () => {
-      render(
-        <Form
-          saveCard={function (): void {
-            throw new Error('Function not implemented.');
-          }}
-        />
-      );
+      render(<Form />);
       const input = screen.getByTestId('input-name');
       await userEvent.type(input, 'React');
       expect(input).toHaveValue('React');
     });
 
     it('input date component', async () => {
-      render(
-        <Form
-          saveCard={function (): void {
-            throw new Error('Function not implemented.');
-          }}
-        />
-      );
+      render(<Form />);
       const input = screen.getByTestId('input-date');
       await userEvent.type(input, '2022-11-05');
       expect(input).toHaveValue('2022-11-05');
     });
 
     it('upload files in input file component', async () => {
-      render(
-        <Form
-          saveCard={function (): void {
-            throw new Error('Function not implemented.');
-          }}
-        />
-      );
+      render(<Form />);
       const mockFile = new File(['someImage'], 'someImage.png', { type: 'image/png' });
       const inputFile = screen.getByTestId('input-file') as HTMLInputElement;
       await userEvent.upload(inputFile, mockFile);
@@ -68,24 +44,12 @@ describe('Form component', () => {
 
   describe('check select country component', () => {
     it('should display the correct number of options', () => {
-      render(
-        <Form
-          saveCard={function (): void {
-            throw new Error('Function not implemented.');
-          }}
-        />
-      );
+      render(<Form />);
       expect(screen.getAllByRole('option').length).toBe(9);
     });
 
     it('should allow user to change country', async () => {
-      render(
-        <Form
-          saveCard={function (): void {
-            throw new Error('Function not implemented.');
-          }}
-        />
-      );
+      render(<Form />);
       const select = screen.getByTestId('select-country');
       const option = screen.getByRole('option', { name: 'Kyrgyzstan' }) as HTMLOptionElement;
       await userEvent.selectOptions(select, option);
@@ -94,13 +58,7 @@ describe('Form component', () => {
   });
 
   it('is switched toggleSwitch after click', async () => {
-    render(
-      <Form
-        saveCard={function (): void {
-          throw new Error('Function not implemented.');
-        }}
-      />
-    );
+    render(<Form />);
     const cashRadio = screen.getByTestId('payment-first');
     const cardRadio = screen.getByTestId('payment-second');
 
@@ -124,13 +82,7 @@ describe('Form component', () => {
     };
 
     it('should show name validate error', async () => {
-      render(
-        <Form
-          saveCard={function (): void {
-            throw new Error('Function not implemented.');
-          }}
-        />
-      );
+      render(<Form />);
       const inputName = screen.getByTestId('input-name');
       await userEvent.type(inputName, 'react2');
       const submit = screen.getByTestId('input-submit');
@@ -139,13 +91,7 @@ describe('Form component', () => {
     });
 
     it('should show date validate error', async () => {
-      render(
-        <Form
-          saveCard={function (): void {
-            throw new Error('Function not implemented.');
-          }}
-        />
-      );
+      render(<Form />);
       const inputDate = screen.getByTestId('input-date');
       const invalidTestDate = '2023-03-20';
       await userEvent.type(inputDate, invalidTestDate);
@@ -155,13 +101,7 @@ describe('Form component', () => {
     });
 
     it('should show file validate error', async () => {
-      render(
-        <Form
-          saveCard={function (): void {
-            throw new Error('Function not implemented.');
-          }}
-        />
-      );
+      render(<Form />);
       const mockFile = new File(['someDoc'], 'someDoc.txt', { type: 'txt' });
       const inputFile = screen.getByTestId('input-file') as HTMLInputElement;
       await userEvent.upload(inputFile, mockFile);
@@ -171,26 +111,14 @@ describe('Form component', () => {
     });
 
     it('should show country validate error', async () => {
-      render(
-        <Form
-          saveCard={function (): void {
-            throw new Error('Function not implemented.');
-          }}
-        />
-      );
+      render(<Form />);
       const submit = screen.getByTestId('input-submit');
       await userEvent.click(submit);
       expect(screen.getByText(messages.selectError)).toBeInTheDocument();
     });
 
     it('should show checkbox validate error', async () => {
-      render(
-        <Form
-          saveCard={function (): void {
-            throw new Error('Function not implemented.');
-          }}
-        />
-      );
+      render(<Form />);
       const checkbox = screen.getByTestId('checkbox-permission');
       const submit = screen.getByTestId('input-submit');
       await userEvent.click(submit);
@@ -199,7 +127,7 @@ describe('Form component', () => {
     });
 
     it('should display successful message if valid all inputs', async () => {
-      render(<Form saveCard={vi.fn()} />);
+      render(<Form />);
 
       const inputName = screen.getByTestId('input-name');
       await userEvent.type(inputName, 'React');
