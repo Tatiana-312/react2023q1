@@ -2,7 +2,7 @@ import SearchBar from '../../components/SearchBar/SearchBar';
 import React, { useState } from 'react';
 import Title from '../../components/Title/Title';
 import CardList from '../../components/CardList/CardList';
-import { Data } from '../../components/SearchBar/data.interface';
+import { Data } from './data.interface';
 import { ApiDataContextType } from './apiDataContext.interface';
 
 export const ApiDataContext = React.createContext<ApiDataContextType>({

@@ -1,6 +1,5 @@
 import React, { useContext, useEffect, useRef, useState } from 'react';
 import { ApiDataContext } from '../../pages/Home/Home';
-import { Data } from './data.interface';
 import classes from './SearchBar.module.css';
 
 const SearchBar: React.FC = () => {

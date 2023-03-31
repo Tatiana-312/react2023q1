@@ -1,4 +1,4 @@
-import { Data } from '../../components/SearchBar/data.interface';
+import { Data } from './data.interface';
 
 export interface ApiDataContextType {
   apiCharacters: Data[];

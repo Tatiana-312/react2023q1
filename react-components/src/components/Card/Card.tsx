@@ -1,6 +1,6 @@
 import React from 'react';
 import classes from './Card.module.css';
-import { Data } from '../SearchBar/data.interface';
+import { Data } from '../../pages/Home/data.interface';
 
 const Card: React.FC<Data> = ({ image, name, gender, status }) => {
   return (

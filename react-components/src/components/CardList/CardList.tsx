@@ -2,7 +2,7 @@ import Card from '../../components/Card/Card';
 import React, { useContext } from 'react';
 import classes from './CardList.module.css';
 import { ApiDataContext } from '../../pages/Home/Home';
-import { Data } from '../SearchBar/data.interface';
+import { Data } from '../../pages/Home/data.interface';
 
 const CardList: React.FC = () => {
   const { apiCharacters } = useContext(ApiDataContext);
