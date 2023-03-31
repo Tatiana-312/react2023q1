@@ -3,19 +3,23 @@ import React, { useState } from 'react';
 import classes from './FormPage.module.css';
 import { CardData } from '../../components/Form/cardData.interface';
 import FormCardList from '../../components/FormCardList/FormCardList';
+import { CardsContextType } from './CardsContextType.interface';
+
+export const CardsContext = React.createContext<CardsContextType>({
+  cards: [],
+  setCards: () => {},
+});
 
 const FormPage: React.FC = () => {
   const [cards, setCards] = useState<CardData[]>([]);
 
-  const saveCardsToState = (data: CardData) => {
-    setCards([...cards, data]);
-  };
-
   return (
-    <div data-testid="form-page" className={classes.form__container}>
-      <Form saveCard={saveCardsToState} />
-      <FormCardList cards={cards} />
-    </div>
+    <CardsContext.Provider value={{ cards, setCards }}>
+      <div data-testid="form-page" className={classes.form__container}>
+        <Form />
+        <FormCardList />
+      </div>
+    </CardsContext.Provider>
   );
 };
 
