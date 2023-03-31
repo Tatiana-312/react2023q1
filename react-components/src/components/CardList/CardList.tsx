@@ -1,14 +1,15 @@
 import Card from '../../components/Card/Card';
-import { CardProps } from '../../components/Card/cardProps.interface';
-import React from 'react';
-import booksData from './booksData.json';
+import React, { useContext } from 'react';
 import classes from './CardList.module.css';
+import { ApiDataContext } from '../../pages/Home/Home';
+import { Data } from '../SearchBar/data.interface';
 
 const CardList: React.FC = () => {
+  const { apiCharacters } = useContext(ApiDataContext);
   return (
     <div className={classes.container}>
-      {booksData.map((data: CardProps) => {
-        return <Card key={data.id} {...data} />;
+      {apiCharacters.map((character: Data) => {
+        return <Card key={character.id} {...character} />;
       })}
     </div>
   );

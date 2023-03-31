@@ -54,7 +54,7 @@ const SearchBar: React.FC = () => {
         type="text"
         value={searchValue}
         onChange={handleChange}
-        placeholder="Type text here"
+        placeholder="Type name here"
       />
       <button className={classes.button} type="submit">
         Search
