@@ -1,7 +1,8 @@
-export interface CardData {
+export interface FormFields {
   name: string;
   date: string;
   country: string;
-  file: string;
+  file: File[];
   payment: string;
+  permission: boolean;
 }

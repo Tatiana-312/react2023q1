@@ -7,8 +7,9 @@ import classes from './Form.module.css';
 import { CardData } from './cardData.interface';
 import DataSaveMessage from '../DataSaveMessage/DataSaveMessage';
 import { useForm } from 'react-hook-form';
-import { FieldValues, SubmitHandler } from 'react-hook-form/dist/types';
+import { SubmitHandler } from 'react-hook-form/dist/types';
 import { CardsContext } from '../../pages/FormPage/FormPage';
+import { FormFields } from './formFieldsProps.interface';
 
 const Form: React.FC = () => {
   const [dataSaveMessage, setDataSaveMessage] = useState('');
@@ -17,7 +18,7 @@ const Form: React.FC = () => {
     handleSubmit,
     formState: { errors },
     reset,
-  } = useForm({ reValidateMode: 'onSubmit' });
+  } = useForm<FormFields>({ reValidateMode: 'onSubmit' });
 
   const { setCards } = useContext(CardsContext);
 
@@ -33,7 +34,7 @@ const Form: React.FC = () => {
     'Uzbekistan',
   ];
 
-  const getCardData = (formData: FieldValues): CardData => {
+  const getCardData = (formData: FormFields): CardData => {
     return {
       name: formData.name,
       date: formData.date,
@@ -43,7 +44,7 @@ const Form: React.FC = () => {
     };
   };
 
-  const onSubmit: SubmitHandler<FieldValues> = (formData): void => {
+  const onSubmit: SubmitHandler<FormFields> = (formData): void => {
     const cardData: CardData = getCardData(formData);
     setCards((prev) => [...prev, cardData]);
     setDataSaveMessage('Data saved successfully!');
@@ -75,7 +76,7 @@ const Form: React.FC = () => {
         label="Date of delivery"
         register={register}
         required={true}
-        validate={(value: Date) => new Date(value) > new Date()}
+        validate={(value: string) => new Date(value) > new Date()}
         isErrors={Boolean(errors.date)}
         errorText="Cannot be selected earlier than the current date"
         onChange={onChange}

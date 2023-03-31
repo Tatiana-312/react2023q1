@@ -1,4 +1,5 @@
 import { UseFormRegister, Path, FieldValues, FieldValue, ValidationRule } from 'react-hook-form';
+import { FormFields } from '../Form/formFieldsProps.interface';
 interface NameProperty {
   name: string;
   date: string;
@@ -10,7 +11,7 @@ export interface InputProps {
   type: string;
   label: string;
   name: Path<NameProperty>;
-  register: UseFormRegister<FieldValues>;
+  register: UseFormRegister<FormFields>;
   required: boolean;
   pattern?: ValidationRule<RegExp>;
   validate?: (value: FieldValue<FieldValues>) => boolean;

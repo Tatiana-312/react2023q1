@@ -1,4 +1,5 @@
-import { FieldValues, Path, UseFormRegister } from 'react-hook-form';
+import { Path, UseFormRegister } from 'react-hook-form';
+import { FormFields } from '../Form/formFieldsProps.interface';
 
 interface NameProperty {
   payment: string;
@@ -8,7 +9,7 @@ export interface ToggleSwitchProps {
   firstOption: string;
   secondOption: string;
   name: Path<NameProperty>;
-  register: UseFormRegister<FieldValues>;
+  register: UseFormRegister<FormFields>;
   required: boolean;
   isErrors: boolean;
   errorText: string;
