@@ -1,0 +1,9 @@
+.nav {
+  display: flex;
+  column-gap: 20px;
+}
+
+.title {
+  font-size: 28px;
+  text-transform: capitalize;
+}

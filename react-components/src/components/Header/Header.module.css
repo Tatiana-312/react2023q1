@@ -1,0 +1,15 @@
+.header {
+  width: 100%;
+  background-color: rgb(139 165 156);
+  box-shadow: 0 0 5px rgb(5, 78, 53);
+}
+
+.header_navbar_container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 1000px;
+  height: 100%;
+  margin: 0 auto;
+  padding: 20px;
+}
