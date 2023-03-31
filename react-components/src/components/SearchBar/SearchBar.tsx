@@ -1,8 +1,10 @@
 import React, { useEffect, useRef, useState } from 'react';
+import { Data } from './data.interface';
 import classes from './SearchBar.module.css';
 
 const SearchBar: React.FC = () => {
   const [searchValue, setSearchValue] = useState<string>('');
+  const [apiCharacters, setApiCharacters] = useState<Data[]>([]);
 
   const handleChange = (e: React.FormEvent<HTMLInputElement>): void => {
     setSearchValue(e.currentTarget.value);
@@ -23,8 +25,24 @@ const SearchBar: React.FC = () => {
     searchBarRef.current = searchValue;
   }, [searchValue]);
 
+  const fetchData = async (query: string) => {
+    try {
+      const response = await fetch(`https://rickandmortyapi.com/api/character/?name=${query}`);
+      const data = await response.json();
+      setApiCharacters(data.results);
+      console.log(data);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    await fetchData(searchValue);
+  };
+
   return (
-    <form className={classes.form} onSubmit={(e) => e.preventDefault()}>
+    <form className={classes.form} onSubmit={handleSubmit}>
       <input
         className={classes.input}
         type="text"
