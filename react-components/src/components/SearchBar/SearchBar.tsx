@@ -5,14 +5,14 @@ import classes from './SearchBar.module.css';
 
 const SearchBar: React.FC = () => {
   const localStorageData = localStorage.getItem('value');
+
   const [searchValue, setSearchValue] = useState<string>(localStorageData || '');
   const { setApiCharacters } = useContext(ApiDataContext);
+  const searchBarRef = useRef(searchValue);
 
   const handleChange = (e: React.FormEvent<HTMLInputElement>): void => {
     setSearchValue(e.currentTarget.value);
   };
-
-  const searchBarRef = useRef(searchValue);
 
   useEffect(() => {
     getCharacters(searchValue);
@@ -32,19 +32,19 @@ const SearchBar: React.FC = () => {
       const characters: Data[] = await get(endpoint, query, value);
       setApiCharacters(characters);
     } catch (err) {
-      console.error(err);
+      console.log(err);
     }
   };
 
   const get = async (endpoint: string, query: string, value: string) => {
     const baseUrl = 'https://rickandmortyapi.com/api';
-    const url = `${baseUrl}${endpoint}${query}${value}`;
+    const url = value ? `${baseUrl}${endpoint}${query}${value}` : `${baseUrl}${endpoint}`;
     try {
       const response: Response = await fetch(url);
       const data = await response.json();
       return data.results;
     } catch {
-      throw Error();
+      throw new Error('Could not fetch the data!');
     }
   };
 
