@@ -15,7 +15,12 @@ const Home: React.FC = () => {
       <div data-testid="home-page">
         <Title {...{ title: 'Rick and Morty' }} />
         <SearchBar />
-        <CardList />
+        {!isLoaded ? (
+          <div>Loading...</div>
+        ) : (
+          <CardList />
+        )}
+        {isError && <div>Error!</div>}
       </div>
     </HomePageContext.Provider>
   );

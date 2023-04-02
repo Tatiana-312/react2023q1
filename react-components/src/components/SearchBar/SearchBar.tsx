@@ -7,7 +7,7 @@ const SearchBar: React.FC = () => {
   const localStorageData = localStorage.getItem('value');
 
   const [searchValue, setSearchValue] = useState<string>(localStorageData || '');
-  const { setApiCharacters } = useContext(HomePageContext);
+  const { setApiCharacters, setIsLoaded, setIsError } = useContext(HomePageContext);
   const searchBarRef = useRef(searchValue);
 
   const handleChange = (e: React.FormEvent<HTMLInputElement>): void => {
@@ -42,8 +42,11 @@ const SearchBar: React.FC = () => {
     try {
       const response: Response = await fetch(url);
       const data = await response.json();
+      setIsLoaded(true);
       return data.results;
     } catch {
+      setIsLoaded(true);
+      setIsError(true);
       throw new Error('Could not fetch the data!');
     }
   };
