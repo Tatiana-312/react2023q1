@@ -1,9 +1,11 @@
 import React, { useContext, useEffect, useRef, useState } from 'react';
+import { Data } from '../../pages/Home/data.interface';
 import { ApiDataContext } from '../../pages/Home/Home';
 import classes from './SearchBar.module.css';
 
 const SearchBar: React.FC = () => {
-  const [searchValue, setSearchValue] = useState<string>('');
+  const localStorageData = localStorage.getItem('value');
+  const [searchValue, setSearchValue] = useState<string>(localStorageData || '');
   const { setApiCharacters } = useContext(ApiDataContext);
 
   const handleChange = (e: React.FormEvent<HTMLInputElement>): void => {
@@ -13,9 +15,7 @@ const SearchBar: React.FC = () => {
   const searchBarRef = useRef(searchValue);
 
   useEffect(() => {
-    const localStorageData = localStorage.getItem('value');
-    setSearchValue(localStorageData || '');
-    fetchData(searchValue);
+    getCharacters(searchValue);
     return () => {
       localStorage.setItem('value', searchBarRef.current);
     };
@@ -25,25 +25,32 @@ const SearchBar: React.FC = () => {
     searchBarRef.current = searchValue;
   }, [searchValue]);
 
-  const fetchData = async (query: string) => {
+  const getCharacters = async (value: string) => {
     try {
-      let response: Response;
-      if (query) {
-        response = await fetch(`https://rickandmortyapi.com/api/character/?name=${query}`);
-      } else {
-        response = await fetch(`https://rickandmortyapi.com/api/character`);
-      }
-      const data = await response.json();
-      setApiCharacters(data.results);
-      console.log(data);
+      const endpoint = '/character';
+      const query = '/?name=';
+      const characters: Data[] = await get(endpoint, query, value);
+      setApiCharacters(characters);
     } catch (err) {
-      console.log(err);
+      console.error(err);
+    }
+  };
+
+  const get = async (endpoint: string, query: string, value: string) => {
+    const baseUrl = 'https://rickandmortyapi.com/api';
+    const url = `${baseUrl}${endpoint}${query}${value}`;
+    try {
+      const response: Response = await fetch(url);
+      const data = await response.json();
+      return data.results;
+    } catch {
+      throw Error();
     }
   };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    await fetchData(searchValue);
+    await getCharacters(searchValue);
   };
 
   return (
