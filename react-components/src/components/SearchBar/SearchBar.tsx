@@ -42,12 +42,17 @@ const SearchBar: React.FC = () => {
     try {
       const response: Response = await fetch(url);
       const data = await response.json();
+      if (data.error) {
+        setApiCharacters([]);
+        setIsLoaded(true);
+        setIsError(true);
+        throw new Error();
+      }
       setIsLoaded(true);
+      setIsError(false);
       return data.results;
-    } catch {
-      setIsLoaded(true);
-      setIsError(true);
-      throw new Error('Could not fetch the data!');
+    } catch (error) {
+      throw Error('Could not fetch the data!');
     }
   };
 
