@@ -5,6 +5,7 @@ import CardList from '../../components/CardList/CardList';
 import { Data } from './data.interface';
 import { HomePageContext } from './HomePageContext';
 import FetchDataError from '../../components/FetchDataError/FetchDataError';
+import Loader from '../../components/Loader/Loader';
 
 const Home: React.FC = () => {
   const [apiCharacters, setApiCharacters] = useState<Data[]>([]);
@@ -16,7 +17,7 @@ const Home: React.FC = () => {
       <div data-testid="home-page">
         <Title {...{ title: 'Rick and Morty' }} />
         <SearchBar />
-        {!isLoaded ? <div>Loading...</div> : <CardList />}
+        {!isLoaded ? <Loader /> : <CardList />}
         {isError && <FetchDataError />}
       </div>
     </HomePageContext.Provider>
