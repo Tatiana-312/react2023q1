@@ -1,13 +1,13 @@
 import React, { useContext, useEffect, useRef, useState } from 'react';
 import { Data } from '../../pages/Home/data.interface';
-import { ApiDataContext } from '../../pages/Home/Home';
+import { HomePageContext } from '../../pages/Home/HomePageContext';
 import classes from './SearchBar.module.css';
 
 const SearchBar: React.FC = () => {
   const localStorageData = localStorage.getItem('value');
 
   const [searchValue, setSearchValue] = useState<string>(localStorageData || '');
-  const { setApiCharacters } = useContext(ApiDataContext);
+  const { setApiCharacters } = useContext(HomePageContext);
   const searchBarRef = useRef(searchValue);
 
   const handleChange = (e: React.FormEvent<HTMLInputElement>): void => {

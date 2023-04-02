@@ -1,11 +1,11 @@
 import Card from '../../components/Card/Card';
 import React, { useContext } from 'react';
 import classes from './CardList.module.css';
-import { ApiDataContext } from '../../pages/Home/Home';
 import { Data } from '../../pages/Home/data.interface';
+import { HomePageContext } from '../../pages/Home/HomePageContext';
 
 const CardList: React.FC = () => {
-  const { apiCharacters } = useContext(ApiDataContext);
+  const { apiCharacters } = useContext(HomePageContext);
   return (
     <div className={classes.container}>
       {apiCharacters.map((character: Data) => {

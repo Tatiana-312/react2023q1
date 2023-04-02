@@ -3,24 +3,21 @@ import React, { useState } from 'react';
 import Title from '../../components/Title/Title';
 import CardList from '../../components/CardList/CardList';
 import { Data } from './data.interface';
-import { ApiDataContextType } from './apiDataContext.interface';
-
-export const ApiDataContext = React.createContext<ApiDataContextType>({
-  apiCharacters: [],
-  setApiCharacters: () => {},
-});
+import { HomePageContext } from './HomePageContext';
 
 const Home: React.FC = () => {
   const [apiCharacters, setApiCharacters] = useState<Data[]>([]);
+  const [isLoaded, setIsLoaded] = useState<boolean>(false);
+  const [isError, setIsError] = useState<boolean>(false);
 
   return (
-    <ApiDataContext.Provider value={{ apiCharacters, setApiCharacters }}>
+    <HomePageContext.Provider value={{ apiCharacters, setApiCharacters, setIsError, setIsLoaded }}>
       <div data-testid="home-page">
         <Title {...{ title: 'Rick and Morty' }} />
         <SearchBar />
         <CardList />
       </div>
-    </ApiDataContext.Provider>
+    </HomePageContext.Provider>
   );
 };
 
