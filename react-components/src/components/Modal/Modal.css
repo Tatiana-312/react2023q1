@@ -19,6 +19,7 @@
 }
 
 .modal__content {
+  position: relative;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -59,4 +60,18 @@
 
 .modal__text {
   font-size: 20px;
+}
+
+.close__button {
+  position: absolute;
+  top: 0;
+  right: 0;
+  cursor: pointer;
+  width: 40px;
+  height: 40px;
+  font-size: 35px;
+  border-radius: 10px;
+  border: none;
+  background-color: transparent;
+  color: rgb(5 78 53);
 }

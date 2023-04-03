@@ -10,6 +10,9 @@ const Modal: React.FC<ModalProps> = ({ active, modalData, closeModal }) => {
         className={active ? 'modal__content active' : 'modal__content'}
         onClick={(e) => e.stopPropagation()}
       >
+        <button className="close__button" onClick={closeModal}>
+          &times;
+        </button>
         <h2 className="modal__title">{modalData.name}</h2>
         <img className="modal__img" src={modalData.image} alt="Avatar" />
         <p className="modal__text">
