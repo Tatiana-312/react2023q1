@@ -38,16 +38,17 @@ const SearchBar: React.FC = () => {
 
   const get = async (endpoint: string, query: string, value: string) => {
     const baseUrl = 'https://rickandmortyapi.com/api';
-    const url = value ? `${baseUrl}${endpoint}${query}${value}` : `${baseUrl}${endpoint}`;
+    const options = value ? `${query}${value}` : '';
     try {
-      const response: Response = await fetch(url);
-      const data = await response.json();
-      if (data.error) {
+      const response: Response = await fetch(`${baseUrl}${endpoint}${options}`);
+    
+      if (!response.ok) {
         setApiCharacters([]);
         setIsLoaded(true);
         setIsError(true);
         throw new Error();
       }
+      const data = await response.json();
       setIsLoaded(true);
       setIsError(false);
       return data.results;
