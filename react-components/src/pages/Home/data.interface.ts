@@ -1,3 +1,7 @@
+interface Location {
+  name: string;
+  url: string;
+}
 export interface Data {
   id?: number;
   name?: string;
@@ -6,7 +10,7 @@ export interface Data {
   type?: string;
   gender?: string;
   origin?: unknown;
-  location?: unknown;
+  location?: Location;
   image?: string;
   episode?: string[];
   url?: string;
