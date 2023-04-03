@@ -6,4 +6,5 @@ export const HomePageContext = React.createContext<HomePageContextType>({
   setApiCharacters: () => {},
   setIsLoaded: () => {},
   setIsError: () => {},
+  openModal: () => {},
 });

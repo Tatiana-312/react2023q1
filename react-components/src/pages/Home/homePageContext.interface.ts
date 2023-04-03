@@ -5,4 +5,5 @@ export interface HomePageContextType {
   setApiCharacters: React.Dispatch<React.SetStateAction<Data[]>>;
   setIsLoaded: React.Dispatch<React.SetStateAction<boolean>>;
   setIsError: React.Dispatch<React.SetStateAction<boolean>>;
+  openModal: (e: React.MouseEvent<HTMLElement>) => void;
 }
