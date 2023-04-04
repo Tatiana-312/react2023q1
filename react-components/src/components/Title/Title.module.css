@@ -1,4 +1,7 @@
 .title {
+  font-family: 'Caveat', cursive;
   text-align: center;
   padding: 15px;
+  font-size: 45px;
+  color: rgb(5 78 53);
 }
