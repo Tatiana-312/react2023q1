@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useRef, useState } from 'react';
-import { Data } from '../../pages/Home/data.interface';
 import { HomePageContext } from '../../pages/Home/HomePageContext';
 import classes from './SearchBar.module.css';
+import { getCharacters } from '../../services/character.service';
 
 const SearchBar: React.FC = () => {
   const localStorageData = localStorage.getItem('value');
@@ -10,12 +10,34 @@ const SearchBar: React.FC = () => {
   const { setApiCharacters, setIsLoaded, setIsError } = useContext(HomePageContext);
   const searchBarRef = useRef(searchValue);
 
+  const setSuccessState = () => {
+    setIsLoaded(true);
+    setIsError(false);
+  };
+
+  const setFailState = () => {
+    setIsLoaded(true);
+    setIsError(true);
+  };
+
   const handleChange = (e: React.FormEvent<HTMLInputElement>): void => {
     setSearchValue(e.currentTarget.value);
   };
 
   useEffect(() => {
-    getCharacters(searchValue);
+    const fetchData = async () => {
+      try {
+        const characters = await getCharacters(searchValue);
+        setSuccessState();
+        setApiCharacters(characters);
+      } catch (err) {
+        setFailState();
+        setApiCharacters([]);
+        console.log(err);
+      }
+    };
+
+    fetchData();
     return () => {
       localStorage.setItem('value', searchBarRef.current);
     };
@@ -25,41 +47,17 @@ const SearchBar: React.FC = () => {
     searchBarRef.current = searchValue;
   }, [searchValue]);
 
-  const getCharacters = async (value: string) => {
-    try {
-      const endpoint = '/character';
-      const query = '/?name=';
-      const characters: Data[] = await get(endpoint, query, value);
-      setApiCharacters(characters);
-    } catch (err) {
-      console.log(err);
-    }
-  };
-
-  const get = async (endpoint: string, query: string, value: string) => {
-    const baseUrl = 'https://rickandmortyapi.com/api';
-    const options = value ? `${query}${value}` : '';
-    try {
-      const response: Response = await fetch(`${baseUrl}${endpoint}${options}`);
-    
-      if (!response.ok) {
-        setApiCharacters([]);
-        setIsLoaded(true);
-        setIsError(true);
-        throw new Error();
-      }
-      const data = await response.json();
-      setIsLoaded(true);
-      setIsError(false);
-      return data.results;
-    } catch (error) {
-      throw Error('Could not fetch the data!');
-    }
-  };
-
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    await getCharacters(searchValue);
+    try {
+      const characters = await getCharacters(searchValue);
+      setSuccessState();
+      setApiCharacters(characters);
+    } catch (err) {
+      setFailState();
+      setApiCharacters([]);
+      console.log(err);
+    }
   };
 
   return (
