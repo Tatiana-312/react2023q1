@@ -2,7 +2,8 @@ export const get = async (endpoint: string, query?: string, value?: string, id?:
   const baseUrl = 'https://rickandmortyapi.com/api/';
   const currentId = id ? id : '';
   const options = value ? `${query}${value}` : '';
-  const url = `${baseUrl}${currentId}${endpoint}${options}`;
+  const url = `${baseUrl}${endpoint}${currentId}${options}`;
+  console.log(url);
   try {
     const response: Response = await fetch(url);
 
@@ -10,7 +11,7 @@ export const get = async (endpoint: string, query?: string, value?: string, id?:
       throw new Error();
     }
     const data = await response.json();
-    return data.results;
+    return data;
   } catch (error) {
     throw Error('Could not fetch the data!');
   }

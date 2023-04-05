@@ -7,6 +7,7 @@ import { HomePageContext } from './HomePageContext';
 import FetchDataError from '../../components/FetchDataError/FetchDataError';
 import Loader from '../../components/Loader/Loader';
 import Modal from '../../components/Modal/Modal';
+import { getCharacterById } from '../../services/character.service';
 
 const Home: React.FC = () => {
   const [apiCharacters, setApiCharacters] = useState<Data[]>([]);
@@ -15,10 +16,10 @@ const Home: React.FC = () => {
   const [modalData, setModalData] = useState<Data>({});
   const [modalActive, setModalActive] = useState<boolean>(false);
 
-  const openModal = (e: React.MouseEvent<HTMLElement>) => {
-    const filteredData = apiCharacters.filter((character) => character.id === +e.currentTarget.id);
+  const openModal = async (e: React.MouseEvent<HTMLElement>) => {
+    const character = await getCharacterById(+e.currentTarget.id);
     setModalActive(true);
-    setModalData(filteredData[0]);
+    setModalData(character);
   };
 
   const closeModal = () => {
