@@ -12,7 +12,12 @@ const Card: React.FC<Data> = ({ id, image, name, species }) => {
         <h2 className={classes.card__title}>{name}</h2>
         <h3 className={classes.card__subtitle}>{species}</h3>
       </div>
-      <button className={classes.card__button} id={`${id}`} onClick={openModal}>
+      <button
+        className={classes.card__button}
+        data-testid={`card-button${id}`}
+        id={`${id}`}
+        onClick={openModal}
+      >
         More
       </button>
     </div>

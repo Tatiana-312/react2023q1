@@ -13,12 +13,12 @@ describe('Search component', () => {
   it('renders with placeholder', () => {
     render(<SearchBar />);
 
-    expect(screen.getByPlaceholderText('Type text here')).toBeInTheDocument();
+    expect(screen.getByPlaceholderText('Type name here')).toBeInTheDocument();
   });
 
   it('prints text in textbox', () => {
     render(<SearchBar />);
-    const input = screen.getByPlaceholderText('Type text here');
+    const input = screen.getByPlaceholderText('Type name here');
     fireEvent.change(input, { target: { value: 'React' } });
     expect(input).toHaveValue('React');
   });
