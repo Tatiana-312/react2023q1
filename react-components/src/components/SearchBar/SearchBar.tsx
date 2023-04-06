@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useRef, useState } from 'react';
+import React, { useContext, useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { HomePageContext } from '../../pages/Home/HomePageContext';
 import classes from './SearchBar.module.css';
 import { getCharacters } from '../../services/character.service';
@@ -7,20 +7,6 @@ const SearchBar: React.FC = () => {
   const localStorageData = localStorage.getItem('value');
   const [searchValue, setSearchValue] = useState<string>(localStorageData || '');
   const { setApiCharacters, setIsLoaded, setIsError } = useContext(HomePageContext);
-
-  useEffect(() => {
-    fetchData();
-  }, []);
-
-  const setSuccessState = () => {
-    setIsLoaded(true);
-    setIsError(false);
-  };
-
-  const setFailState = () => {
-    setIsLoaded(true);
-    setIsError(true);
-  };
 
   const fetchData = async () => {
     try {
@@ -32,6 +18,30 @@ const SearchBar: React.FC = () => {
       setApiCharacters([]);
       console.log(err);
     }
+  };
+
+  const useMount = (callback: () => void) => {
+    const callbackReference = useRef(callback);
+
+    useLayoutEffect(() => {
+      callbackReference.current = callback;
+    }, [callback]);
+
+    useEffect(() => {
+      callbackReference.current();
+    }, []);
+  };
+
+  useMount(() => fetchData());
+
+  const setSuccessState = () => {
+    setIsLoaded(true);
+    setIsError(false);
+  };
+
+  const setFailState = () => {
+    setIsLoaded(true);
+    setIsError(true);
   };
 
   const handleChange = (e: React.FormEvent<HTMLInputElement>): void => {

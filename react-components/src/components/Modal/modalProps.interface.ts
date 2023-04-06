@@ -1,4 +1,4 @@
-import { Data } from "../../pages/Home/data.interface";
+import { Data } from '../../pages/Home/data.interface';
 
 export interface ModalProps {
   active: boolean;

@@ -14,12 +14,12 @@ export const getCharacters = async (value: string) => {
 };
 
 export const getCharacterById = async (id: number) => {
-    try {
-      const endpoint = 'character/';
-      const query = '';
-      const character: Data = await get(endpoint, query, '', id);
-      return character;
-    } catch {
-      throw Error('Could not fetch the data!');
-    }
-  };
+  try {
+    const endpoint = 'character/';
+    const query = '';
+    const character: Data = await get(endpoint, query, '', id);
+    return character;
+  } catch {
+    throw Error('Could not fetch the data!');
+  }
+};
