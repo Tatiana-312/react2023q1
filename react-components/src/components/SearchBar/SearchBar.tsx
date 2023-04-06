@@ -5,10 +5,12 @@ import { getCharacters } from '../../services/character.service';
 
 const SearchBar: React.FC = () => {
   const localStorageData = localStorage.getItem('value');
-
   const [searchValue, setSearchValue] = useState<string>(localStorageData || '');
   const { setApiCharacters, setIsLoaded, setIsError } = useContext(HomePageContext);
-  const searchBarRef = useRef(searchValue);
+
+  useEffect(() => {
+    fetchData();
+  }, []);
 
   const setSuccessState = () => {
     setIsLoaded(true);
@@ -20,35 +22,7 @@ const SearchBar: React.FC = () => {
     setIsError(true);
   };
 
-  const handleChange = (e: React.FormEvent<HTMLInputElement>): void => {
-    setSearchValue(e.currentTarget.value);
-  };
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const characters = await getCharacters(searchValue);
-        setSuccessState();
-        setApiCharacters(characters);
-      } catch (err) {
-        setFailState();
-        setApiCharacters([]);
-        console.log(err);
-      }
-    };
-
-    fetchData();
-    return () => {
-      localStorage.setItem('value', searchBarRef.current);
-    };
-  }, []);
-
-  useEffect(() => {
-    searchBarRef.current = searchValue;
-  }, [searchValue]);
-
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+  const fetchData = async () => {
     try {
       const characters = await getCharacters(searchValue);
       setSuccessState();
@@ -58,6 +32,16 @@ const SearchBar: React.FC = () => {
       setApiCharacters([]);
       console.log(err);
     }
+  };
+
+  const handleChange = (e: React.FormEvent<HTMLInputElement>): void => {
+    setSearchValue(e.currentTarget.value);
+  };
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    localStorage.setItem('value', searchValue);
+    fetchData();
   };
 
   return (

@@ -18,8 +18,8 @@ const Home: React.FC = () => {
 
   const openModal = async (e: React.MouseEvent<HTMLElement>) => {
     const character = await getCharacterById(+e.currentTarget.id);
-    setModalActive(true);
     setModalData(character);
+    setModalActive(true);
   };
 
   const closeModal = () => {
