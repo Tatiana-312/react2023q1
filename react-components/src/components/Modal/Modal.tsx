@@ -4,7 +4,7 @@ import { ModalProps } from './modalProps.interface';
 
 const Modal: React.FC<ModalProps> = ({ active, modalData, closeModal }) => {
   return (
-    <div className={active ? 'modal active' : 'modal'} onClick={closeModal}>
+    <div className={active ? 'modal active' : 'modal'} onClick={closeModal} data-testid='modal-window'>
       <div
         className={active ? 'modal__content active' : 'modal__content'}
         onClick={(e) => e.stopPropagation()}
