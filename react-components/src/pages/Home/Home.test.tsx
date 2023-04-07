@@ -62,8 +62,9 @@ describe('HomePage', () => {
     render(<Home />);
     const cardButton = await waitFor(() => screen.getByTestId('card-button1'));
     await userEvent.click(cardButton);
+    const modalData = screen.getByText('Citadel of Ricks');
     const closeButton = screen.getByRole('button', { name: '×' });
     await userEvent.click(closeButton);
-    expect(screen.getByTestId('modal-window')).not.toHaveClass('active');
+    expect(modalData).not.toBeInTheDocument();
   });
 });

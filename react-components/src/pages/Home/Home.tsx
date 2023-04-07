@@ -35,7 +35,7 @@ const Home: React.FC = () => {
         <SearchBar />
         {!isLoaded ? <Loader /> : <CardList />}
         {isError && <FetchDataError />}
-        <Modal modalData={modalData} active={modalActive} closeModal={closeModal} />
+        {modalActive ? <Modal modalData={modalData} closeModal={closeModal} /> : null}
       </div>
     </HomePageContext.Provider>
   );

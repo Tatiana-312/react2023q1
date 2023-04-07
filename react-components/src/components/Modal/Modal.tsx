@@ -2,17 +2,10 @@ import React from 'react';
 import './Modal.css';
 import { ModalProps } from './modalProps.interface';
 
-const Modal: React.FC<ModalProps> = ({ active, modalData, closeModal }) => {
+const Modal: React.FC<ModalProps> = ({ modalData, closeModal }) => {
   return (
-    <div
-      className={active ? 'modal active' : 'modal'}
-      onClick={closeModal}
-      data-testid="modal-window"
-    >
-      <div
-        className={active ? 'modal__content active' : 'modal__content'}
-        onClick={(e) => e.stopPropagation()}
-      >
+    <div className={'modal'} onClick={closeModal}>
+      <div className={'modal__content'} onClick={(e) => e.stopPropagation()}>
         <button className="close__button" onClick={closeModal}>
           &times;
         </button>

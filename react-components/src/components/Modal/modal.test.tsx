@@ -19,12 +19,11 @@ const modalData = {
   url: 'https://rickandmortyapi.com/api/character/1',
   created: '2017-11-04T18:48:46.250Z',
 };
-const modalActive = true;
 const handleClose = vi.fn();
 
 describe('Modal window', () => {
   it('should call modalClose function by clicking on close button', async () => {
-    render(<Modal modalData={modalData} active={modalActive} closeModal={handleClose} />);
+    render(<Modal modalData={modalData} closeModal={handleClose} />);
     const closeButton = screen.getByRole('button', { name: '×' });
     await userEvent.click(closeButton);
     expect(handleClose).toHaveBeenCalledTimes(1);
