@@ -1,10 +1,11 @@
 import React from 'react';
-import { fireEvent, render, screen } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import App from './App';
 import { MemoryRouter } from 'react-router-dom';
+import userEvent from '@testing-library/user-event';
 
 describe('React router', () => {
-  it('Router test', () => {
+  it('Router test', async () => {
     render(
       <MemoryRouter>
         <App />
@@ -13,11 +14,11 @@ describe('React router', () => {
     const homeLink = screen.getByTestId('home-link');
     const aboutLink = screen.getByTestId('about-link');
     const formLink = screen.getByTestId('form-link');
-    fireEvent.click(aboutLink);
+    await userEvent.click(aboutLink);
     expect(screen.getByTestId('about-page')).toBeInTheDocument();
-    fireEvent.click(homeLink);
+    await userEvent.click(homeLink);
     expect(screen.getByTestId('home-page')).toBeInTheDocument();
-    fireEvent.click(formLink);
+    await userEvent.click(formLink);
     expect(screen.getByTestId('form-page')).toBeInTheDocument();
   });
 
