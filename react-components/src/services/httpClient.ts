@@ -3,7 +3,6 @@ export const get = async (endpoint: string, query?: string, value?: string, id?:
   const currentId = id ? id : '';
   const options = value ? `${query}${value}` : '';
   const url = `${baseUrl}${endpoint}${currentId}${options}`;
-  console.log(url);
   try {
     const response: Response = await fetch(url);
 

@@ -16,7 +16,6 @@ const SearchBar: React.FC = () => {
     } catch (err) {
       setFailState();
       setApiCharacters([]);
-      console.log(err);
     }
   };
 

@@ -65,6 +65,5 @@ describe('HomePage', () => {
     const closeButton = screen.getByRole('button', { name: '×' });
     await userEvent.click(closeButton);
     expect(screen.getByTestId('modal-window')).not.toHaveClass('active');
-
   });
 });

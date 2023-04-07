@@ -70,32 +70,32 @@ export const handlers = [
   }),
   rest.get('https://rickandmortyapi.com/api/character/1', (_req, res, ctx) => {
     return res(
-        ctx.status(200),
-        ctx.json({
-            id: 1,
-              name: 'Rick Sanchez',
-              status: 'Alive',
-              species: 'Human',
-              type: '',
-              gender: 'Male',
-              location: {
-                name: 'Citadel of Ricks',
-                url: 'https://rickandmortyapi.com/api/location/3',
-              },
-              image: 'https://rickandmortyapi.com/api/character/avatar/1.jpeg',
-              url: 'https://rickandmortyapi.com/api/character/1',
-              created: '2017-11-04T18:48:46.250Z',
-        })
-    )
+      ctx.status(200),
+      ctx.json({
+        id: 1,
+        name: 'Rick Sanchez',
+        status: 'Alive',
+        species: 'Human',
+        type: '',
+        gender: 'Male',
+        location: {
+          name: 'Citadel of Ricks',
+          url: 'https://rickandmortyapi.com/api/location/3',
+        },
+        image: 'https://rickandmortyapi.com/api/character/avatar/1.jpeg',
+        url: 'https://rickandmortyapi.com/api/character/1',
+        created: '2017-11-04T18:48:46.250Z',
+      })
+    );
   }),
   rest.get('https://rickandmortyapi.com/api/character/', (req, res, ctx) => {
     const param = req.url.searchParams.get('name');
     if (param === 'q4q4')
-    return res(
+      return res(
         ctx.status(404),
         ctx.json({
-            errorMessage: 'Could not fetch the data!',
-          }),
-    )
+          errorMessage: 'Could not fetch the data!',
+        })
+      );
   }),
 ];
