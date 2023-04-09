@@ -9,7 +9,7 @@ export interface Data {
   species?: string;
   type?: string;
   gender?: string;
-  origin?: unknown;
+  origin?: Location;
   location?: Location;
   image?: string;
   episode?: string[];

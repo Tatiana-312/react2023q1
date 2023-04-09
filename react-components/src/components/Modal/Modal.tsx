@@ -28,8 +28,20 @@ const Modal: React.FC<ModalProps> = ({ modalData, closeModal }) => {
           {modalData.location?.name}
         </p>
         <p className="modal__text">
+          <span className="modal__span">Origin: </span>
+          {modalData.origin?.name}
+        </p>
+        <p className="modal__text">
+          <span className="modal__span">Type: </span>
+          {modalData.type ? modalData.type : 'unknown'}
+        </p>
+        <p className="modal__text">
           <span className="modal__span">Created: </span>
-          {modalData.created}
+          {new Date(modalData.created!).toLocaleDateString('en-GB')}
+        </p>
+        <p className="modal__text">
+          <span className="modal__span">Url: </span>
+          {modalData.url}
         </p>
       </div>
     </div>
