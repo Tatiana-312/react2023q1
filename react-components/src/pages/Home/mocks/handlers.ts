@@ -19,6 +19,10 @@ export const handlers = [
                 name: 'Citadel of Ricks',
                 url: 'https://rickandmortyapi.com/api/location/3',
               },
+              origin: {
+                name: 'Earth (C-137)',
+                url: 'https://rickandmortyapi.com/api/location/1',
+              },
               image: 'https://rickandmortyapi.com/api/character/avatar/1.jpeg',
               url: 'https://rickandmortyapi.com/api/character/1',
               created: '2017-11-04T18:48:46.250Z',
@@ -33,6 +37,10 @@ export const handlers = [
               location: {
                 name: 'Citadel of Ricks',
                 url: 'https://rickandmortyapi.com/api/location/3',
+              },
+              origin: {
+                name: 'unknown',
+                url: '',
               },
               image: 'https://rickandmortyapi.com/api/character/avatar/2.jpeg',
               url: 'https://rickandmortyapi.com/api/character/2',
@@ -59,6 +67,10 @@ export const handlers = [
                 name: 'Citadel of Ricks',
                 url: 'https://rickandmortyapi.com/api/location/3',
               },
+              origin: {
+                name: 'unknown',
+                url: '',
+              },
               image: 'https://rickandmortyapi.com/api/character/avatar/2.jpeg',
               url: 'https://rickandmortyapi.com/api/character/2',
               created: '2017-11-04T18:50:21.651Z',
@@ -81,6 +93,10 @@ export const handlers = [
         location: {
           name: 'Citadel of Ricks',
           url: 'https://rickandmortyapi.com/api/location/3',
+        },
+        origin: {
+          name: 'Earth (C-137)',
+          url: 'https://rickandmortyapi.com/api/location/1',
         },
         image: 'https://rickandmortyapi.com/api/character/avatar/1.jpeg',
         url: 'https://rickandmortyapi.com/api/character/1',
