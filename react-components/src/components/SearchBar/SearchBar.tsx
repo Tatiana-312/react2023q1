@@ -2,10 +2,14 @@ import React, { useContext, useEffect, useLayoutEffect, useRef, useState } from 
 import { HomePageContext } from '../../pages/Home/HomePageContext';
 import classes from './SearchBar.module.css';
 import { getCharacters } from '../../services/character.service';
+import { useAppDispatch, useAppSelector } from '../../hook';
+import { addSearchValue } from '../../store/searchValueSlice';
 
 const SearchBar: React.FC = () => {
-  const localStorageData = localStorage.getItem('value');
-  const [searchValue, setSearchValue] = useState<string>(localStorageData || '');
+  const dispatch = useAppDispatch();
+  const changeValue = (currentValue: string) => dispatch(addSearchValue(currentValue));
+  const searchValue = useAppSelector(state => state.searchValue);
+
   const { setApiCharacters, setIsLoaded, setIsError } = useContext(HomePageContext);
 
   const fetchData = async () => {
@@ -44,12 +48,11 @@ const SearchBar: React.FC = () => {
   };
 
   const handleChange = (e: React.FormEvent<HTMLInputElement>): void => {
-    setSearchValue(e.currentTarget.value);
+    changeValue(e.currentTarget.value);
   };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    localStorage.setItem('value', searchValue);
     fetchData();
   };
 
