@@ -17,7 +17,9 @@ const Home: React.FC = () => {
   const [modalActive, setModalActive] = useState<boolean>(false);
 
   const openModal = async (e: React.MouseEvent<HTMLElement>) => {
+    setIsLoaded(false);
     const character = await getCharacterById(+e.currentTarget.id);
+    setIsLoaded(true);
     setModalData(character);
     setModalActive(true);
   };

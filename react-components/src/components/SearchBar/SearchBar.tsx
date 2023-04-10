@@ -10,6 +10,7 @@ const SearchBar: React.FC = () => {
 
   const fetchData = async () => {
     try {
+      setIsLoaded(false);
       const characters = await getCharacters(searchValue);
       setSuccessState();
       setApiCharacters(characters);
