@@ -10,7 +10,6 @@ import Modal from '../../components/Modal/Modal';
 import { getCharacterById } from '../../services/character.service';
 
 const Home: React.FC = () => {
-  const [apiCharacters, setApiCharacters] = useState<Data[]>([]);
   const [isLoaded, setIsLoaded] = useState<boolean>(false);
   const [isError, setIsError] = useState<boolean>(false);
   const [modalData, setModalData] = useState<Data>({});
@@ -27,9 +26,7 @@ const Home: React.FC = () => {
   };
 
   return (
-    <HomePageContext.Provider
-      value={{ apiCharacters, setApiCharacters, setIsError, setIsLoaded, openModal }}
-    >
+    <HomePageContext.Provider value={{ setIsError, setIsLoaded, openModal }}>
       <div data-testid="home-page">
         <Title {...{ title: 'Rick and Morty' }} />
         <SearchBar />

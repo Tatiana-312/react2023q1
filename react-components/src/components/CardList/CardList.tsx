@@ -1,14 +1,14 @@
 import Card from '../../components/Card/Card';
-import React, { useContext } from 'react';
+import React from 'react';
 import classes from './CardList.module.css';
 import { Data } from '../../pages/Home/data.interface';
-import { HomePageContext } from '../../pages/Home/HomePageContext';
+import { useAppSelector } from '../../hook';
 
 const CardList: React.FC = () => {
-  const { apiCharacters } = useContext(HomePageContext);
+  const charactersData: Data[] = useAppSelector(state => state.charactersData);
   return (
     <div className={classes.container}>
-      {apiCharacters.map((character: Data) => {
+      {charactersData.map((character: Data) => {
         return <Card key={character.id} {...character} />;
       })}
     </div>

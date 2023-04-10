@@ -1,11 +1,13 @@
 import { configureStore } from '@reduxjs/toolkit';
 import searchValueReducer from './searchValueSlice';
+import charactersDataReducer from './charactersDataSlice';
 
 const store = configureStore({
-    reducer: {
-        searchValue: searchValueReducer,
-    },
-})
+  reducer: {
+    searchValue: searchValueReducer,
+    charactersData: charactersDataReducer,
+  },
+});
 
 export default store;
 

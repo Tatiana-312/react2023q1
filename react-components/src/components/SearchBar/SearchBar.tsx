@@ -4,22 +4,25 @@ import classes from './SearchBar.module.css';
 import { getCharacters } from '../../services/character.service';
 import { useAppDispatch, useAppSelector } from '../../hook';
 import { addSearchValue } from '../../store/searchValueSlice';
+import { addCharactersData } from '../../store/charactersDataSlice';
+import { Data } from '../../pages/Home/data.interface';
 
 const SearchBar: React.FC = () => {
   const dispatch = useAppDispatch();
   const changeValue = (currentValue: string) => dispatch(addSearchValue(currentValue));
-  const searchValue = useAppSelector(state => state.searchValue);
+  const addNewData = (characters: Data[]) => dispatch(addCharactersData(characters));
+  const searchValue = useAppSelector((state) => state.searchValue);
 
-  const { setApiCharacters, setIsLoaded, setIsError } = useContext(HomePageContext);
+  const { setIsLoaded, setIsError } = useContext(HomePageContext);
 
   const fetchData = async () => {
     try {
       const characters = await getCharacters(searchValue);
       setSuccessState();
-      setApiCharacters(characters);
+      addNewData(characters);
     } catch (err) {
       setFailState();
-      setApiCharacters([]);
+      addNewData([]);
     }
   };
 
