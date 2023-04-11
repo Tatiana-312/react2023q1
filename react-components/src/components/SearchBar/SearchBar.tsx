@@ -9,16 +9,17 @@ import { Data } from '../../pages/Home/data.interface';
 
 const SearchBar: React.FC = () => {
   const dispatch = useAppDispatch();
-  const changeValue = (currentValue: string) => dispatch(addSearchValue(currentValue));
+  const addValue = (currentValue: string) => dispatch(addSearchValue(currentValue));
   const addCharacters = (characters: Data[]) => dispatch(addCharactersData(characters));
   const searchValue = useAppSelector((state) => state.searchValue);
+  const [inputValue, setInputValue] = useState(searchValue || '');
 
   const { setIsLoaded, setIsError } = useContext(HomePageContext);
 
-  const fetchData = async () => {
+  const fetchData = async (value: string) => {
     try {
       setIsLoaded(false);
-      const characters = await getCharacters(searchValue);
+      const characters = await getCharacters(value);
       setSuccessState();
       addCharacters(characters);
     } catch (err) {
@@ -39,7 +40,7 @@ const SearchBar: React.FC = () => {
     }, []);
   };
 
-  useMount(() => fetchData());
+  useMount(() => fetchData(searchValue));
 
   const setSuccessState = () => {
     setIsLoaded(true);
@@ -52,12 +53,13 @@ const SearchBar: React.FC = () => {
   };
 
   const handleChange = (e: React.FormEvent<HTMLInputElement>): void => {
-    changeValue(e.currentTarget.value);
+    setInputValue(e.currentTarget.value);
   };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    fetchData();
+    addValue(inputValue);
+    fetchData(inputValue);
   };
 
   return (
@@ -65,7 +67,7 @@ const SearchBar: React.FC = () => {
       <input
         className={classes.input}
         type="text"
-        value={searchValue}
+        value={inputValue}
         onChange={handleChange}
         placeholder="Type name here"
       />
