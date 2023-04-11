@@ -1,5 +1,5 @@
 import Input from '../../components/Input/Input';
-import React, { useContext, useState } from 'react';
+import React, { useState } from 'react';
 import Select from '../../components/Select/Select';
 import Checkbox from '../../components/Checkbox/Checkbox';
 import ToggleSwitch from '../../components/ToggleSwitch/ToggleSwitch';
@@ -8,8 +8,9 @@ import { CardData } from './cardData.interface';
 import DataSaveMessage from '../DataSaveMessage/DataSaveMessage';
 import { useForm } from 'react-hook-form';
 import { SubmitHandler } from 'react-hook-form/dist/types';
-import { CardsContext } from '../../pages/FormPage/FormPage';
 import { FormFieldsData } from './formFieldsProps.interface';
+import { useAppDispatch } from '../../hook';
+import { addCardData } from '../../store/formCardsDataSlice';
 
 const Form: React.FC = () => {
   const [dataSaveMessage, setDataSaveMessage] = useState('');
@@ -20,7 +21,8 @@ const Form: React.FC = () => {
     reset,
   } = useForm<FormFieldsData>({ reValidateMode: 'onSubmit' });
 
-  const { setCards } = useContext(CardsContext);
+  const dispatch = useAppDispatch();
+  const addCard = (cardData: CardData) => dispatch(addCardData(cardData));
 
   const countries = [
     'Belarus',
@@ -46,7 +48,7 @@ const Form: React.FC = () => {
 
   const onSubmit: SubmitHandler<FormFieldsData> = (formData): void => {
     const cardData: CardData = getCardData(formData);
-    setCards((prev) => [...prev, cardData]);
+    addCard(cardData);
     setDataSaveMessage('Data saved successfully!');
     reset();
   };

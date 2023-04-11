@@ -1,11 +1,13 @@
 import { configureStore } from '@reduxjs/toolkit';
 import searchValueReducer from './searchValueSlice';
 import charactersDataReducer from './apiDataSlice';
+import formCardsDataReducer from './formCardsDataSlice';
 
 const store = configureStore({
   reducer: {
     searchValue: searchValueReducer,
     apiData: charactersDataReducer,
+    formCardsData: formCardsDataReducer,
   },
 });
 
