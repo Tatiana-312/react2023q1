@@ -5,7 +5,7 @@ import { Data } from '../../pages/Home/data.interface';
 import { useAppSelector } from '../../hook';
 
 const CardList: React.FC = () => {
-  const charactersData: Data[] = useAppSelector(state => state.charactersData);
+  const charactersData: Data[] = useAppSelector(state => state.apiData.characters);
   return (
     <div className={classes.container}>
       {charactersData.map((character: Data) => {
