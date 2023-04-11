@@ -15,7 +15,7 @@ const Home: React.FC = () => {
   const searchValue = useAppSelector((state) => state.searchValue);
   const dispatch = useAppDispatch();
 
-  const {data, isLoading, isError, refetch } = useGetCharacterByNameQuery(searchValue);
+  const { data, isLoading, isFetching, isError, refetch } = useGetCharacterByNameQuery(searchValue);
 
   const openModal = async (e: React.MouseEvent<HTMLElement>) => {
     const character = await getCharacterById(+e.currentTarget.id);
@@ -25,16 +25,16 @@ const Home: React.FC = () => {
   const closeModal = () => {
     setModalActive(false);
   };
-
+  const cardList = isFetching || isError ? null : <CardList />;
   return (
-      <div data-testid="home-page">
-        <Title {...{ title: 'Rick and Morty' }} />
-        <SearchBar />
-        {isLoading && <Loader />}
-        {isError && <FetchDataError />}
-        <CardList />
-        {/* {modalActive ? <Modal modalData={characterData} closeModal={closeModal} /> : null} */}
-      </div>
+    <div data-testid="home-page">
+      <Title {...{ title: 'Rick and Morty' }} />
+      <SearchBar />
+      {(isLoading || isFetching) && <Loader />}
+      {isError && <FetchDataError />}
+      {cardList}
+      {/* {modalActive ? <Modal modalData={characterData} closeModal={closeModal} /> : null} */}
+    </div>
   );
 };
 
