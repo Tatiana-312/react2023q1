@@ -9,7 +9,7 @@ import Loader from '../../components/Loader/Loader';
 import Modal from '../../components/Modal/Modal';
 import { getCharacterById } from '../../services/character.service';
 import { useAppDispatch, useAppSelector } from '../../hook';
-import { addCharacterData } from '../../store/apiDataSlice';
+import { addCharacterData } from '../../redux/store/apiDataSlice';
 
 const Home: React.FC = () => {
   const [isLoaded, setIsLoaded] = useState<boolean>(false);

@@ -10,7 +10,7 @@ import { useForm } from 'react-hook-form';
 import { SubmitHandler } from 'react-hook-form/dist/types';
 import { FormFieldsData } from './formFieldsProps.interface';
 import { useAppDispatch } from '../../hook';
-import { addCardData } from '../../store/formCardsDataSlice';
+import { addCardData } from '../../redux/store/formCardsDataSlice';
 
 const Form: React.FC = () => {
   const [dataSaveMessage, setDataSaveMessage] = useState('');

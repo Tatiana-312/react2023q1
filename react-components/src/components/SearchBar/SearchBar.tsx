@@ -3,8 +3,8 @@ import { HomePageContext } from '../../pages/Home/HomePageContext';
 import classes from './SearchBar.module.css';
 import { getCharacters } from '../../services/character.service';
 import { useAppDispatch, useAppSelector } from '../../hook';
-import { addSearchValue } from '../../store/searchValueSlice';
-import { addCharactersData } from '../../store/apiDataSlice';
+import { addSearchValue } from '../../redux/store/searchValueSlice';
+import { addCharactersData } from '../../redux/store/apiDataSlice';
 import { Data } from '../../pages/Home/data.interface';
 
 const SearchBar: React.FC = () => {

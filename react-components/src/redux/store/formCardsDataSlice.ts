@@ -1,5 +1,5 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
-import { CardData } from '../components/Form/cardData.interface';
+import { CardData } from '../../components/Form/cardData.interface';
 
 const formCardsDataSlice = createSlice({
   name: 'formCardsData',
