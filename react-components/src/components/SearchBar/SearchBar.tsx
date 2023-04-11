@@ -1,56 +1,16 @@
-import React, { useContext, useEffect, useLayoutEffect, useRef, useState } from 'react';
-import { HomePageContext } from '../../pages/Home/HomePageContext';
+import React, { useState } from 'react';
 import classes from './SearchBar.module.css';
-import { getCharacters } from '../../services/character.service';
 import { useAppDispatch, useAppSelector } from '../../hook';
 import { addSearchValue } from '../../redux/store/searchValueSlice';
-import { addCharactersData } from '../../redux/store/apiDataSlice';
-import { Data } from '../../pages/Home/data.interface';
+import { useGetCharacterByNameQuery } from '../../redux/rickAndMortyApi';
 
 const SearchBar: React.FC = () => {
   const dispatch = useAppDispatch();
   const addValue = (currentValue: string) => dispatch(addSearchValue(currentValue));
-  const addCharacters = (characters: Data[]) => dispatch(addCharactersData(characters));
   const searchValue = useAppSelector((state) => state.searchValue);
   const [inputValue, setInputValue] = useState(searchValue || '');
 
-  const { setIsLoaded, setIsError } = useContext(HomePageContext);
-
-  const fetchData = async (value: string) => {
-    try {
-      setIsLoaded(false);
-      const characters = await getCharacters(value);
-      setSuccessState();
-      addCharacters(characters);
-    } catch (err) {
-      setFailState();
-      addCharacters([]);
-    }
-  };
-
-  const useMount = (callback: () => void) => {
-    const callbackReference = useRef(callback);
-
-    useLayoutEffect(() => {
-      callbackReference.current = callback;
-    }, [callback]);
-
-    useEffect(() => {
-      callbackReference.current();
-    }, []);
-  };
-
-  useMount(() => fetchData(searchValue));
-
-  const setSuccessState = () => {
-    setIsLoaded(true);
-    setIsError(false);
-  };
-
-  const setFailState = () => {
-    setIsLoaded(true);
-    setIsError(true);
-  };
+  const { refetch } = useGetCharacterByNameQuery(searchValue);
 
   const handleChange = (e: React.FormEvent<HTMLInputElement>): void => {
     setInputValue(e.currentTarget.value);
@@ -59,7 +19,6 @@ const SearchBar: React.FC = () => {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     addValue(inputValue);
-    fetchData(inputValue);
   };
 
   return (
