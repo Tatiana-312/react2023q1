@@ -3,11 +3,11 @@ import React from 'react';
 import classes from './CardList.module.css';
 import { Data } from '../../pages/Home/data.interface';
 import { useAppSelector } from '../../hook';
-import { useGetCharacterByNameQuery } from '../../redux/rickAndMortyApi';
+import { useGetCharactersQuery } from '../../redux/rickAndMortyApi';
 
 const CardList: React.FC = () => {
   const searchValue = useAppSelector((state) => state.searchValue);
-  const { data, isError } = useGetCharacterByNameQuery(searchValue);
+  const { data } = useGetCharactersQuery(searchValue);
 
   return (
     <div className={classes.container}>

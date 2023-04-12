@@ -2,15 +2,12 @@ import React, { useState } from 'react';
 import classes from './SearchBar.module.css';
 import { useAppDispatch, useAppSelector } from '../../hook';
 import { addSearchValue } from '../../redux/store/searchValueSlice';
-import { useGetCharacterByNameQuery } from '../../redux/rickAndMortyApi';
 
 const SearchBar: React.FC = () => {
   const dispatch = useAppDispatch();
   const addValue = (currentValue: string) => dispatch(addSearchValue(currentValue));
   const searchValue = useAppSelector((state) => state.searchValue);
   const [inputValue, setInputValue] = useState(searchValue || '');
-
-  const { refetch } = useGetCharacterByNameQuery(searchValue);
 
   const handleChange = (e: React.FormEvent<HTMLInputElement>): void => {
     setInputValue(e.currentTarget.value);
