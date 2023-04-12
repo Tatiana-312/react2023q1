@@ -1,10 +1,13 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import classes from './Card.module.css';
 import { Data } from '../../pages/Home/data.interface';
-import { HomePageContext } from '../../pages/Home/HomePageContext';
+import { useAppDispatch } from '../../hook';
+import { openModal } from '../../redux/store/modalSlice';
 
 const Card: React.FC<Data> = ({ id, image, name, species }) => {
-  const { openModal } = useContext(HomePageContext);
+  const dispatch = useAppDispatch();
+  const open = (id: number) => dispatch(openModal(id));
+
   return (
     <div className={classes.card} data-testid="card">
       <div className={classes.card__body}>
@@ -16,7 +19,7 @@ const Card: React.FC<Data> = ({ id, image, name, species }) => {
         className={classes.card__button}
         data-testid={`card-button${id}`}
         id={`${id}`}
-        onClick={openModal}
+        onClick={(e) => open(+e.currentTarget.id)}
       >
         More
       </button>

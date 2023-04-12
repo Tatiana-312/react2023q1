@@ -1,20 +1,23 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import './Modal.css';
-import { ModalProps } from './modalProps.interface';
 import { useGetCharacterByIdQuery } from '../../redux/rickAndMortyApi';
-import { HomePageContext } from '../../pages/Home/HomePageContext';
 import Loader from '../Loader/Loader';
+import { useAppDispatch, useAppSelector } from '../../hook';
+import { closeModal } from '../../redux/store/modalSlice';
 
-const Modal: React.FC<ModalProps> = ({ closeModal }) => {
-  const { cardId } = useContext(HomePageContext);
+const Modal: React.FC = () => {
+  const cardId = useAppSelector((state) => state.modal.id);
   const { data, isLoading, isFetching } = useGetCharacterByIdQuery(cardId);
 
+  const dispatch = useAppDispatch();
+  const close = () => dispatch(closeModal());
+
   return (
-    <div className={'modal'} onClick={closeModal}>
+    <div className={'modal'} onClick={close}>
       {(isLoading || isFetching) && <Loader />}
       {data && (
         <div className={'modal__content'} onClick={(e) => e.stopPropagation()}>
-          <button className="close__button" onClick={closeModal}>
+          <button className="close__button" onClick={close}>
             &times;
           </button>
           <h2 className="modal__title">{data.name}</h2>
