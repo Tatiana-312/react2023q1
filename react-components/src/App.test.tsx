@@ -6,10 +6,10 @@ import userEvent from '@testing-library/user-event';
 import { renderWithProviders } from './testUtils';
 import { fetch, Headers, Request, Response } from 'cross-fetch';
 
-global.fetch = fetch
-global.Headers = Headers
-global.Request = Request
-global.Response = Response
+global.fetch = fetch;
+global.Headers = Headers;
+global.Request = Request;
+global.Response = Response;
 
 describe('React router', () => {
   it('Router test', async () => {
