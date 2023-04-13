@@ -1,12 +1,13 @@
 import React from 'react';
-import { render, screen, waitFor } from '@testing-library/react';
+import { screen, waitFor } from '@testing-library/react';
 import FormPage from './FormPage';
 import userEvent from '@testing-library/user-event';
 import { vi } from 'vitest';
+import { renderWithProviders } from '../../testUtils';
 
 describe('FormPage component', () => {
   it('create card after submit with information from inputs', async () => {
-    render(<FormPage />);
+    renderWithProviders(<FormPage />);
 
     const inputName = screen.getByTestId('input-name');
     await userEvent.type(inputName, 'React');

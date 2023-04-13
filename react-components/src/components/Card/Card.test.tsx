@@ -1,16 +1,11 @@
 import React from 'react';
-import { render, screen } from '@testing-library/react';
+import { screen } from '@testing-library/react';
 import Card from './Card';
-
-const testData = {
-  id: 1,
-  imgUrl: 'https://m.media-amazon.com/images/P/0553277537.01._SCLZZZZZZZ_SX500_.jpg',
-  name: 'Rick',
-};
+import { renderWithProviders } from '../../testUtils';
 
 describe('Card component', () => {
   it('Card renders', () => {
-    render(<Card key={testData.id} {...testData} />);
+    renderWithProviders(<Card />);
 
     expect(screen.getByTestId('card')).toBeDefined();
     expect(screen.getByRole('img')).toBeInTheDocument();
