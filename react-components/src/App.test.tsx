@@ -1,12 +1,19 @@
 import React from 'react';
-import { render, screen } from '@testing-library/react';
+import { screen } from '@testing-library/react';
 import App from './App';
 import { MemoryRouter } from 'react-router-dom';
 import userEvent from '@testing-library/user-event';
+import { renderWithProviders } from './testUtils';
+import { fetch, Headers, Request, Response } from 'cross-fetch';
+
+global.fetch = fetch
+global.Headers = Headers
+global.Request = Request
+global.Response = Response
 
 describe('React router', () => {
   it('Router test', async () => {
-    render(
+    renderWithProviders(
       <MemoryRouter>
         <App />
       </MemoryRouter>
@@ -23,7 +30,7 @@ describe('React router', () => {
   });
 
   it('Error page test', () => {
-    render(
+    renderWithProviders(
       <MemoryRouter initialEntries={['/hbjhrbjhvf', '/404']}>
         <App />
       </MemoryRouter>
