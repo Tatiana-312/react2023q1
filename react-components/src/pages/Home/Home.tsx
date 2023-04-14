@@ -18,7 +18,7 @@ const Home: React.FC = () => {
 
   return (
     <div data-testid="home-page">
-      <Title {...{ title: 'Rick and Morty' }} />
+      <Title title={'Rick and Morty'} />
       <SearchBar />
       {(isLoading || isFetching) && <Loader />}
       {isError && <FetchDataError />}
