@@ -13,4 +13,3 @@ ReactDOM.hydrateRoot(
     </Provider>
   </BrowserRouter>
 );
-console.log('hydrated');
