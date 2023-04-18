@@ -1,13 +1,14 @@
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
-import express from 'express';
+import express, { NextFunction, Request, Response } from 'express';
 import { createServer as createViteServer } from 'vite';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
+const PORT = 5173;
 
-export async function createServer() {
+async function createServer() {
   const app = express();
 
   const vite = await createViteServer({
@@ -17,40 +18,33 @@ export async function createServer() {
 
   app.use(vite.middlewares);
 
-  app.use('*', async (req, res, next) => {
+  app.use('*', async (req: Request, res: Response, next: NextFunction) => {
     const url = req.originalUrl;
     try {
       let template = fs.readFileSync(path.resolve(__dirname, 'index.html'), 'utf-8');
-
-      // 2. Apply Vite HTML transforms. This injects the Vite HMR client,
-      //    and also applies HTML transforms from Vite plugins, e.g. global
-      //    preambles from @vitejs/plugin-react
       template = await vite.transformIndexHtml(url, template);
 
-      // 3. Load the server entry. ssrLoadModule automatically transforms
-      //    ESM source code to be usable in Node.js! There is no bundling
-      //    required, and provides efficient invalidation similar to HMR.
-      const { render } = await vite.ssrLoadModule('/src/entry-server.js');
+      const parts = template.split('<!--app-html-->');
 
-      // 4. render the app HTML. This assumes entry-server.js's exported
-      //     `render` function calls appropriate framework SSR APIs,
-      //    e.g. ReactDOMServer.renderToString()
-      const appHtml = await render(url);
+      const { render } = await vite.ssrLoadModule('/src/entry-server.tsx');
 
-      // 5. Inject the app-rendered HTML into the template.
-      const html = template.replace(`<!--ssr-outlet-->`, appHtml);
-
-      // 6. Send the rendered HTML back.
-      res.status(200).set({ 'Content-Type': 'text/html' }).end(html);
-    } catch (e) {
-      // vite.ssrFixStacktrace(e)
+      const stream = await render(url, {
+        onShellReady() {
+          res.write(parts[0]);
+          stream.pipe(res);
+        },
+        onAllReady() {
+          res.write(parts[1]);
+          res.end();
+        },
+      });
+    } catch (err) {
+      const e = err as Error;
+      vite.ssrFixStacktrace(e);
       next(e);
     }
   });
 
-  console.log('Server is running');
-
-  app.listen(5173);
+  app.listen(PORT, () => console.log(`listening on http://localhost:${PORT}`));
 }
-
 createServer();
