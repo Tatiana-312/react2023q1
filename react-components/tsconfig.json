@@ -21,13 +21,13 @@
   },
   "ts-node": {
     "esm": true,
-    "transpileOnly": true,
     "experimentalSpecifierResolution": "node"
   },
   "include": [
     "./src/**/*",
     "styled.d.ts",
     "vite.config.ts",
-    "server.ts"
+    "server.ts",
+    "cypress.d.ts"
   ]
 }
