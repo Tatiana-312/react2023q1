@@ -11,6 +11,7 @@ import { SubmitHandler } from 'react-hook-form/dist/types';
 import { FormFieldsData } from './formFieldsProps.interface';
 import { useAppDispatch } from '../../hook';
 import { addCardData } from '../../redux/store/formCardsDataSlice';
+import InputFile from '../InputFile/InputFile';
 
 const Form: React.FC = () => {
   const [dataSaveMessage, setDataSaveMessage] = useState('');
@@ -83,7 +84,7 @@ const Form: React.FC = () => {
         errorText="Cannot be selected earlier than the current date"
         onChange={onChange}
       />
-      <Input
+      <InputFile
         name="file"
         testId="input-file"
         type="file"
@@ -93,7 +94,6 @@ const Form: React.FC = () => {
         validate={(value: FileList) => /^.*\.(jpg|JPG|png|PNG)$/.test(value[0].name)}
         isErrors={Boolean(errors.file)}
         errorText="Only images allowed"
-        onChange={onChange}
       />
       <Select
         name="country"
