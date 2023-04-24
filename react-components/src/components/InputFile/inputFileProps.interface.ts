@@ -1,4 +1,4 @@
-import { UseFormRegister, Path, FieldValues, FieldValue, ValidationRule } from 'react-hook-form';
+import { UseFormRegister, Path, FieldValues, FieldValue } from 'react-hook-form';
 import { FormFieldsData } from '../Form/formFieldsProps.interface';
 interface NameProperty {
   file: string;
