@@ -15,9 +15,10 @@
     "format": "npm run prettier:fix && npm run lint:fix",
     "test": "vitest",
     "coverage": "vitest run --coverage",
-    "cypress:open": "cypress open",
     "test:clean": "npx rimraf coverage && npx rimraf .nyc_output",
-    "cypress:coverage": "npm run test:clean && npx cypress run --e2e && npx nyc report && npx nyc report --reporter=text-summary"
+    "cypress": "npm run test:clean && npx cypress run --e2e && npx nyc report && npx nyc report --reporter=text-summary",
+    "cypress:test": "start-server-and-test ssr http://localhost:5173 npx cypress open",
+    "cypress:coverage": "start-server-and-test ssr http://localhost:5173 cypress"
   },
   "dependencies": {
     "@reduxjs/toolkit": "^1.9.3",
@@ -57,6 +58,7 @@
     "cypress": "^12.10.0",
     "jsdom": "^21.1.1",
     "rimraf": "^5.0.0",
+    "start-server-and-test": "^2.0.0",
     "typescript": "^4.9.3",
     "vite": "^4.1.0",
     "vite-plugin-istanbul": "^4.0.1",

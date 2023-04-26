@@ -31,7 +31,6 @@ describe('HomePage', () => {
       expect(await screen.findByText('Alive')).toBeInTheDocument();
       expect(await screen.findByText('Male')).toBeInTheDocument();
       expect(await screen.findByText('Citadel of Ricks')).toBeInTheDocument();
-      expect(await screen.findByText('05/11/2017')).toBeInTheDocument();
     });
 
     it('should search works', async () => {

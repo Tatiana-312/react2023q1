@@ -74,7 +74,7 @@ describe('React "Rick and Morty" app', () => {
       cy.contains('Data saved successfully!');
       cy.get('div[data-testid="form-card"]').should('be.visible');
       cy.contains('Jerry');
-      cy.contains('2023-04-23');
+      cy.contains(correctTestDate);
       cy.contains('Country');
       cy.contains('Payment method');
       cy.get('[alt="book cover"]').should('be.visible');
