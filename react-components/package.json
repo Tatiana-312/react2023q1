@@ -15,9 +15,10 @@
     "format": "npm run prettier:fix && npm run lint:fix",
     "test": "vitest",
     "coverage": "vitest run --coverage",
+    "open": "npx cypress open",
     "test:clean": "npx rimraf coverage && npx rimraf .nyc_output",
     "cypress": "npm run test:clean && npx cypress run --e2e && npx nyc report && npx nyc report --reporter=text-summary",
-    "cypress:test": "start-server-and-test ssr http://localhost:5173 npx cypress open",
+    "cypress:open": "start-server-and-test ssr http://localhost:5173 open",
     "cypress:coverage": "start-server-and-test ssr http://localhost:5173 cypress"
   },
   "dependencies": {
