@@ -3,10 +3,13 @@ import classes from './Card.module.css';
 import { Data } from '../../pages/Home/data.interface';
 import { useAppDispatch } from '../../hook';
 import { openModal } from '../../redux/store/modalSlice';
+import { rickAndMortyApi } from '../../redux/rickAndMortyApi';
 
 const Card: React.FC<Data> = ({ id, image, name, species }) => {
   const dispatch = useAppDispatch();
   const open = (id: number) => dispatch(openModal(id));
+
+  const [trigger] = rickAndMortyApi.endpoints.getCharacterById.useLazyQuery();
 
   return (
     <div className={classes.card} data-testid="card">
@@ -19,7 +22,10 @@ const Card: React.FC<Data> = ({ id, image, name, species }) => {
         className={classes.card__button}
         data-testid={`card-button${id}`}
         id={`${id}`}
-        onClick={(e) => open(+e.currentTarget.id)}
+        onClick={async (e) => {
+          open(+e.currentTarget.id);
+          await trigger(+e.currentTarget.id);
+        }}
       >
         More
       </button>
