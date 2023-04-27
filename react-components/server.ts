@@ -28,13 +28,19 @@ async function createServer() {
 
       const { render } = await vite.ssrLoadModule('/src/entry-server.tsx');
 
-      const stream = await render(url, {
+      const [{ pipe }, store] = await render(url, {
         onShellReady() {
           res.write(parts[0]);
-          stream.pipe(res);
+          pipe(res);
         },
         onAllReady() {
-          res.write(parts[1]);
+          res.write(
+            parts[1] +
+              `<script>window.__PRELOADED_STATE__ = ${JSON.stringify(store.getState()).replace(
+                /</g,
+                '\\u003c'
+              )}</script>`
+          );
           res.end();
         },
       });
