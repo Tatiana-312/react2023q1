@@ -15,7 +15,9 @@ const Card: React.FC<Data> = ({ id, image, name, species }) => {
     <div className={classes.card} data-testid="card">
       <div className={classes.card__body}>
         <img className={classes.card__image} src={image} alt="card-image" />
-        <h2 data-testid="card-title" className={classes.card__title}>{name}</h2>
+        <h2 data-testid="card-title" className={classes.card__title}>
+          {name}
+        </h2>
         <h3 className={classes.card__subtitle}>{species}</h3>
       </div>
       <button

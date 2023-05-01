@@ -16,7 +16,11 @@ const Modal: React.FC = () => {
     <div className={'modal'} onClick={close}>
       {(isLoading || isFetching) && <Loader />}
       {data && (
-        <div data-testid="modal-content" className={'modal__content'} onClick={(e) => e.stopPropagation()}>
+        <div
+          data-testid="modal-content"
+          className={'modal__content'}
+          onClick={(e) => e.stopPropagation()}
+        >
           <button data-testid="close-button" className="close__button" onClick={close}>
             &times;
           </button>
