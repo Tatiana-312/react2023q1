@@ -18,25 +18,25 @@ describe('React "Rick and Morty" app', () => {
   describe('Home page', () => {
     it('should search work according to the input value', () => {
       cy.visit('/');
-      cy.get('._input_13s7j_17').type('Morty').and('be.focused');
-      cy.get('._input_13s7j_17').should('have.value', 'Morty');
-      cy.get('._button_13s7j_43').click();
-      cy.get('._card__title_1wj5z_69').filter(':contains("Morty")').should('have.length', 20);
+      cy.get('[data-testid="search-input"]').type('Morty').and('be.focused');
+      cy.get('[data-testid="search-input"]').should('have.value', 'Morty');
+      cy.get('[type="submit"]').click();
+      cy.get('[data-testid="card-title"]').filter(':contains("Morty")').should('have.length', 20);
     });
 
     it('should open specific modal window and then close it', () => {
       cy.visit('/');
       cy.get('[data-testid="card-button6"]').click();
-      cy.get('.modal__content').should('exist');
+      cy.get('[data-testid="modal-content"]').should('exist');
       cy.contains('Abadango');
-      cy.get('.close__button').click();
-      cy.get('.modal__content').should('not.exist');
+      cy.get('[data-testid="close-button"]').click();
+      cy.get('[data-testid="modal-content"]').should('not.exist');
     });
 
     it('should show request error when incorrect input', () => {
       cy.visit('/');
-      cy.get('._input_13s7j_17').type('hfg5').and('be.focused');
-      cy.get('._button_13s7j_43').click();
+      cy.get('[data-testid="search-input"]').type('hfg5').and('be.focused');
+      cy.get('[type="submit"]').click();
       cy.get('[alt="Oops!"]').should('exist');
       cy.contains('Character cannot be found!');
     });
@@ -55,7 +55,7 @@ describe('React "Rick and Morty" app', () => {
       cy.contains('Please choose your country');
       cy.contains('Please select a payment method');
       cy.contains('Please check this box if you want to proceed');
-      cy.get('._cardList__container_s077d_1').should('be.empty').and('not.be.visible');
+      cy.get('[data-testid="cardList-container"]').should('be.empty').and('not.be.visible');
     });
 
     it('should show success message and create card', () => {

@@ -25,6 +25,7 @@ const SearchBar: React.FC = () => {
   return (
     <form className={classes.form} onSubmit={handleSubmit}>
       <input
+        data-testid="search-input"
         className={classes.input}
         type="text"
         value={inputValue}
