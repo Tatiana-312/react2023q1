@@ -16,6 +16,6 @@ export interface InputProps {
   pattern?: ValidationRule<RegExp>;
   validate?: (value: FieldValue<FieldValues>) => boolean;
   isErrors: boolean;
-  onChange: (e: React.FormEvent<HTMLInputElement>) => void;
+  onChange?: (e: React.FormEvent<HTMLInputElement>) => void;
   errorText: string;
 }

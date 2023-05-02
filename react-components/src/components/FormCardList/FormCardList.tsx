@@ -7,7 +7,7 @@ import { useAppSelector } from '../../hook';
 const FormCardList: React.FC = () => {
   const cards: CardData[] = useAppSelector((state) => state.formCardsData);
   return (
-    <div className={classes.cardList__container}>
+    <div data-testid="cardList-container" className={classes.cardList__container}>
       {cards.map((item: CardData, index: number) => {
         return <FormCard key={index} {...item} />;
       })}
